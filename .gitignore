@@ -1,0 +1,21 @@
+
+# Executable
+BrunchPolice
+
+# Object files
+*.o
+**/obj/
+
+# macOS specific files
+*.dSYM
+.DS_Store
+
+# VSCode settings
+.vscode
+
+# Temporary files (wildcard to match any file prefixed with tmp)
+tmp*
+**/tmp/
+
+# Local folder for personal notes, tests, or temp files
+_local/
