@@ -6,6 +6,12 @@ extends CharacterBody2D
 
 @onready var ap = $AnimationPlayer
 @onready var sprite = $Sprite2D
+@onready var cshape = $CollisionShape2D
+
+var is_crouching = false
+
+var standing_cshape = preload("res://ressources/knight_standing_cshape.tres")
+var crouching_cshape = preload("res://ressources/knight_crouching_cshape.tres")
 
 func _physics_process(delta):
 #func _physics_process(delta: float) -> void:
@@ -28,12 +34,12 @@ func _physics_process(delta):
 	
 	if horizontal_direction != 0:
 		switch_direction(horizontal_direction)
-		#sprite.flip_h = (horizontal_direction == -1)
 	
-	#if horizontal_direction:
-		#velocity.x = horizontal_direction * speed
-	#else:
-		#velocity.x = move_toward(velocity.x, 0, speed)
+#	Handle crouching
+	if Input.is_action_just_pressed("crouch"):
+		crouch()
+	elif Input.is_action_just_released("crouch"):
+		stand()
 	
 	move_and_slide()
 	
@@ -44,15 +50,41 @@ func _physics_process(delta):
 func update_animations(horizontal_direction):
 	if is_on_floor():
 		if horizontal_direction == 0:
-			ap.play("idle")
+			if is_crouching:
+				ap.play("crouch")
+			else:
+				ap.play("idle")
 		else:
-			ap.play("run")
+			if is_crouching:
+				ap.play("crouch_walk")
+			else:
+				ap.play("run")
 	else:
-		if velocity.y < 0:
-			ap.play("jump")
-		elif velocity.y > 0:
-			ap.play("fall")
+		if is_crouching == false:
+			if velocity.y < 0:
+				ap.play("jump")
+			elif velocity.y > 0:
+				ap.play("fall")
+		else:
+			ap.play("crouch")
 	
 func switch_direction(horizontal_direction):
 	sprite.flip_h = (horizontal_direction == -1)
 	sprite.position.x = horizontal_direction * 4
+	
+func crouch():
+	if is_crouching:
+		return
+	is_crouching = true
+	cshape.shape = crouching_cshape
+	cshape.position.y = 0
+	
+func stand():
+	if is_crouching == false:
+		return
+	is_crouching = false
+	cshape.shape = standing_cshape
+	cshape.position.y = -4
+	
+	
+	
