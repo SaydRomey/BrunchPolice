@@ -53,9 +53,10 @@ func _physics_process(delta):
 				print("Player stuck, setting stuck_under_object to true")
 	
 	if stuck_under_object && above_head_is_empty():
-		stand()
-		stuck_under_object = false
-		print("Player was stuck, now standing straight")
+		if !Input.is_action_pressed("crouch"):
+			stand()
+			stuck_under_object = false
+			print("Player was stuck, now standing straight")
 	
 	move_and_slide()
 	
@@ -102,7 +103,7 @@ func stand():
 		return
 	is_crouching = false
 	cshape.shape = standing_cshape
-	cshape.position.y = -4
+	cshape.position.y = -5
 	
 	
 	

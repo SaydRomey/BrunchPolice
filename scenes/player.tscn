@@ -400,7 +400,7 @@ texture = ExtResource("1_lbujg")
 hframes = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -4)
+position = Vector2(0, -5)
 shape = ExtResource("2_0ndqy")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -415,8 +415,8 @@ autoplay = "idle"
 
 [node name="CrouchRaycast_1" type="RayCast2D" parent="."]
 position = Vector2(-8, -3)
-target_position = Vector2(0, -25)
+target_position = Vector2(0, -19)
 
 [node name="CrouchRaycast_2" type="RayCast2D" parent="."]
 position = Vector2(8, -3)
-target_position = Vector2(0, -25)
+target_position = Vector2(0, -19)
