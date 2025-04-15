@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+#https://www.youtube.com/watch?v=93QBVvCzUGI&list=PLhXFaKLHQJdXpwaNt6gGwpHLTWL0m-TSL&index=11
+
 @export var speed = 150
 @export var gravity = 20
 @export var jump_force = -500
@@ -11,7 +13,7 @@ extends CharacterBody2D
 @onready var crouch_raycast2 = $CrouchRaycast_2
 @onready var coyote_timer = $CoyoteTimer
 @onready var jump_buffer_timer = $JumpBufferTimer
-
+@onready var jump_height_timer = $JumpHeightTimer
 
 var is_crouching = false
 var stuck_under_object = false
@@ -34,6 +36,7 @@ func _physics_process(delta):
 	
 #	Handle jump
 	if Input.is_action_just_pressed("jump"):
+		jump_height_timer.start()
 		jump()
 	
 #	Handle movement/deceleration using input direction
@@ -89,14 +92,20 @@ func jump():
 		if !jump_buffered:
 			jump_buffered = true
 			jump_buffer_timer.start()
-			#print("Jump buffered TRUE")
 
 func _on_coyote_timer_timeout() -> void:
 	can_coyote_jump = false
 
 func _on_jump_buffer_timer_timeout() -> void:
 	jump_buffered = false
-	#print("Jump buffered FALSE")
+
+func _on_jump_height_timer_timeout() -> void:
+	if !Input.is_action_pressed("jump"):
+		if velocity.y < -100:
+			velocity.y = -10
+			print("Low jump")
+	else:
+		print("High jump")
 
 func above_head_is_empty() -> bool:
 	var result = !crouch_raycast1.is_colliding() && !crouch_raycast2.is_colliding()

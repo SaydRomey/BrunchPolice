@@ -19,3 +19,6 @@ position = Vector2(-354, -373)
 
 [node name="Box2" parent="." instance=ExtResource("3_phd6a")]
 position = Vector2(-389, -597)
+
+[node name="Box3" parent="." instance=ExtResource("3_phd6a")]
+position = Vector2(-497, -702)
