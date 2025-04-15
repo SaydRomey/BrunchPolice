@@ -9,9 +9,11 @@ extends CharacterBody2D
 @onready var cshape = $CollisionShape2D
 @onready var crouch_raycast1 = $CrouchRaycast_1
 @onready var crouch_raycast2 = $CrouchRaycast_2
+@onready var coyote_timer = $CoyoteTimer
 
 var is_crouching = false
 var stuck_under_object = false
+var can_coyote_jump = false
 
 var standing_cshape = preload("res://ressources/knight_standing_cshape.tres")
 var crouching_cshape = preload("res://ressources/knight_crouching_cshape.tres")
@@ -20,19 +22,20 @@ var crouching_cshape = preload("res://ressources/knight_crouching_cshape.tres")
 	#print()
 
 func _physics_process(delta):
-#func _physics_process(delta: float) -> void:
 	
 #	Add the gravity
-	#if not is_on_floor():
-		#velocity += get_gravity() * delta
-	if !is_on_floor():
+	if !is_on_floor() && (can_coyote_jump == false):
 		velocity.y += gravity
 		if velocity.y > 1000:
 			velocity.y = 1000
 	
 #	Handle jump
-	if Input.is_action_just_pressed("jump"): #&& is_on_floor():
+	if Input.is_action_just_pressed("jump"):
+		if is_on_floor() || can_coyote_jump:
 			velocity.y = jump_force
+			if can_coyote_jump:
+				can_coyote_jump = false
+				print("Coyote jump")
 	
 #	Handle movement/deceleration using input direction
 	var horizontal_direction = Input.get_axis("move_left", "move_right")
@@ -58,10 +61,18 @@ func _physics_process(delta):
 			stuck_under_object = false
 			print("Player was stuck, now standing straight")
 	
+	var was_on_floor = is_on_floor()
 	move_and_slide()
+	if was_on_floor && !is_on_floor() && velocity.y >= 0:
+		#print("Fall")
+		can_coyote_jump = true
+		coyote_timer.start()
 	
 	update_animations(horizontal_direction)
-	
+
+func _on_coyote_timer_timeout() -> void:
+	can_coyote_jump = false
+
 func above_head_is_empty() -> bool:
 	var result = !crouch_raycast1.is_colliding() && !crouch_raycast2.is_colliding()
 	return result
@@ -104,6 +115,3 @@ func stand():
 	is_crouching = false
 	cshape.shape = standing_cshape
 	cshape.position.y = -5
-	
-	
-	

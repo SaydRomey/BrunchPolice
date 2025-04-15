@@ -1,5 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://bnh5gkcq45x1h"]
+[gd_scene load_steps=17 format=3 uid="uid://bnh5gkcq45x1h"]
 
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_8wdms"]
 [ext_resource type="Texture2D" uid="uid://k53ioenx2u7f" path="res://assets/textures/_Idle.png" id="1_lbujg"]
 [ext_resource type="Shape2D" uid="uid://c1hb43u0mjnu2" path="res://ressources/knight_standing_cshape.tres" id="2_0ndqy"]
 [ext_resource type="Texture2D" uid="uid://i8tflimouthk" path="res://assets/textures/_Run.png" id="2_wvmr0"]
@@ -393,6 +394,7 @@ _data = {
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(0, -12)
+script = ExtResource("1_8wdms")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(4, -28)
@@ -420,3 +422,9 @@ target_position = Vector2(0, -19)
 [node name="CrouchRaycast_2" type="RayCast2D" parent="."]
 position = Vector2(8, -3)
 target_position = Vector2(0, -19)
+
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="CoyoteTimer" to="." method="_on_coyote_timer_timeout"]
