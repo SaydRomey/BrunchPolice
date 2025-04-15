@@ -10,10 +10,13 @@ extends CharacterBody2D
 @onready var crouch_raycast1 = $CrouchRaycast_1
 @onready var crouch_raycast2 = $CrouchRaycast_2
 @onready var coyote_timer = $CoyoteTimer
+@onready var jump_buffer_timer = $JumpBufferTimer
+
 
 var is_crouching = false
 var stuck_under_object = false
 var can_coyote_jump = false
+var jump_buffered = false
 
 var standing_cshape = preload("res://ressources/knight_standing_cshape.tres")
 var crouching_cshape = preload("res://ressources/knight_crouching_cshape.tres")
@@ -31,11 +34,7 @@ func _physics_process(delta):
 	
 #	Handle jump
 	if Input.is_action_just_pressed("jump"):
-		if is_on_floor() || can_coyote_jump:
-			velocity.y = jump_force
-			if can_coyote_jump:
-				can_coyote_jump = false
-				print("Coyote jump")
+		jump()
 	
 #	Handle movement/deceleration using input direction
 	var horizontal_direction = Input.get_axis("move_left", "move_right")
@@ -53,25 +52,51 @@ func _physics_process(delta):
 		else:
 			if stuck_under_object != true:
 				stuck_under_object = true
-				print("Player stuck, setting stuck_under_object to true")
+				#print("Player stuck, setting stuck_under_object to true")
 	
 	if stuck_under_object && above_head_is_empty():
 		if !Input.is_action_pressed("crouch"):
 			stand()
 			stuck_under_object = false
-			print("Player was stuck, now standing straight")
+			#print("Player was stuck, now standing straight")
 	
 	var was_on_floor = is_on_floor()
 	move_and_slide()
+	
+#	Started to fall
 	if was_on_floor && !is_on_floor() && velocity.y >= 0:
 		#print("Fall")
 		can_coyote_jump = true
 		coyote_timer.start()
 	
+#	Touched ground
+	if !was_on_floor && is_on_floor():
+		#print("Touched ground")
+		if jump_buffered:
+			jump_buffered = false
+			print("Buffered jump")
+			jump()
+	
 	update_animations(horizontal_direction)
+
+func jump():
+	if is_on_floor() || can_coyote_jump:
+		velocity.y = jump_force
+		if can_coyote_jump:
+			can_coyote_jump = false
+			print("Coyote jump")
+	else:
+		if !jump_buffered:
+			jump_buffered = true
+			jump_buffer_timer.start()
+			#print("Jump buffered TRUE")
 
 func _on_coyote_timer_timeout() -> void:
 	can_coyote_jump = false
+
+func _on_jump_buffer_timer_timeout() -> void:
+	jump_buffered = false
+	#print("Jump buffered FALSE")
 
 func above_head_is_empty() -> bool:
 	var result = !crouch_raycast1.is_colliding() && !crouch_raycast2.is_colliding()
