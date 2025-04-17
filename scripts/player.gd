@@ -50,16 +50,22 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("move_left"):
 		if current_time - last_tap_left_time <= double_tap_time:
-			start_roll(-1)
+			if last_tap_left_time > last_tap_right_time:
+				start_roll(-1)
 		last_tap_left_time = current_time
 	
 	if Input.is_action_just_pressed("move_right"):
 		if current_time - last_tap_right_time <= double_tap_time:
-			start_roll(1)
+			if last_tap_right_time > last_tap_left_time:
+				start_roll(1)
 		last_tap_right_time = current_time
 	
 #	Horizontal movement
 	var horizontal_direction = Input.get_axis("move_left", "move_right")
+	
+	if Input.is_action_just_pressed("roll") && is_on_floor() && !is_rolling:
+		if horizontal_direction != 0:
+			start_roll(sign(horizontal_direction))
 	
 	if is_rolling:
 		velocity.x = roll_speed * roll_direction
@@ -129,11 +135,13 @@ func start_roll(direction: int):
 		return
 	is_rolling = true
 	roll_direction = direction
+	velocity.x = roll_speed * roll_direction
 	#print("Rolling ", "left" if direction == -1 else "right")
 	ap.play("roll")
 	roll_timer.start()
-	cshape.shape = crouching_cshape
-	cshape.position.y = 0
+	#cshape.shape = crouching_cshape
+	#cshape.position.y = 0
+	crouch()
 
 func crouch():
 	if is_crouching:
