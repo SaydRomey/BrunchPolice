@@ -6,6 +6,7 @@ extends CharacterBody2D
 @export var jump_force = -500
 @export var roll_speed = 200
 @export var double_tap_time = 0.3
+@export_range(0.0, 1.0) var acceleration = 0.1
 @export_range(0.0, 1.0) var friction = 0.1
 
 # Nodes
@@ -72,7 +73,8 @@ func _physics_process(delta):
 		velocity.x = roll_speed * roll_direction
 	else:
 		if horizontal_direction:
-			velocity.x = speed * horizontal_direction
+			#velocity.x = speed * horizontal_direction
+			velocity.x = move_toward(velocity.x, horizontal_direction * speed, speed * acceleration)
 		else:
 			velocity.x = move_toward(velocity.x, 0, speed * friction)
 		#if horizontal_direction != 0:
