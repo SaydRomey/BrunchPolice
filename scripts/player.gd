@@ -9,6 +9,12 @@ extends CharacterBody2D
 @export var double_tap_time = 0.3
 @export_range(0.0, 1.0) var acceleration = 0.1
 @export_range(0.0, 1.0) var friction = 0.1
+@export_range(0.0, 1.0) var decelerate_on_jump_release = 0.5
+
+@export var dash_speed = 1000.0
+@export var dash_max_distance = 300.0
+@export var dash_curve : Curve
+@export var dash_cooldown = 1.0
 
 # Nodes
 @onready var ap = $AnimationPlayer
@@ -29,6 +35,9 @@ var crouching_cshape = preload("res://ressources/knight_crouching_cshape.tres")
 var roll_direction = 0
 var last_tap_left_time = 0.1
 var last_tap_right_time = 0.1
+var dash_start_position = 0
+var dash_direction = 0
+var dash_timer = 0
 
 # Flags
 var is_crouching = false
@@ -36,6 +45,7 @@ var stuck_under_object = false
 var can_coyote_jump = false
 var jump_buffered = false
 var is_rolling = false
+var is_dashing = false
 
 #func _process(delta):
 	#print()
@@ -90,12 +100,36 @@ func _physics_process(delta):
 	if horizontal_direction != 0 && !is_rolling:
 		switch_direction(horizontal_direction)
 	
-
+#	Dash activation
+	if Input.is_action_just_pressed("dash") && horizontal_direction && !is_dashing && dash_timer <= 0:
+		is_dashing = true
+		dash_start_position = position.x
+		dash_direction = horizontal_direction
+		dash_timer = dash_cooldown
 	
-	#	Jump
-	if Input.is_action_just_pressed("jump"):
-		jump_height_timer.start()
-		jump()
+#	Actual dash
+	if is_dashing:
+		var current_distance = abs(position.x - dash_start_position)
+		if current_distance >= dash_max_distance || is_on_wall():
+			is_dashing = false
+		else:
+			velocity.x = dash_direction * dash_speed * dash_curve.sample(current_distance / dash_max_distance)
+			velocity.y = 0
+	
+#	Reduces the dash timer
+	if dash_timer > 0:
+		dash_timer -= delta
+	
+#	Jump
+	#if Input.is_action_just_pressed("jump"):
+		#jump_height_timer.start()
+		#jump()
+		
+	if Input.is_action_just_pressed("jump") && (is_on_floor() || is_on_wall()):
+		velocity.y = jump_force
+	
+	if Input.is_action_just_released("jump") && velocity.y < 0:
+		velocity.y *= decelerate_on_jump_release
 	
 #	Crouch
 	if Input.is_action_just_pressed("crouch"):
