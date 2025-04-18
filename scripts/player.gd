@@ -1,7 +1,8 @@
 extends CharacterBody2D
 
 # Constants
-@export var speed = 150
+@export var walk_speed = 150
+@export var run_speed = 250
 @export var gravity = 20
 @export var jump_force = -500
 @export var roll_speed = 200
@@ -65,6 +66,12 @@ func _physics_process(delta):
 #	Horizontal movement
 	var horizontal_direction = Input.get_axis("move_left", "move_right")
 	
+	var speed
+	if Input.is_action_pressed("run"):
+		speed = run_speed
+	else:
+		speed = walk_speed
+	
 	if Input.is_action_just_pressed("roll") && is_on_floor() && !is_rolling:
 		if horizontal_direction != 0:
 			start_roll(sign(horizontal_direction))
@@ -76,12 +83,14 @@ func _physics_process(delta):
 			#velocity.x = speed * horizontal_direction
 			velocity.x = move_toward(velocity.x, horizontal_direction * speed, speed * acceleration)
 		else:
-			velocity.x = move_toward(velocity.x, 0, speed * friction)
+			velocity.x = move_toward(velocity.x, 0, walk_speed * friction)
 		#if horizontal_direction != 0:
 			#switch_direction(horizontal_direction)
 	
 	if horizontal_direction != 0 && !is_rolling:
 		switch_direction(horizontal_direction)
+	
+
 	
 	#	Jump
 	if Input.is_action_just_pressed("jump"):
