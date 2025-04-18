@@ -6,6 +6,7 @@ extends CharacterBody2D
 @export var jump_force = -500
 @export var roll_speed = 200
 @export var double_tap_time = 0.3
+@export_range(0.0, 1.0) var friction = 0.1
 
 # Nodes
 @onready var ap = $AnimationPlayer
@@ -45,20 +46,20 @@ func _physics_process(delta):
 		if velocity.y > 1000:
 			velocity.y = 1000
 		
-#	Double tap to roll
-	var current_time = Time.get_ticks_msec() / 1000.0
-	
-	if Input.is_action_just_pressed("move_left"):
-		if current_time - last_tap_left_time <= double_tap_time:
-			if last_tap_left_time > last_tap_right_time:
-				start_roll(-1)
-		last_tap_left_time = current_time
-	
-	if Input.is_action_just_pressed("move_right"):
-		if current_time - last_tap_right_time <= double_tap_time:
-			if last_tap_right_time > last_tap_left_time:
-				start_roll(1)
-		last_tap_right_time = current_time
+##	Double tap to roll
+	#var current_time = Time.get_ticks_msec() / 1000.0
+	#
+	#if Input.is_action_just_pressed("move_left"):
+		#if current_time - last_tap_left_time <= double_tap_time:
+			#if last_tap_left_time > last_tap_right_time:
+				#start_roll(-1)
+		#last_tap_left_time = current_time
+	#
+	#if Input.is_action_just_pressed("move_right"):
+		#if current_time - last_tap_right_time <= double_tap_time:
+			#if last_tap_right_time > last_tap_left_time:
+				#start_roll(1)
+		#last_tap_right_time = current_time
 	
 #	Horizontal movement
 	var horizontal_direction = Input.get_axis("move_left", "move_right")
@@ -70,9 +71,15 @@ func _physics_process(delta):
 	if is_rolling:
 		velocity.x = roll_speed * roll_direction
 	else:
-		velocity.x = speed * horizontal_direction
-		if horizontal_direction != 0:
-			switch_direction(horizontal_direction)
+		if horizontal_direction:
+			velocity.x = speed * horizontal_direction
+		else:
+			velocity.x = move_toward(velocity.x, 0, speed * friction)
+		#if horizontal_direction != 0:
+			#switch_direction(horizontal_direction)
+	
+	if horizontal_direction != 0 && !is_rolling:
+		switch_direction(horizontal_direction)
 	
 	#	Jump
 	if Input.is_action_just_pressed("jump"):
@@ -135,7 +142,6 @@ func start_roll(direction: int):
 		return
 	is_rolling = true
 	roll_direction = direction
-	velocity.x = roll_speed * roll_direction
 	#print("Rolling ", "left" if direction == -1 else "right")
 	ap.play("roll")
 	roll_timer.start()
