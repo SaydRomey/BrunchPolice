@@ -24,6 +24,7 @@ extends CharacterBody2D
 @onready var jump_buffer_timer = $JumpBufferTimer
 @onready var jump_height_timer = $JumpHeightTimer
 @onready var roll_timer = $RollTimer
+@onready var attack_timer = $AttackTimer
 @onready var crouch_raycast1 = $CrouchRaycast_1
 @onready var crouch_raycast2 = $CrouchRaycast_2
 
@@ -46,6 +47,8 @@ var can_coyote_jump = false
 var jump_buffered = false
 var is_rolling = false
 var is_dashing = false
+var can_attack = true
+var is_attacking = false
 
 #func _process(delta):
 	#print()
@@ -147,6 +150,11 @@ func _physics_process(delta):
 			stuck_under_object = false
 			#print("Player was stuck, now standing straight")
 	
+	if Input.is_action_pressed("attack") && can_attack:
+		is_attacking = true
+		can_attack = false
+		attack_timer.start()
+	
 #	Move
 	var was_on_floor = is_on_floor()
 	move_and_slide()
@@ -243,6 +251,10 @@ func _on_roll_timer_timeout() -> void:
 		crouch()
 		stuck_under_object = true
 
+func _on_attack_timer_timeout() -> void:
+	is_attacking = false
+	can_attack = true
+
 func above_head_is_empty() -> bool:
 	var result = !crouch_raycast1.is_colliding() && !crouch_raycast2.is_colliding()
 	return result
@@ -250,6 +262,12 @@ func above_head_is_empty() -> bool:
 func update_animations(horizontal_direction):
 	if is_rolling:
 		ap.play("roll")
+		return
+	if is_dashing:
+		ap.play("dash")
+		return
+	if is_attacking:
+		ap.play("attack")
 		return
 	if is_on_floor():
 		if horizontal_direction == 0:
