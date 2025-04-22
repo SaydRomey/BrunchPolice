@@ -1,2 +1,3 @@
-# BrunchPolice
-2D Platformer to learn game dev
+# GodotPlayground
+
+2D Platformer and other genres tests to learn game dev

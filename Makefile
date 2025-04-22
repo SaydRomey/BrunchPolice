@@ -1,9 +1,9 @@
 
 # Project Info
-NAME		:= BrunchPolice
+NAME		:= WipGame
 AUTHOR		:= cdumais
 TEAM		:= $(AUTHOR)
-REPO_LINK	:= https://github.com/SaydRomey/BrunchPolice
+REPO_LINK	:= https://github.com/SaydRomey/GodotPlayground
 
 # Compiler and Flags
 COMPILE	:= c++
