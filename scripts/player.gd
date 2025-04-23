@@ -1,14 +1,19 @@
 extends CharacterBody2D
 
 # Constants & Exports
-@export var walk_speed = 150
-@export var run_speed = 250
-@export var walk_roll_speed = 200
-@export var run_roll_speed = 350
 @export var gravity = 20
 @export var jump_force = -500
-@export var dash_speed = 1000.0
-@export var dash_max_distance = 300.0
+@export var walk_speed = 150
+@export var run_speed = 250
+@export var crouch_walk_speed = 100
+@export var crouch_run_speed = 125
+@export var roll_speed_multiplier = 1.3
+@export var walk_roll_speed = 200
+@export var run_roll_speed = 350
+@export var dash_speed = 900.0
+@export var slide_speed = 500.0
+@export var dash_max_distance = 250.0
+@export var slide_max_distance = 200.0
 @export var dash_cooldown = 1.0
 @export var double_tap_time = 0.3
 
@@ -44,19 +49,20 @@ var dash_direction = 0
 var dash_timer = 0
 
 # Flags
+var print_output = true # <- Set this variable to true/false to toggle detailed output
 var is_crouching = false
 var stuck_under_object = false
 var can_coyote_jump = false
 var jump_buffered = false
-
-var roll_requested = false
-
 var is_rolling = false
 var is_dashing = false
 var can_attack = true
 var is_attacking = false
+var is_running = false
 
 func _physics_process(delta: float) -> void:
+	is_running = Input.is_action_pressed("run")
+	
 	handle_gravity()
 	handle_horizontal_movement(delta)
 	handle_jump()
@@ -74,14 +80,9 @@ func handle_gravity():
 
 func handle_horizontal_movement(delta):
 	var direction = Input.get_axis("move_left", "move_right")
-	var speed
-	if Input.is_action_pressed("run"):
-		speed = run_speed
-	else:
-		speed = walk_speed
+	var speed = get_current_speed()
 	
-	# Double tap to roll (optional)
-	double_tap_roll() # <- Comment/uncomment this line to disable/enable it
+	check_double_tap_roll() # <- Comment/uncomment this line to disable/enable it
 	
 	if Input.is_action_pressed("roll") && is_on_floor() && !is_rolling:
 		if direction != 0:
@@ -110,6 +111,8 @@ func handle_jump():
 
 func handle_dash(delta):
 	var direction = Input.get_axis("move_left", "move_right")
+	var speed = dash_speed if !is_crouching else slide_speed
+	var max_distance = dash_max_distance if !is_crouching else slide_max_distance
 	
 	if Input.is_action_just_pressed("dash") && direction && !is_dashing && dash_timer <= 0:
 		is_dashing = true
@@ -119,10 +122,10 @@ func handle_dash(delta):
 	
 	if is_dashing:
 		var distance = abs(position.x - dash_start_position)
-		if distance >= dash_max_distance || is_on_wall():
+		if distance >= max_distance || is_on_wall():
 			is_dashing = false
 		else:
-			velocity.x = dash_direction * dash_speed * dash_curve.sample(distance / dash_max_distance)
+			velocity.x = dash_direction * speed * dash_curve.sample(distance / max_distance)
 			velocity.y = 0
 	
 	dash_timer = max(0, dash_timer - delta)
@@ -151,12 +154,16 @@ func handle_ground_state():
 	move_and_slide()
 	
 	if was_on_floor && !is_on_floor() && velocity.y >= 0:
+		tell("Falling")
 		can_coyote_jump = true
 		coyote_timer.start()
 	
-	if !was_on_floor && is_on_floor() && jump_buffered:
-		jump()
-		jump_buffered = false
+	if !was_on_floor && is_on_floor():
+		tell("Touched ground")
+		if jump_buffered:
+			tell("Buffered jump")
+			jump()
+			jump_buffered = false
 
 # Movement Actions
 func start_roll(direction: int):
@@ -164,17 +171,14 @@ func start_roll(direction: int):
 	
 	is_rolling = true
 	roll_direction = direction
+	tell("Rolling ")
+	tell("left" if direction == -1 else "right")
 	
-	#current_roll_speed = run_roll_speed if Input.is_action_pressed("run") else walk_roll_speed
-	if Input.is_action_pressed("run"):
-		current_roll_speed = run_roll_speed
-	else:
-		current_roll_speed = walk_roll_speed
+	#current_roll_speed = run_roll_speed if is_running else walk_roll_speed
+	current_roll_speed = get_current_speed() * roll_speed_multiplier
 	
 	switch_direction(roll_direction)
-	
 	ap.play("roll")
-	
 	roll_timer.start()
 	crouch()
 
@@ -217,19 +221,18 @@ func update_animations(direction: float):
 	if is_rolling:
 		ap.play("roll")
 	elif is_dashing:
-		ap.play("dash")
+		if is_crouching:
+			ap.play("slide" if is_crouching else "dash")
 	elif is_attacking:
 		if is_crouching:
-			ap.play("crouch_attack")
-		else:
-			ap.play("attack")
+			ap.play("crouch_attack" if is_crouching else "attack")
 	elif is_on_floor():
 		if direction == 0:
 			ap.play("crouch" if is_crouching else "idle")
 		else:
 			ap.play("crouch_walk" if is_crouching else "run")
 			
-			if Input.is_action_pressed("run"):
+			if is_running:
 				ap.speed_scale = 1.2
 	else:
 		ap.play("crouch" if is_crouching else ("jump" if velocity.y < 0 else "fall"))
@@ -237,9 +240,10 @@ func update_animations(direction: float):
 # Timer Callbacks
 func _on_coyote_timer_timeout(): can_coyote_jump = false
 func _on_jump_buffer_timer_timeout(): jump_buffered = false
-func _on_jump_height_timer_timeout():
-	if !Input.is_action_pressed("jump") && velocity.y < -100:
-		velocity.y = -10
+
+#func _on_jump_height_timer_timeout():
+	#if !Input.is_action_pressed("jump") && velocity.y < -100:
+		#velocity.y = -10
 
 func _on_roll_timer_timeout():
 	is_rolling = false
@@ -254,11 +258,23 @@ func _on_attack_timer_timeout():
 	can_attack = true
 
 # Utility Functions
+func get_current_speed() -> float:
+	if is_crouching:
+		return crouch_run_speed if is_running else crouch_walk_speed
+	elif is_running:
+		return run_speed
+	else:
+		return walk_speed
+
 func above_head_is_empty() -> bool:
 	return !crouch_raycast1.is_colliding() && !crouch_raycast2.is_colliding()
 
 # Optionnal Functions
-func double_tap_roll():
+func tell(message: String) -> void:
+	if print_output:
+		print(message)
+
+func check_double_tap_roll():
 	var current_time = Time.get_ticks_msec() / 1000.0
 	
 	if Input.is_action_just_pressed("move_left"):

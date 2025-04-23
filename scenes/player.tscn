@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bnh5gkcq45x1h"]
+[gd_scene load_steps=28 format=3 uid="uid://bnh5gkcq45x1h"]
 
 [ext_resource type="Script" uid="uid://de76s83uqs1bi" path="res://scripts/player.gd" id="1_8wdms"]
 [ext_resource type="Texture2D" uid="uid://k53ioenx2u7f" path="res://assets/textures/_Idle.png" id="1_lbujg"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bioh5cmjwhpa8" path="res://assets/textures/_Dash.png" id="10_egfm2"]
 [ext_resource type="Texture2D" uid="uid://cwns8jasylyv8" path="res://assets/textures/_Attack.png" id="11_xmb0x"]
 [ext_resource type="Texture2D" uid="uid://hudv3ufx5ohv" path="res://assets/textures/_CrouchAttack.png" id="12_3v2ag"]
+[ext_resource type="Texture2D" uid="uid://bnnc77x1jy4rc" path="res://assets/textures/_Slide.png" id="13_jej6c"]
 
 [sub_resource type="Curve" id="Curve_e3gnl"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 1, Vector2(0.108782, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.209504), -1.1426, 0.0, 1, 0]
@@ -172,6 +173,59 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_jej6c"]
+resource_name = "crouch_attack"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("12_3v2ag")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
 }
 
 [sub_resource type="Animation" id="Animation_gvuhe"]
@@ -549,9 +603,10 @@ tracks/3/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 }
 
-[sub_resource type="Animation" id="Animation_jej6c"]
-resource_name = "crouch_attack"
-length = 0.2
+[sub_resource type="Animation" id="Animation_f1ej7"]
+resource_name = "slide"
+length = 0.1
+loop_mode = 1
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -563,7 +618,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("12_3v2ag")]
+"values": [ExtResource("13_jej6c")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -575,7 +630,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [4]
+"values": [2]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -596,10 +651,10 @@ tracks/3/path = NodePath("Sprite2D:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.05),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [0, 1, 2, 3]
+"values": [0, 1]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0mnpv"]
@@ -614,7 +669,8 @@ _data = {
 &"idle": SubResource("Animation_y0mvs"),
 &"jump": SubResource("Animation_xx8mc"),
 &"roll": SubResource("Animation_58ukw"),
-&"run": SubResource("Animation_412ys")
+&"run": SubResource("Animation_412ys"),
+&"slide": SubResource("Animation_f1ej7")
 }
 
 [node name="Player" type="CharacterBody2D"]
