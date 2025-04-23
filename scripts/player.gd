@@ -4,16 +4,14 @@ extends CharacterBody2D
 @export var gravity = 20
 @export var jump_force = -500
 @export var walk_speed = 150
-@export var run_speed = 250
+@export var run_speed = 200
 @export var crouch_walk_speed = 100
 @export var crouch_run_speed = 125
 @export var roll_speed_multiplier = 1.3
 @export var walk_roll_speed = 200
 @export var run_roll_speed = 350
-@export var dash_speed = 900.0
-@export var slide_speed = 500.0
-@export var dash_max_distance = 250.0
-@export var slide_max_distance = 200.0
+@export var dash_speed_multiplier = 3.5
+@export var dash_distance_multiplier = 1.2
 @export var dash_cooldown = 1.0
 @export var double_tap_time = 0.3
 
@@ -24,6 +22,7 @@ extends CharacterBody2D
 @export var dash_curve : Curve
 
 # Node References
+@onready var debug_label: Label = $"../CanvasLayer/DebugLabel"
 @onready var ap = $AnimationPlayer
 @onready var sprite = $Sprite2D
 @onready var cshape = $CollisionShape2D
@@ -71,6 +70,9 @@ func _physics_process(delta: float) -> void:
 	handle_attack()
 	handle_ground_state()
 	update_animations(Input.get_axis("move_left", "move_right"))
+	update_debug_label()
+	if Input.is_action_just_pressed("toggle_debug"):
+		toggle_debug_output()
 
 # Core Mechanics
 func handle_gravity():
@@ -111,8 +113,9 @@ func handle_jump():
 
 func handle_dash(delta):
 	var direction = Input.get_axis("move_left", "move_right")
-	var speed = dash_speed if !is_crouching else slide_speed
-	var max_distance = dash_max_distance if !is_crouching else slide_max_distance
+	var base_speed = get_current_speed()
+	var speed = base_speed * dash_speed_multiplier
+	var max_distance = base_speed * dash_distance_multiplier
 	
 	if Input.is_action_just_pressed("dash") && direction && !is_dashing && dash_timer <= 0:
 		is_dashing = true
@@ -171,8 +174,7 @@ func start_roll(direction: int):
 	
 	is_rolling = true
 	roll_direction = direction
-	tell("Rolling ")
-	tell("left" if direction == -1 else "right")
+	tell("Rolling left" if direction == -1 else "Rolling right")
 	
 	#current_roll_speed = run_roll_speed if is_running else walk_roll_speed
 	current_roll_speed = get_current_speed() * roll_speed_multiplier
@@ -184,6 +186,7 @@ func start_roll(direction: int):
 
 func crouch():
 	if is_crouching: return
+	tell("Crouching")
 	is_crouching = true
 	cshape.shape = crouching_cshape
 	cshape.position.y = 0
@@ -191,8 +194,10 @@ func crouch():
 func stand():
 	if !is_crouching: return
 	if !above_head_is_empty():
+		tell("Can't stand: object above")
 		stuck_under_object = true
 		return
+	tell("Standing up")
 	is_crouching = false
 	cshape.shape = standing_cshape
 	cshape.position.y = -5
@@ -221,11 +226,10 @@ func update_animations(direction: float):
 	if is_rolling:
 		ap.play("roll")
 	elif is_dashing:
-		if is_crouching:
+		if is_crouching && is_on_floor():
 			ap.play("slide" if is_crouching else "dash")
 	elif is_attacking:
-		if is_crouching:
-			ap.play("crouch_attack" if is_crouching else "attack")
+		ap.play("crouch_attack" if is_crouching else "attack")
 	elif is_on_floor():
 		if direction == 0:
 			ap.play("crouch" if is_crouching else "idle")
@@ -269,11 +273,47 @@ func get_current_speed() -> float:
 func above_head_is_empty() -> bool:
 	return !crouch_raycast1.is_colliding() && !crouch_raycast2.is_colliding()
 
-# Optionnal Functions
+# Debug Output functions
+func toggle_debug_output():
+	print_output = !print_output
+	debug_label.visible = print_output
+
+func update_debug_label():
+	var lines := []
+
+	# Base info
+	lines.append("Speed: %.2f" % get_current_speed())
+	lines.append("Velocity: (%.2f, %.2f)" % [velocity.x, velocity.y])
+
+	# Determine movement state
+	var state := ""
+
+	if is_rolling:
+		state = "Rolling"
+	elif is_dashing:
+		state = "Dashing"
+	elif !is_on_floor():
+		state = "Jumping" if velocity.y < 0 else "Falling"
+	elif is_crouching:
+		if abs(velocity.x) > 0.1:
+			state = "Crouch Running" if is_running else "Crouch Walking"
+		else:
+			state = "Crouching"
+	else:
+		if abs(velocity.x) > 0.1:
+			state = "Running" if is_running else "Walking"
+		else:
+			state = "Idle"
+
+	lines.append("State: %s" % state)
+
+	debug_label.text = "\n".join(lines)
+
 func tell(message: String) -> void:
 	if print_output:
 		print(message)
 
+# Optionnal Functions
 func check_double_tap_roll():
 	var current_time = Time.get_ticks_msec() / 1000.0
 	

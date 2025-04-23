@@ -28,3 +28,11 @@ scale = Vector2(0.877144, 0.364679)
 [node name="Box3" parent="." instance=ExtResource("3_phd6a")]
 position = Vector2(-312, -450)
 scale = Vector2(2.12823, 0.719222)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="DebugLabel" type="Label" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.5)
+theme_override_font_sizes/font_size = 4
