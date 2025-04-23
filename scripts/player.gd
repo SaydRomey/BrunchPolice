@@ -3,9 +3,10 @@ extends CharacterBody2D
 # Constants & Exports
 @export var walk_speed = 150
 @export var run_speed = 250
+@export var walk_roll_speed = 200
+@export var run_roll_speed = 350
 @export var gravity = 20
 @export var jump_force = -500
-@export var roll_speed = 200
 @export var dash_speed = 1000.0
 @export var dash_max_distance = 300.0
 @export var dash_cooldown = 1.0
@@ -35,6 +36,7 @@ var crouching_cshape = preload("res://ressources/knight_crouching_cshape.tres")
 
 # State variables
 var roll_direction = 0
+var current_roll_speed = 0.0
 var last_tap_left_time = 0.1
 var last_tap_right_time = 0.1
 var dash_start_position = 0
@@ -79,26 +81,15 @@ func handle_horizontal_movement(delta):
 		speed = walk_speed
 	
 	# Double tap to roll (optional)
-	double_tap_roll() # <- Comment/uncomment this line to enable/disable it
+	double_tap_roll() # <- Comment/uncomment this line to disable/enable it
 	
-	#if Input.is_action_just_pressed("roll") && is_on_floor() && !is_rolling:
-		#if direction != 0:
-			#start_roll(sign(direction))
-	
-	# Step 1: Detect intent to roll
-	if Input.is_action_just_pressed("roll") and is_on_floor() and !is_rolling:
-		roll_requested = true
-
-# Step 2: Start roll as soon as direction is given
-	if roll_requested and direction != 0 and is_on_floor() and !is_rolling:
-		switch_direction(direction)
-		start_roll(sign(direction))
-		roll_requested = false
-	
+	if Input.is_action_pressed("roll") && is_on_floor() && !is_rolling:
+		if direction != 0:
+			start_roll(sign(direction))
+		
 	if is_rolling:
-		velocity.x = roll_speed * roll_direction
+		velocity.x = current_roll_speed * roll_direction
 	else:
-		#velocity.x = move_toward(velocity.x, direction * speed, speed * acceleration if direction else walk_speed * friction)
 		if direction != 0:
 			velocity.x = move_toward(velocity.x, direction * speed, speed * acceleration)
 		else:
@@ -170,9 +161,20 @@ func handle_ground_state():
 # Movement Actions
 func start_roll(direction: int):
 	if is_rolling || !is_on_floor(): return
+	
 	is_rolling = true
 	roll_direction = direction
+	
+	#current_roll_speed = run_roll_speed if Input.is_action_pressed("run") else walk_roll_speed
+	if Input.is_action_pressed("run"):
+		current_roll_speed = run_roll_speed
+	else:
+		current_roll_speed = walk_roll_speed
+	
+	switch_direction(roll_direction)
+	
 	ap.play("roll")
+	
 	roll_timer.start()
 	crouch()
 
@@ -210,23 +212,31 @@ func switch_direction(direction: float):
 	sprite.position.x = direction * 4
 
 func update_animations(direction: float):
+	ap.speed_scale = 1.0
+	
 	if is_rolling:
 		ap.play("roll")
 	elif is_dashing:
 		ap.play("dash")
 	elif is_attacking:
-		ap.play("attack")
+		if is_crouching:
+			ap.play("crouch_attack")
+		else:
+			ap.play("attack")
 	elif is_on_floor():
 		if direction == 0:
 			ap.play("crouch" if is_crouching else "idle")
 		else:
 			ap.play("crouch_walk" if is_crouching else "run")
+			
+			if Input.is_action_pressed("run"):
+				ap.speed_scale = 1.2
 	else:
 		ap.play("crouch" if is_crouching else ("jump" if velocity.y < 0 else "fall"))
 
 # Timer Callbacks
 func _on_coyote_timer_timeout(): can_coyote_jump = false
-func _on_jump_buffer_timeout(): jump_buffered = false
+func _on_jump_buffer_timer_timeout(): jump_buffered = false
 func _on_jump_height_timer_timeout():
 	if !Input.is_action_pressed("jump") && velocity.y < -100:
 		velocity.y = -10
@@ -237,7 +247,7 @@ func _on_roll_timer_timeout():
 		stand()
 	else:
 		crouch()
-		stuck_under_object = true # before crouch() ?
+		stuck_under_object = true
 
 func _on_attack_timer_timeout():
 	is_attacking = false
