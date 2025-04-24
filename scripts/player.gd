@@ -6,7 +6,7 @@ extends CharacterBody2D
 @export var walk_speed = 150
 @export var run_speed = 200
 @export var crouch_walk_speed = 100
-@export var crouch_run_speed = 125
+@export var crouch_run_speed = 150
 @export var roll_speed_multiplier = 1.3
 @export var walk_roll_speed = 200
 @export var run_roll_speed = 350
@@ -123,19 +123,14 @@ func handle_dash(delta):
 	var direction = Input.get_axis("move_left", "move_right")
 	var base_speed = get_current_speed()
 	var speed = base_speed * dash_speed_multiplier
-	var max_distance = base_speed * dash_distance_multiplier
 	
-	## Momentum-based dash distance
-	#var base_distance: float = base_speed * dash_distance_multiplier
-	#var min_distance: float = 100.0
-	#var max_distance: float = 350.0
-#
-	## Use current velocity.x as momentum source, not just intended move speed
-	#var momentum_factor: float = clamp(abs(velocity.x) / run_speed, 0.5, 1.5)
-	#var max_dash_distance: float = clamp(base_distance * momentum_factor, min_distance, max_distance)
+	# Momentum-based dash distance
+	var base_distance: float = base_speed * dash_distance_multiplier
+	var momentum_factor: float = clamp(abs(velocity.x) / run_speed, 0.8, 1.2)
+	var max_distance: float = clamp(base_distance * momentum_factor, 180.0, 320.0)
 	
-	# ? Use velocity.length() instead of abs(velocity.x) for 8-way dashes.
-	# ? Vary dash_speed itself based on momentum
+	 #? Use velocity.length() instead of abs(velocity.x) for 8-way dashes.
+	 #? Vary dash_speed itself based on momentum
 	
 	if Input.is_action_just_pressed("dash") && direction && !is_dashing && dash_timer <= 0:
 		is_dashing = true
@@ -148,10 +143,9 @@ func handle_dash(delta):
 		if distance >= max_distance || is_on_wall():
 			is_dashing = false
 		else:
-			velocity.x = dash_direction * speed * dash_curve.sample(distance / max_distance)
-			#velocity.x = dash_direction * speed * dash_curve.sample(distance / max_dash_distance)
+			var dash_progress = distance / max_distance
+			velocity.x = dash_direction * speed * dash_curve.sample(dash_progress)
 			velocity.y = 0
-			
 			
 			# Trigger slide animation mid-dash
 			if Input.is_action_pressed("crouch") && !is_crouching:
