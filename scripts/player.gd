@@ -14,6 +14,7 @@ extends CharacterBody2D
 @export var dash_distance_multiplier = 1.2
 @export var dash_cooldown = 1.0
 @export var double_tap_time = 0.3
+@export var can_double_jump = true
 
 @export_range(0.0, 1.0) var acceleration = 0.1
 @export_range(0.0, 1.0) var friction = 0.1
@@ -58,6 +59,7 @@ var is_dashing = false
 var can_attack = true
 var is_attacking = false
 var is_running = false
+var has_double_jumped = false
 
 func _physics_process(delta: float) -> void:
 	is_running = Input.is_action_pressed("run")
@@ -80,15 +82,22 @@ func handle_gravity():
 		velocity.y += gravity
 		velocity.y = min(velocity.y, 1000)
 
+var last_move_direction := 0
+
 func handle_horizontal_movement(delta):
-	var direction = Input.get_axis("move_left", "move_right")
 	var speed = get_current_speed()
+	var direction = Input.get_axis("move_left", "move_right")
+	
+	if direction != 0:
+		last_move_direction = direction
+	elif !is_rolling && !is_dashing:
+		last_move_direction = 0
 	
 	check_double_tap_roll() # <- Comment/uncomment this line to disable/enable it
 	
 	if Input.is_action_pressed("roll") && is_on_floor() && !is_rolling:
 		if direction != 0:
-			start_roll(sign(direction))
+			start_roll(sign(last_move_direction))
 		
 	if is_rolling:
 		velocity.x = current_roll_speed * roll_direction
@@ -103,10 +112,9 @@ func handle_horizontal_movement(delta):
 
 func handle_jump():
 	if Input.is_action_just_pressed("jump"):
-		if is_on_floor() || is_on_wall():
-			velocity.y = jump_force
-		else:
-			buffer_jump()
+		#if is_on_floor() || is_on_wall():
+			#velocity.y = jump_force
+		jump()
 	
 	if Input.is_action_just_released("jump") && velocity.y < 0:
 		velocity.y *= decelerate_on_jump_release
@@ -116,6 +124,18 @@ func handle_dash(delta):
 	var base_speed = get_current_speed()
 	var speed = base_speed * dash_speed_multiplier
 	var max_distance = base_speed * dash_distance_multiplier
+	
+	## Momentum-based dash distance
+	#var base_distance: float = base_speed * dash_distance_multiplier
+	#var min_distance: float = 100.0
+	#var max_distance: float = 350.0
+#
+	## Use current velocity.x as momentum source, not just intended move speed
+	#var momentum_factor: float = clamp(abs(velocity.x) / run_speed, 0.5, 1.5)
+	#var max_dash_distance: float = clamp(base_distance * momentum_factor, min_distance, max_distance)
+	
+	# ? Use velocity.length() instead of abs(velocity.x) for 8-way dashes.
+	# ? Vary dash_speed itself based on momentum
 	
 	if Input.is_action_just_pressed("dash") && direction && !is_dashing && dash_timer <= 0:
 		is_dashing = true
@@ -129,7 +149,13 @@ func handle_dash(delta):
 			is_dashing = false
 		else:
 			velocity.x = dash_direction * speed * dash_curve.sample(distance / max_distance)
+			#velocity.x = dash_direction * speed * dash_curve.sample(distance / max_dash_distance)
 			velocity.y = 0
+			
+			
+			# Trigger slide animation mid-dash
+			if Input.is_action_pressed("crouch") && !is_crouching:
+				crouch()
 	
 	dash_timer = max(0, dash_timer - delta)
 
@@ -163,6 +189,7 @@ func handle_ground_state():
 	
 	if !was_on_floor && is_on_floor():
 		tell("Touched ground")
+		has_double_jumped = false
 		if jump_buffered:
 			tell("Buffered jump")
 			jump()
@@ -176,13 +203,23 @@ func start_roll(direction: int):
 	roll_direction = direction
 	tell("Rolling left" if direction == -1 else "Rolling right")
 	
-	#current_roll_speed = run_roll_speed if is_running else walk_roll_speed
 	current_roll_speed = get_current_speed() * roll_speed_multiplier
 	
 	switch_direction(roll_direction)
 	ap.play("roll")
 	roll_timer.start()
 	crouch()
+	
+	## Calculate roll time based on momentum (more speed = longer roll)
+	#var base_duration: float = 0.4  # Base slide duration (seconds)
+	#var max_duration: float = 0.8   # Max cap for sliding
+	#var min_duration: float = 0.2   # Minimum floor
+#
+	## Use absolute speed for consistency
+	#var speed_factor: float = clamp(abs(velocity.x) / run_speed, 0.5, 1.5)
+	#var roll_duration: float = clamp(base_duration * speed_factor, min_duration, max_duration)
+#
+	#roll_timer.start(roll_duration)
 
 func crouch():
 	if is_crouching: return
@@ -203,10 +240,15 @@ func stand():
 	cshape.position.y = -5
 
 func jump():
-	if is_rolling || !above_head_is_empty(): return
+	#if is_rolling || !above_head_is_empty(): return
+	if !above_head_is_empty(): return
 	if is_on_floor() || can_coyote_jump:
 		velocity.y = jump_force
 		can_coyote_jump = false
+		has_double_jumped = false
+	elif can_double_jump && !has_double_jumped:
+		velocity.y = jump_force
+		has_double_jumped = true
 	else:
 		buffer_jump()
 
@@ -227,7 +269,9 @@ func update_animations(direction: float):
 		ap.play("roll")
 	elif is_dashing:
 		if is_crouching && is_on_floor():
-			ap.play("slide" if is_crouching else "dash")
+			ap.play("slide")
+		else:
+			ap.play("dash")
 	elif is_attacking:
 		ap.play("crouch_attack" if is_crouching else "attack")
 	elif is_on_floor():
@@ -251,7 +295,9 @@ func _on_jump_buffer_timer_timeout(): jump_buffered = false
 
 func _on_roll_timer_timeout():
 	is_rolling = false
-	if above_head_is_empty():
+	velocity.x *= 0.5 # Smooth stop after sliding
+	
+	if above_head_is_empty() && !is_crouching:
 		stand()
 	else:
 		crouch()
@@ -293,7 +339,10 @@ func update_debug_label():
 	elif is_dashing:
 		state = "Dashing"
 	elif !is_on_floor():
-		state = "Jumping" if velocity.y < 0 else "Falling"
+		if has_double_jumped:
+			state = "Double Jumping" if velocity.y < 0 else "Falling"
+		else:
+			state = "Jumping" if velocity.y < 0 else "Falling"
 	elif is_crouching:
 		if abs(velocity.x) > 0.1:
 			state = "Crouch Running" if is_running else "Crouch Walking"
