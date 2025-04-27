@@ -729,8 +729,17 @@ one_shot = true
 wait_time = 0.2
 one_shot = true
 
+[node name="DashTimer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[node name="DashCooldownTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="CoyoteTimer" to="." method="_on_coyote_timer_timeout"]
 [connection signal="timeout" from="JumpBufferTimer" to="." method="_on_jump_buffer_timer_timeout"]
 [connection signal="timeout" from="JumpHeightTimer" to="." method="_on_jump_height_timer_timeout"]
 [connection signal="timeout" from="RollTimer" to="." method="_on_roll_timer_timeout"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="DashCooldownTimer" to="." method="_on_dash_cooldown_timer_timeout"]
