@@ -9,7 +9,7 @@ extends CharacterBody2D
 # ▶ EXPORTS / TWEAKABLES ◀
 # -------------------------
 
-@export_group("Movement speeds")
+@export_group("Movement Speeds")
 @export var gravity               : float =  20.0
 @export var walk_speed            : float = 150.0
 @export var run_speed             : float = 200.0
@@ -33,15 +33,12 @@ extends CharacterBody2D
 @export_group("Jump")
 @export var can_double_jump       : bool  = true
 
+@export_group("Wall-jump / Wall-slide")
+@export var wall_slide_speed      : float = 100.0
+@export var wall_stick_time       : float = 0.25
+
 @export_group("Debug")
 @export var print_debug           : bool  = true
-
-# -------------------
-# ▶ INTERNAL ENUMS ◀
-# -------------------
-
-# simpler than 15 flags — you can OR‑comb them if needed
-enum AnimFlag { NONE, SLIDE }
 
 # -------------------------
 # ▶ NODE REFERENCES (onready) ◀
@@ -58,11 +55,16 @@ enum AnimFlag { NONE, SLIDE }
 	ROLL          = $RollTimer,
 	ATTACK        = $AttackTimer,
 	DASH          = $DashTimer,
-	DASH_COOLDOWN = $DashCooldownTimer
+	DASH_COOLDOWN = $DashCooldownTimer,
+	WALL_STICK    = $WallStickTimer
 }
 
 # Raycasts for ceiling check
 @onready var ray_overhead := [$CrouchRaycast_1, $CrouchRaycast_2]
+
+# Raycasts for wall check
+@onready var wall_raycast_left  = $WallRaycastLeft
+@onready var wall_raycast_right = $WallRaycastRight
 
 # --------------------
 # ▶ COLLISION SHAPES ◀
@@ -84,6 +86,9 @@ var has_double_jumped  : bool  = false
 var can_coyote_jump    : bool  = false
 var jump_buffered      : bool  = false
 var was_on_floor       : bool  = false
+var is_wall_sliding    : bool  = false
+var is_wall_sticking   : bool  = false
+var just_touched_wall  : bool  = false
 
 var dash_origin_x      : float = 0.0
 var dash_dir           : int   = 0
@@ -101,7 +106,7 @@ var facing             : int   = 1   # 1 right, ‑1 left
 
 func _physics_process(delta:float)->void:
 	var inp := _gather_input()
-
+	
 	_apply_gravity(delta)
 	_handle_horizontal(inp, delta)
 	_handle_jump(inp)
@@ -110,17 +115,18 @@ func _physics_process(delta:float)->void:
 	_handle_roll(inp)
 	_check_double_tap_roll(inp)
 	_handle_attack(inp)
-
+	_handle_wall_slide(inp)
+	
 	move_and_slide()
 	_ground_state_logic()
-
+	
 	_update_anim(inp.move)
+	
 	_update_debug_label(print_debug)
-	if inp.toggle_debug:
-		_toggle_debug_output()
+	if inp.toggle_debug: _toggle_debug_output()
 
 # =========================================
-#  INPUT GATHERING (all in one dict)
+#  INPUT GATHERING
 # =========================================
 
 func _gather_input() -> Dictionary:
@@ -178,6 +184,7 @@ func _handle_horizontal(inp:Dictionary, delta:float)->void:
 # =====================================================
 
 func _handle_jump(inp:Dictionary)->void:
+	
 	# jump pressed
 	if inp.jump_down:
 		if is_on_floor() || can_coyote_jump:
@@ -194,12 +201,57 @@ func _handle_jump(inp:Dictionary)->void:
 func _do_jump():
 	velocity.y = jump_force
 	can_coyote_jump = false
+	timers.WALL_STICK.stop()
+
+# =========================================
+#  WALL-SLIDE / WALL-JUMP
+# =========================================
+
+func _handle_wall_slide(inp: Dictionary) -> void:
+	
+	# Reset if we left the wall or landed
+	if is_on_floor() || !is_on_wall():
+		is_wall_sliding = false
+		is_wall_sticking = false
+		just_touched_wall = false
+		timers.WALL_STICK.stop()
+		_switch_direction(facing)
+		return
+	
+	# Are we pushing into the wall?
+	var pushing_left = inp.move < 0 && _is_on_wall_only_left()
+	var pushing_right = inp.move > 0 && !_is_on_wall_only_left()
+	if !(pushing_left || pushing_right):
+		just_touched_wall = false
+		return
+	
+	# First frame on the wall -> start stick timer
+	if !just_touched_wall:
+		just_touched_wall = true
+		is_wall_sticking = true
+		timers.WALL_STICK.start(wall_stick_time)
+	
+	is_wall_sliding = true
+	_switch_direction(-facing)
+	
+	# Stick or slide?
+	#if is_wall_sticking:
+		#velocity.y = min(velocity.y, 0)
+	#else:
+		#velocity.y = min(velocity.y, wall_slide_speed)
+	
+	velocity.y = min(velocity.y, 0 if is_wall_sticking else wall_slide_speed)
+
+func _is_on_wall_only_left() -> bool:
+	return wall_raycast_left.is_colliding() && !wall_raycast_right.is_colliding()
+
+func _on_WallStickTimer_timeout() -> void: is_wall_sticking = false
 
 # =====================================================
 #  CROUCH / STAND
 # =====================================================
 
-func _handle_crouch(inp:Dictionary)->void:
+func _handle_crouch(inp: Dictionary) -> void:
 	if inp.crouch_down:
 		_crouch()
 	elif inp.crouch_up && _ceiling_clear():
@@ -392,8 +444,11 @@ func _update_anim(move_axis:float)->void:
 			else:
 				anim.play("idle")
 	else:
-		#anim.play("jump" if velocity.y < 0 else "fall") # This line does not allow air crouching
-		anim.play("crouch" if is_crouching else ("jump" if velocity.y < 0 else "fall")) # This line allows air crouching
+		if is_wall_sliding:
+			anim.play("wall_slide")
+			if is_wall_sticking: anim.speed_scale = 0
+		else:
+			anim.play("crouch" if is_crouching else ("jump" if velocity.y < 0 else "fall"))
 
 # =====================================================
 #  DEBUG TEXT
@@ -419,6 +474,8 @@ func _update_debug_label(enabled: bool):
 		state = "Rolling"
 	elif is_dashing:
 		state = "Dashing"
+	elif is_wall_sliding:
+		state = "Wall Sticking" if is_wall_sticking else "Wall Sliding"
 	elif !is_on_floor():
 		if has_double_jumped:
 			state = "Double Jumping" if velocity.y < 0 else "Falling"
