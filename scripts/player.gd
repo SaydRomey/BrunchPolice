@@ -34,11 +34,12 @@ extends CharacterBody2D
 @export var can_double_jump       : bool  = true
 
 @export_group("Wall-jump / Wall-slide")
+@export var wall_jump_force       = Vector2(250, -450)  # X for push-off, Y for height
 @export var wall_slide_speed      : float = 100.0
-@export var wall_stick_time       : float = 0.25
+@export var wall_stick_time       : float = 0.45
 
 @export_group("Debug")
-@export var print_debug           : bool  = true
+@export var enable_print_debug    : bool  = true
 
 # -------------------------
 # ▶ NODE REFERENCES (onready) ◀
@@ -122,7 +123,7 @@ func _physics_process(delta:float)->void:
 	
 	_update_anim(inp.move)
 	
-	_update_debug_label(print_debug)
+	_update_debug_label(enable_print_debug)
 	if inp.toggle_debug: _toggle_debug_output()
 
 # =========================================
@@ -173,10 +174,8 @@ func _handle_horizontal(inp:Dictionary, delta:float)->void:
 	if inp.move != 0:
 		facing = sign(inp.move)
 		_switch_direction(facing)
-		#velocity.x = lerp(velocity.x, target, acceleration)
 		velocity.x = move_toward(velocity.x, target, speed * acceleration)
 	else:
-		#velocity.x = lerp(velocity.x, 0.0, friction)
 		velocity.x = move_toward(velocity.x, target, walk_speed * friction)
 
 # =====================================================
@@ -184,15 +183,20 @@ func _handle_horizontal(inp:Dictionary, delta:float)->void:
 # =====================================================
 
 func _handle_jump(inp:Dictionary)->void:
+	if !_ceiling_clear(): return
 	
 	# jump pressed
 	if inp.jump_down:
 		if is_on_floor() || can_coyote_jump:
 			_do_jump()
 		elif can_double_jump && !has_double_jumped:
-			_do_jump(); has_double_jumped = true
+			_do_jump()
+			has_double_jumped = true
+		elif is_wall_sliding:
+			_do_wall_jump()
 		else:
-			jump_buffered = true; timers.JUMP_BUFFER.start()
+			jump_buffered = true
+			start_timer("JUMP_BUFFER")
 
 	# variable height
 	if inp.jump_up && velocity.y < 0:
@@ -201,7 +205,15 @@ func _handle_jump(inp:Dictionary)->void:
 func _do_jump():
 	velocity.y = jump_force
 	can_coyote_jump = false
-	timers.WALL_STICK.stop()
+	stop_timer("WALL_STICK")
+
+func _do_wall_jump() -> void:
+	# Jump away from wall (opposite to contact direction)
+	var wall_dir := -1 if _is_on_wall_only_left() else 1
+	velocity.y = wall_jump_force.y
+	velocity.x = -wall_jump_force.x * wall_dir
+	has_double_jumped = false
+	_wall_slide_end()
 
 # =========================================
 #  WALL-SLIDE / WALL-JUMP
@@ -209,13 +221,10 @@ func _do_jump():
 
 func _handle_wall_slide(inp: Dictionary) -> void:
 	
-	# Reset if we left the wall or landed
+	# Reset if left the wall or landed
 	if is_on_floor() || !is_on_wall():
-		is_wall_sliding = false
-		is_wall_sticking = false
-		just_touched_wall = false
-		timers.WALL_STICK.stop()
-		_switch_direction(facing)
+		if is_wall_sliding:
+			_wall_slide_end()
 		return
 	
 	# Are we pushing into the wall?
@@ -229,21 +238,25 @@ func _handle_wall_slide(inp: Dictionary) -> void:
 	if !just_touched_wall:
 		just_touched_wall = true
 		is_wall_sticking = true
-		timers.WALL_STICK.start(wall_stick_time)
+		start_timer("WALL_STICK", wall_stick_time)
 	
 	is_wall_sliding = true
 	_switch_direction(-facing)
 	
-	# Stick or slide?
-	#if is_wall_sticking:
-		#velocity.y = min(velocity.y, 0)
-	#else:
-		#velocity.y = min(velocity.y, wall_slide_speed)
-	
 	velocity.y = min(velocity.y, 0 if is_wall_sticking else wall_slide_speed)
+
+func _wall_slide_end() -> void:
+	is_wall_sliding = false
+	is_wall_sticking = false
+	just_touched_wall = false
+	stop_timer("WALL_STICK")
+	_switch_direction(facing)
 
 func _is_on_wall_only_left() -> bool:
 	return wall_raycast_left.is_colliding() && !wall_raycast_right.is_colliding()
+
+func _wall_side_from_rays() -> int:
+	return -1 if _is_on_wall_only_left() else (1 if !_is_on_wall_only_left() else 0)
 
 func _on_WallStickTimer_timeout() -> void: is_wall_sticking = false
 
@@ -252,6 +265,8 @@ func _on_WallStickTimer_timeout() -> void: is_wall_sticking = false
 # =====================================================
 
 func _handle_crouch(inp: Dictionary) -> void:
+	if is_rolling || is_dashing: return
+	
 	if inp.crouch_down:
 		_crouch()
 	elif inp.crouch_up && _ceiling_clear():
@@ -284,7 +299,7 @@ func _ceiling_clear()->bool:
 func _handle_dash(inp:Dictionary, delta:float)->void:
 	if is_rolling: return #? TOCHECK: This prevents mid-roll dash cancel
 	
-	if inp.dash && inp.move != 0 && !is_dashing && timers.DASH_COOLDOWN.is_stopped():
+	if inp.dash && inp.move != 0 && !is_dashing && !is_timer_active("DASH_COOLDOWN"):
 		_dash_start(sign(inp.move))
 
 	if is_dashing:
@@ -299,8 +314,8 @@ func _dash_start(dir:int)->void:
 	dash_speed        = _current_ground_speed() * dash_speed_multiplier
 	dash_max_distance = _current_ground_speed() * dash_distance_mult
 
-	timers.DASH.start(dash_duration)
-	timers.DASH_COOLDOWN.start(dash_cooldown)
+	start_timer("DASH", dash_duration)
+	start_timer("DASH_COOLDOWN", dash_cooldown)
 
 	# make sure we face the right way
 	_switch_direction(dir)
@@ -343,7 +358,7 @@ func _roll_start(dir:int):
 	roll_dir   = dir
 	roll_speed = _current_ground_speed() * roll_speed_multiplier
 	_switch_direction(roll_dir)
-	timers.ROLL.start()
+	start_timer("ROLL")
 	_crouch()
 
 func _on_RollTimer_timeout():
@@ -382,7 +397,7 @@ func _handle_attack(inp:Dictionary)->void:
 	
 	if inp.attack && !is_attacking:
 		is_attacking = true
-		timers.ATTACK.start()
+		start_timer("ATTACK")
 
 func _on_AttackTimer_timeout():
 	is_attacking = false
@@ -392,26 +407,54 @@ func _on_AttackTimer_timeout():
 # =====================================================
 
 func _ground_state_logic():
-	# falling off ledge – coyote
 	if is_on_floor():
+		if !was_on_floor:
+			# Player just landed
+			if jump_buffered:
+				_do_jump()
+				jump_buffered = false
+				stop_timer("JUMP_BUFFER")
+		
 		was_on_floor = true
 		has_double_jumped = false
+		is_wall_sliding = false
 	else:
 		if was_on_floor:
 			can_coyote_jump = true
-			timers.COYOTE.start()
+			start_timer("COYOTE")
 			was_on_floor = false
 
 func _on_CoyoteTimer_timeout(): can_coyote_jump = false
 func _on_JumpBufferTimer_timeout(): jump_buffered = false
 
 # =====================================================
-# 
+# HELPERS
 # =====================================================
 
-func _switch_direction(dir: float):
+func _switch_direction(dir: float) -> void:
 	sprite.flip_h = dir < 0
 	sprite.position.x = dir * 4
+
+func start_timer(name: String, time: float = -1.0) -> void:
+	if !timers.has(name):
+		push_error("Timer '%s' not found in timers dictionary." % name)
+		return
+	if time > 0.0:
+		timers[name].start(time)
+	else:
+		timers[name].start()
+
+func stop_timer(name: String) -> void:
+	if !timers.has(name):
+		push_error("Timer '%s' not found in timers dictionary." % name)
+		return
+	timers[name].stop()
+
+func is_timer_active(name: String) -> bool:
+	if !timers.has(name):
+		push_error("Timer '%s' not found in timers dictionary." % name)
+		return false
+	return !timers[name].is_stopped()
 
 # =====================================================
 #  ANIMATION
@@ -455,8 +498,8 @@ func _update_anim(move_axis:float)->void:
 # =====================================================
 
 func _toggle_debug_output():
-	print_debug = !print_debug
-	debug_lbl.visible = print_debug
+	enable_print_debug = !enable_print_debug
+	debug_lbl.visible = enable_print_debug
 #
 func _update_debug_label(enabled: bool):
 	if !enabled: return
@@ -466,6 +509,8 @@ func _update_debug_label(enabled: bool):
 	# Base info
 	lines.append("Speed: %.2f" % _current_ground_speed())
 	lines.append("Velocity: (%.2f, %.2f)" % [velocity.x, velocity.y])
+	
+	lines.append("Wall Side: %d" % _wall_side_from_rays())
 
 	# Determine movement state
 	var state := ""
