@@ -90,6 +90,7 @@ var was_on_floor       : bool  = false
 var is_wall_sliding    : bool  = false
 var is_wall_sticking   : bool  = false
 var just_touched_wall  : bool  = false
+var is_wall_jumping    : bool  = false
 
 var dash_origin_x      : float = 0.0
 var dash_dir           : int   = 0
@@ -161,6 +162,18 @@ func _current_ground_speed()->float:
 
 func _handle_horizontal(inp:Dictionary, delta:float)->void:
 	is_running = inp.run
+	
+	if is_wall_jumping:
+		if velocity.y >= 0: # Started to fall
+			is_wall_jumping = false
+			if inp.move != 0:
+				_switch_direction(sign(inp.move))
+		else:
+ 			# Lock facing direction during ascent
+			if abs(velocity.x) > 0.5:
+			#if abs(velocity.x) > 5.0:
+				_switch_direction(sign(velocity.x))
+			return
 
 	if is_rolling:
 		velocity.x = roll_speed * roll_dir
@@ -173,7 +186,8 @@ func _handle_horizontal(inp:Dictionary, delta:float)->void:
 	
 	if inp.move != 0:
 		facing = sign(inp.move)
-		_switch_direction(facing)
+		if !is_wall_jumping:
+			_switch_direction(facing)
 		velocity.x = move_toward(velocity.x, target, speed * acceleration)
 	else:
 		velocity.x = move_toward(velocity.x, target, walk_speed * friction)
@@ -183,17 +197,17 @@ func _handle_horizontal(inp:Dictionary, delta:float)->void:
 # =====================================================
 
 func _handle_jump(inp:Dictionary)->void:
-	if !_ceiling_clear(): return
 	
 	# jump pressed
 	if inp.jump_down:
+		if is_wall_sliding:
+			_do_wall_jump()
+			return
 		if is_on_floor() || can_coyote_jump:
 			_do_jump()
 		elif can_double_jump && !has_double_jumped:
 			_do_jump()
 			has_double_jumped = true
-		elif is_wall_sliding:
-			_do_wall_jump()
 		else:
 			jump_buffered = true
 			start_timer("JUMP_BUFFER")
@@ -203,17 +217,21 @@ func _handle_jump(inp:Dictionary)->void:
 		velocity.y *= jump_release_decel
 
 func _do_jump():
+	if !_ceiling_clear(): return
 	velocity.y = jump_force
 	can_coyote_jump = false
 	stop_timer("WALL_STICK")
 
 func _do_wall_jump() -> void:
+	is_wall_jumping = true
+	_wall_slide_end()
 	# Jump away from wall (opposite to contact direction)
 	var wall_dir := -1 if _is_on_wall_only_left() else 1
 	velocity.y = wall_jump_force.y
-	velocity.x = -wall_jump_force.x * wall_dir
+	velocity.x = -wall_dir * wall_jump_force.x
+	_switch_direction(-wall_dir)
+	can_coyote_jump = false
 	has_double_jumped = false
-	_wall_slide_end()
 
 # =========================================
 #  WALL-SLIDE / WALL-JUMP
@@ -228,8 +246,10 @@ func _handle_wall_slide(inp: Dictionary) -> void:
 		return
 	
 	# Are we pushing into the wall?
-	var pushing_left = inp.move < 0 && _is_on_wall_only_left()
-	var pushing_right = inp.move > 0 && !_is_on_wall_only_left()
+	var pushing_left = inp.move < 0 && (_wall_side_from_rays() == -1)
+	var pushing_right = inp.move > 0 && (_wall_side_from_rays() == 1)
+	#var pushing_left = inp.move < 0 && _is_on_wall_only_left()
+	#var pushing_right = inp.move > 0 && !_is_on_wall_only_left()
 	if !(pushing_left || pushing_right):
 		just_touched_wall = false
 		return
@@ -241,7 +261,10 @@ func _handle_wall_slide(inp: Dictionary) -> void:
 		start_timer("WALL_STICK", wall_stick_time)
 	
 	is_wall_sliding = true
-	_switch_direction(-facing)
+	var wall_dir = _wall_side_from_rays()
+	if wall_dir != 0:
+		_switch_direction(-wall_dir)
+	#_switch_direction(-facing)
 	
 	velocity.y = min(velocity.y, 0 if is_wall_sticking else wall_slide_speed)
 
@@ -256,7 +279,12 @@ func _is_on_wall_only_left() -> bool:
 	return wall_raycast_left.is_colliding() && !wall_raycast_right.is_colliding()
 
 func _wall_side_from_rays() -> int:
-	return -1 if _is_on_wall_only_left() else (1 if !_is_on_wall_only_left() else 0)
+	if wall_raycast_left.is_colliding() && !wall_raycast_right.is_colliding():
+		return -1
+	if wall_raycast_right.is_colliding() && !wall_raycast_left.is_colliding():
+		return 1
+	return 0
+	#return -1 if _is_on_wall_only_left() else (1 if !_is_on_wall_only_left() else 0)
 
 func _on_WallStickTimer_timeout() -> void: is_wall_sticking = false
 
@@ -354,6 +382,9 @@ func _handle_roll(inp:Dictionary)->void:
 		pass
 
 func _roll_start(dir:int):
+	if is_rolling || is_wall_sliding: return
+	if !is_on_floor(): return #? TOCHECK: This prevents frontflips
+	
 	is_rolling = true
 	roll_dir   = dir
 	roll_speed = _current_ground_speed() * roll_speed_multiplier
@@ -522,7 +553,9 @@ func _update_debug_label(enabled: bool):
 	elif is_wall_sliding:
 		state = "Wall Sticking" if is_wall_sticking else "Wall Sliding"
 	elif !is_on_floor():
-		if has_double_jumped:
+		if is_wall_jumping:
+			state = "Wall Jumping"
+		elif has_double_jumped:
 			state = "Double Jumping" if velocity.y < 0 else "Falling"
 		else:
 			state = "Jumping" if velocity.y < 0 else "Falling"
