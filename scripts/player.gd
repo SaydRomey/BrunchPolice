@@ -35,8 +35,14 @@ extends CharacterBody2D
 
 @export_group("Wall-jump / Wall-slide")
 @export var wall_jump_force       = Vector2(250, -450)  # X for push-off, Y for height
+@export var wall_stick_jump_force = Vector2(200, -550)
 @export var wall_slide_speed      : float = 100.0
 @export var wall_stick_time       : float = 0.45
+
+@export_group("Glide")
+@export var glide_gravity         : float = 8.0
+@export var glide_max_speed       : float = 180.0 # horizontal cap while gliding
+@export var glide_accel           : float = 0.25  # lerp factor for steering
 
 @export_group("Debug")
 @export var enable_print_debug    : bool  = true
@@ -57,7 +63,7 @@ extends CharacterBody2D
 	ATTACK        = $AttackTimer,
 	DASH          = $DashTimer,
 	DASH_COOLDOWN = $DashCooldownTimer,
-	WALL_STICK    = $WallStickTimer
+	WALL_STICK    = $WallStickTimer,
 }
 
 # Raycasts for ceiling check
@@ -91,6 +97,7 @@ var is_wall_sliding    : bool  = false
 var is_wall_sticking   : bool  = false
 var just_touched_wall  : bool  = false
 var is_wall_jumping    : bool  = false
+var is_gliding         : bool  = false
 
 var dash_origin_x      : float = 0.0
 var dash_dir           : int   = 0
@@ -101,6 +108,7 @@ var roll_dir           : int   = 0
 var roll_speed         : float = 0.0
 
 var facing             : int   = 1   # 1 right, ‑1 left
+var wall_jump_dir      : int   = 0
 
 # =========================================
 #  MAIN LOOP
@@ -112,6 +120,7 @@ func _physics_process(delta:float)->void:
 	_apply_gravity(delta)
 	_handle_horizontal(inp, delta)
 	_handle_jump(inp)
+	_handle_glide(inp, delta)
 	_handle_crouch(inp)
 	_handle_dash(inp, delta)
 	_handle_roll(inp)
@@ -152,7 +161,7 @@ func _gather_input() -> Dictionary:
 # =====================================================
 
 func _apply_gravity(delta:float)->void:
-	if !is_on_floor() && !can_coyote_jump && !is_dashing:
+	if !is_on_floor() && !can_coyote_jump && !is_dashing && !is_gliding:
 		velocity.y = min(velocity.y + gravity, 1000)
 
 func _current_ground_speed()->float:
@@ -166,13 +175,11 @@ func _handle_horizontal(inp:Dictionary, delta:float)->void:
 	if is_wall_jumping:
 		if velocity.y >= 0: # Started to fall
 			is_wall_jumping = false
+			wall_jump_dir = 0
 			if inp.move != 0:
 				_switch_direction(sign(inp.move))
 		else:
- 			# Lock facing direction during ascent
-			if abs(velocity.x) > 0.5:
-			#if abs(velocity.x) > 5.0:
-				_switch_direction(sign(velocity.x))
+			_switch_direction(wall_jump_dir)
 			return
 
 	if is_rolling:
@@ -193,7 +200,7 @@ func _handle_horizontal(inp:Dictionary, delta:float)->void:
 		velocity.x = move_toward(velocity.x, target, walk_speed * friction)
 
 # =====================================================
-#  JUMP / DOUBLE‑JUMP / COYOTE
+#  JUMP / DOUBLE‑JUMP / COYOTE / WALL-JUMP
 # =====================================================
 
 func _handle_jump(inp:Dictionary)->void:
@@ -201,7 +208,8 @@ func _handle_jump(inp:Dictionary)->void:
 	# jump pressed
 	if inp.jump_down:
 		if is_wall_sliding:
-			_do_wall_jump()
+			var force = wall_stick_jump_force if is_wall_sticking else wall_jump_force
+			_do_wall_jump(force)
 			return
 		if is_on_floor() || can_coyote_jump:
 			_do_jump()
@@ -222,19 +230,22 @@ func _do_jump():
 	can_coyote_jump = false
 	stop_timer("WALL_STICK")
 
-func _do_wall_jump() -> void:
+func _do_wall_jump(force: Vector2) -> void:
 	is_wall_jumping = true
 	_wall_slide_end()
+	
 	# Jump away from wall (opposite to contact direction)
 	var wall_dir := -1 if _is_on_wall_only_left() else 1
-	velocity.y = wall_jump_force.y
-	velocity.x = -wall_dir * wall_jump_force.x
-	_switch_direction(-wall_dir)
+	wall_jump_dir = -wall_dir
+	
+	velocity = Vector2(wall_jump_dir * force.x, force.y)
+	
+	_switch_direction(wall_jump_dir)
 	can_coyote_jump = false
 	has_double_jumped = false
 
 # =========================================
-#  WALL-SLIDE / WALL-JUMP
+#  WALL-SLIDE
 # =========================================
 
 func _handle_wall_slide(inp: Dictionary) -> void:
@@ -248,8 +259,6 @@ func _handle_wall_slide(inp: Dictionary) -> void:
 	# Are we pushing into the wall?
 	var pushing_left = inp.move < 0 && (_wall_side_from_rays() == -1)
 	var pushing_right = inp.move > 0 && (_wall_side_from_rays() == 1)
-	#var pushing_left = inp.move < 0 && _is_on_wall_only_left()
-	#var pushing_right = inp.move > 0 && !_is_on_wall_only_left()
 	if !(pushing_left || pushing_right):
 		just_touched_wall = false
 		return
@@ -264,7 +273,6 @@ func _handle_wall_slide(inp: Dictionary) -> void:
 	var wall_dir = _wall_side_from_rays()
 	if wall_dir != 0:
 		_switch_direction(-wall_dir)
-	#_switch_direction(-facing)
 	
 	velocity.y = min(velocity.y, 0 if is_wall_sticking else wall_slide_speed)
 
@@ -287,6 +295,42 @@ func _wall_side_from_rays() -> int:
 	#return -1 if _is_on_wall_only_left() else (1 if !_is_on_wall_only_left() else 0)
 
 func _on_WallStickTimer_timeout() -> void: is_wall_sticking = false
+
+# =========================================
+#  GLIDE (hold Jump in mid-air)
+# =========================================
+
+func _handle_glide(inp: Dictionary, delta:float) -> void:
+	if is_gliding:
+		_glide_update(inp, delta)
+		return
+	
+	if !is_on_floor() && velocity.y > 0 && inp.jump \
+		&& !is_dashing && !is_rolling && !is_wall_sliding && !is_wall_jumping:
+		_glide_start()
+
+func _glide_start() -> void:
+	is_gliding = true
+	velocity.y = min(velocity.y + glide_gravity, 600)
+
+func _glide_update(inp: Dictionary, delta: float) -> void:
+	
+	# Free horizontal steering with its own accel / cap
+	var target_x = float(inp.move) * glide_max_speed
+	
+	velocity.x = move_toward(velocity.x, target_x, glide_max_speed * glide_accel)
+	
+	# Flip if player turns
+	if inp.move != 0:
+		facing = sign(inp.move)
+		_switch_direction(facing)
+	
+	# Abort if Jump released or player lands
+	if !inp.jump || is_on_floor():
+		_glide_end()
+
+func _glide_end() -> void:
+	is_gliding = false
 
 # =====================================================
 #  CROUCH / STAND
@@ -521,6 +565,8 @@ func _update_anim(move_axis:float)->void:
 		if is_wall_sliding:
 			anim.play("wall_slide")
 			if is_wall_sticking: anim.speed_scale = 0
+		elif is_gliding:
+			anim.play("glide") #? to check
 		else:
 			anim.play("crouch" if is_crouching else ("jump" if velocity.y < 0 else "fall"))
 
@@ -552,6 +598,8 @@ func _update_debug_label(enabled: bool):
 		state = "Dashing"
 	elif is_wall_sliding:
 		state = "Wall Sticking" if is_wall_sticking else "Wall Sliding"
+	elif is_gliding:
+		state = "Gliding"
 	elif !is_on_floor():
 		if is_wall_jumping:
 			state = "Wall Jumping"
