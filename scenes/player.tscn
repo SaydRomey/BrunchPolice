@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://bkia7dfud8ufb"]
+
+[ext_resource type="Script" uid="uid://bf7gqwqies32p" path="res://fsm/state_machine.gd" id="1_g2els"]
+[ext_resource type="Script" uid="uid://cdr1pivimmspq" path="res://scripts/states/idle.gd" id="2_qlg0r"]
+[ext_resource type="Script" uid="uid://bsphdssugydkf" path="res://scripts/states/running.gd" id="3_tuyoq"]
+[ext_resource type="Script" uid="uid://b2q27ko20fb00" path="res://scripts/states/jumping.gd" id="4_fjrip"]
+[ext_resource type="Script" uid="uid://bay07qjwh7lwr" path="res://scripts/states/falling.gd" id="5_smehm"]
+
+[node name="Player" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("1_g2els")
+metadata/_custom_type_script = "uid://bf7gqwqies32p"
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("2_qlg0r")
+metadata/_custom_type_script = "uid://c2g36k3dc0eru"
+
+[node name="Running" type="Node" parent="StateMachine"]
+script = ExtResource("3_tuyoq")
+metadata/_custom_type_script = "uid://c2g36k3dc0eru"
+
+[node name="Jumping" type="Node" parent="StateMachine"]
+script = ExtResource("4_fjrip")
+metadata/_custom_type_script = "uid://c2g36k3dc0eru"
+
+[node name="Falling" type="Node" parent="StateMachine"]
+script = ExtResource("5_smehm")
+metadata/_custom_type_script = "uid://c2g36k3dc0eru"
