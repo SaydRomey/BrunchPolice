@@ -15,7 +15,7 @@ class_name Player extends CharacterBody2D
 
 
 @onready var fsm := $StateMachine
-@onready var label := $Label
+@onready var label : Label = $"../CanvasLayer/Label"
 
 
 func _process(_delta: float) -> void:
