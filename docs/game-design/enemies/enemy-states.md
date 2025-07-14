@@ -6,7 +6,7 @@ Extending states involves adding new behaviors or actions to the enemy's state m
 
 <details><summary>See Basic State Machine<\summary>
 
-## State Machine
+</br><b>State Machine<\b>
 
 A reusable finite state machine (FSM) class for player or enemy behaviors:  
 - Supports enemy or NPC behavior like idle, chase, attack, flee.
