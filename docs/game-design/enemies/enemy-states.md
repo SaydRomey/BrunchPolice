@@ -5,16 +5,15 @@ Extending states involves adding new behaviors or actions to the enemy's state m
 
 ---
 
-<details><summary>See Basic State Machine<\summary>
+<details><summary>See Basic State Machine</summary>
 
-
-State Machine
+## State Machine
 
 A reusable finite state machine (FSM) class for player or enemy behaviors:  
 - Supports enemy or NPC behavior like idle, chase, attack, flee.
 - Easily extensible for complex patterns (e.g., boss fight phases).  
 
-Header File (StateMachine.h):
+### Header File (StateMachine.h):
 ```cpp
 #ifndef STATE_MACHINE_H
 #define STATE_MACHINE_H
@@ -39,7 +38,7 @@ public:
 #endif // STATE_MACHINE_H
 ```
 
-Implementation File (StateMachine.cpp):
+### Implementation File (StateMachine.cpp):
 ```cpp
 #include "StateMachine.h"
 
