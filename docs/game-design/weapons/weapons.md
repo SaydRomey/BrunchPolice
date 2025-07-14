@@ -5,7 +5,7 @@
 [Weapons - Level Specific](./weapons-level-specific.md)  
 [Weapons - Level Reward](./weapons-level-reward.md)  
 [Weapons - Bacon Gun](./weapons-bacon-gun.md)  
-[Damage Calculation](./damage-calculations.md)  
+[Damage Calculation](./damage-calculation.md)  
 [Health Component](./health-component.md)  
 [Invincibility Frames](./invincibility-frames.md)  
 [Projectile Manager](./projectile-manager.md)  
