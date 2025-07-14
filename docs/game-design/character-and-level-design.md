@@ -2,7 +2,9 @@
 # Character and level design
 
 Here are some ideas for culprits, each with their unique 
-level theme, design, and gameplay details.
+level theme, design, and gameplay details.  
+
+[See enemy implementation details](./enemies/enemies.md)  
 
 ---
 
