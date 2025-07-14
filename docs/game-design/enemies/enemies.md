@@ -5,5 +5,7 @@
 [Enemy - AI Movement](./enemy-ai-movement.md)  
 [Enemy - AI Bosses](./enemy-ai-bosses.md)  
 [Enemy - AI Child Classes](./enemy-ai-child-classes.md)  
+[Enemy - AI Environment Interactions](./enemy-ai-environment-interactions.md)  
+
 
 ---
