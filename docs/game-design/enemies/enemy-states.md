@@ -56,7 +56,7 @@ String StateMachine::get_state() const {
 }
 ```
 
-<\details>
+</details>
 
 ---
 
