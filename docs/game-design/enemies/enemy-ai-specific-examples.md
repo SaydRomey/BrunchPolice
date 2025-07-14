@@ -798,7 +798,7 @@ void GummyBearBrute::charge() {
 }
 ```
 
---
+---
 
 #### Cupcake Bombs
 
@@ -844,7 +844,7 @@ void CupcakeBomb::explode() {
 }
 ```
 
---
+---
 
 #### Jellybean Snipers
 
@@ -954,7 +954,7 @@ void AngryChicken::_physics_process(float delta) {
 }
 ```
 
---
+---
 
 #### Eggshell Drones
 
@@ -1186,7 +1186,7 @@ void LemonBat::swoop_attack() {
 }
 ```
 
---
+---
 
 #### Orange Peel Traps
 
@@ -1240,7 +1240,7 @@ void OrangePeelTrap::_physics_process(float delta) {
 ### Bakery Bonanza Enemies
 
 
-###$ Flour Bag Monsters
+#### Flour Bag Monsters
 
 Behavior:  
 Puff flour clouds that obscure the player's vision.  
