@@ -8,6 +8,9 @@
 
 [Weapons Ideas and Implementation Document](./docs/game-design/weapons/weapons.md)
 
+[Enemies Document](./docs/game-design/enemies/enemies.md)
+
+
 
 ---
 
