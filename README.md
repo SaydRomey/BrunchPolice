@@ -10,6 +10,11 @@
 
 [Enemies Document](./docs/game-design/enemies/enemies.md)
 
+[Interaction System](./docs/game-design/interaction-system.md)  
+
+[Dialogue System](./docs/game-design/dialogue-system.md)  
+
+
 
 
 ---
