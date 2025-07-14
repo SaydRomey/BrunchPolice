@@ -1,4 +1,4 @@
-# Enemy AI - Bosses
+# Enemy - Bosses
 
 Implementation for Boss Classes.  
 Each boss has unique mechanics and behaviors, implemented modularly to make them reusable or adaptable to other projects.
