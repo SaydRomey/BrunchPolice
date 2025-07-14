@@ -1,15 +1,17 @@
 # Enemy AI Movement
 
-Create reusable classes for enemy behaviors:
+Reusable classes for enemy behaviors:
 
 - **Patrolling AI**: Moves between set points on a platform.
 - **Chasing AI**: Follows the player within a defined range.
 - **Flying AI**: Handles airborne enemies with unique movement patterns.
-- **Pathfinding AI**: Implements A* or Dijkstraâ€™s algorithm for navigating complex levels.
+- **Pathfinding AI**: Implements A* or Dijkstra's algorithm for navigating complex levels.
 
 ---
 
-Modular Enemy AI system designed to handle common behaviors and allow for easy customization and reuse across different 2D games. It supports various AI behaviors such as patrolling, chasing the player, attacking, and retreating. This system will integrate seamlessly with Godot through C++98 using GDNative.
+Modular Enemy AI system designed to handle common behaviors and allow for easy customization and reuse across different 2D games.  
+It supports various AI behaviors such as patrolling, chasing the player, attacking, and retreating.  
+This system will integrate seamlessly with Godot through C++98 using GDNative.
 
 ---
 
