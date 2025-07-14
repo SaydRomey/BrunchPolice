@@ -3,10 +3,11 @@ Extending States in the Enemy AI System
 
 Extending states involves adding new behaviors or actions to the enemy's state machine, allowing for more dynamic and unique enemy behaviors.   The state machine design makes it easy to implement and transition between new states while keeping the logic modular and reusable.  
 
+---
 
 <details><summary>See Basic State Machine<\summary>
 
-</br><b>State Machine<\b>
+State Machine
 
 A reusable finite state machine (FSM) class for player or enemy behaviors:  
 - Supports enemy or NPC behavior like idle, chase, attack, flee.
@@ -54,6 +55,7 @@ String StateMachine::get_state() const {
     return current_state;
 }
 ```
+
 <\details>
 
 ---
