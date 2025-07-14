@@ -6,6 +6,9 @@
 
 [Character and Level Design Document](./docs/game-design/character-and-level-design.md)
 
+[Weapons Ideas and Implementation Document](./docs/game-design/weapons/weapons.md)
+
+
 ---
 
 ## File Structure
