@@ -1,8 +1,9 @@
 # Weapons - Level Specific
 
-the player usually has a brunch fork in his main hand, but when inside a level, he can find a specific off hand weapon..
+The player usually has a brunch fork in his main hand, but when inside a level, he can find a specific off hand weapon..
 
-the offhand weapon can be wielded at the same time as the fork if it has only a shield or debuff effect, but in the off hand
+the offhand weapon can be wielded at the same time as the fork if it has 
+only a shield or debuff effect, but in the off hand
 
 some heavy weapons require both hands,
 like the lollipop hammer..
@@ -11,7 +12,7 @@ the player can have one main hand weapon,
 either default fork or bread knife, rolling pin, etc
 (one handed weapons that can be charged for a different attack)
 and either none or one off hand weapon/item,
-like a dishwasher sprayer)
+like a dishwasher sprayer
 
 ---
 

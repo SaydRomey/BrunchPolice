@@ -4,15 +4,15 @@
 
 ### Identity
 
-| Field | Value |
-|---|---|
-| Level | Pastry Palace |
-| Culprit Title | Croissant Crook |
-| Canonical Culprit | Cameron “Croissant Crook” Cline |
-| Legacy Culprit | Clara “Croissant Crook” Cline |
-| Crime | Sneaks croissants into their purse |
-| Palette | Pastry browns, cream, butter-yellow, frosting pinks, warm bakery tones |
-| Core Feel | Elegant pastry theft, rotating mixers, croissant platforms, sticky slowdown |
+| Field             | Value                                                                       |
+| ----------------- | --------------------------------------------------------------------------- |
+| Level             | Pastry Palace                                                               |
+| Culprit Title     | Croissant Crook                                                             |
+| Canonical Culprit | Cameron “Croissant Crook” Cline                                             |
+| Legacy Culprit    | Clara “Croissant Crook” Cline                                               |
+| Crime             | Sneaks croissants into their purse                                          |
+| Palette           | Pastry browns, cream, butter-yellow, frosting pinks, warm bakery tones      |
+| Core Feel         | Elegant pastry theft, rotating mixers, croissant platforms, sticky slowdown |
 
 ### Level Elements
 
@@ -54,22 +54,22 @@
 
 ### Enemies
 
-| Enemy | Current Behavior | Status |
-|---|---|---|
-| Flying Éclairs | Hover and shoot whipped cream projectiles | Canonical |
-| Rolling Baguette | Rolls along platforms, contact damage | Canonical |
-| Jelly-filled Donuts | Chase player and explode on contact | Canonical |
-| Donut / pastry machinery hazards | Seen in visual references | Variant / environmental hazard |
+| Enemy                            | Current Behavior                          | Status                         |
+| -------------------------------- | ----------------------------------------- | ------------------------------ |
+| Flying Éclairs                   | Hover and shoot whipped cream projectiles | Canonical                      |
+| Rolling Baguette                 | Rolls along platforms, contact damage     | Canonical                      |
+| Jelly-filled Donuts              | Chase player and explode on contact       | Canonical                      |
+| Donut / pastry machinery hazards | Seen in visual references                 | Variant / environmental hazard |
 
 ### Boss Fight
 
-| Field | Current Design |
-|---|---|
-| Boss | Cameron “Croissant Crook” Cline |
-| Main attacks | Throws oversized croissants; dashes around arena |
-| Obstruction | Croissants stick to ground and block movement |
-| Counterplay | Use Syrup Boots to move through sticky areas; attack while boss is throwing croissants |
-| Possible state | Summoning state can spawn rolling croissants or baguettes |
+| Field          | Current Design                                                                         |
+| -------------- | -------------------------------------------------------------------------------------- |
+| Boss           | Cameron “Croissant Crook” Cline                                                        |
+| Main attacks   | Throws oversized croissants; dashes around arena                                       |
+| Obstruction    | Croissants stick to ground and block movement                                          |
+| Counterplay    | Use Syrup Boots to move through sticky areas; attack while boss is throwing croissants |
+| Possible state | Summoning state can spawn rolling croissants or baguettes                              |
 
 ### Power-Ups
 
@@ -84,19 +84,19 @@
 
 ### Weapons Connected To Level
 
-| Weapon | Type | Source Category | Notes |
-|---|---|---|---|
-| Croissant Cutter | Main-hand | Weapon examples | Pastry-themed blade |
-| Whipped Cream Shield | Off-hand | Weapon examples / power-up overlap | Also appears as power-up |
-| Baguette Maul | Two-handed | Weapon examples | Heavy pastry weapon |
-| Cake Cutter Dagger | Main-hand | Additional weapon | Fast dagger |
-| Frost Edge Knife | Main-hand | Additional weapon | Frosting/ice-flavored knife |
-| Jam Jar Grenade | Off-hand | Additional weapon | Throwable AoE |
-| Butter Spray Can | Off-hand | Additional weapon | Spray/debuff tool |
-| Bakery Mixer Staff | Two-handed | Additional weapon | Staff with mixer motif |
-| Layer Cake Greatsword | Two-handed | Additional weapon | Heavy blade |
-| Bread Slicer | Temporary level weapon | Level-specific weapon | Temporary weapon for Pastry Palace |
-| Whipped Cream Cannon | Level reward weapon | Reward weapon | Reward weapon after level |
+| Weapon                | Type                   | Source Category                    | Notes                              |
+| --------------------- | ---------------------- | ---------------------------------- | ---------------------------------- |
+| Croissant Cutter      | Main-hand              | Weapon examples                    | Pastry-themed blade                |
+| Whipped Cream Shield  | Off-hand               | Weapon examples / power-up overlap | Also appears as power-up           |
+| Baguette Maul         | Two-handed             | Weapon examples                    | Heavy pastry weapon                |
+| Cake Cutter Dagger    | Main-hand              | Additional weapon                  | Fast dagger                        |
+| Frost Edge Knife      | Main-hand              | Additional weapon                  | Frosting/ice-flavored knife        |
+| Jam Jar Grenade       | Off-hand               | Additional weapon                  | Throwable AoE                      |
+| Butter Spray Can      | Off-hand               | Additional weapon                  | Spray/debuff tool                  |
+| Bakery Mixer Staff    | Two-handed             | Additional weapon                  | Staff with mixer motif             |
+| Layer Cake Greatsword | Two-handed             | Additional weapon                  | Heavy blade                        |
+| Bread Slicer          | Temporary level weapon | Level-specific weapon              | Temporary weapon for Pastry Palace |
+| Whipped Cream Cannon  | Level reward weapon    | Reward weapon                      | Reward weapon after level          |
 
 ### Visual References Assigned
 

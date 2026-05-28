@@ -4,16 +4,16 @@
 
 The `lgbtq+.md` file provides inclusive names. These are now the **canonical active names** for culprits. Old names remain as legacy references only.
 
-| Level | Culprit Title | Legacy Name | Canonical Inclusive Name | Status |
-|---|---|---|---|---|
-| Grease Canyon | Bacon Bandit | Barry “Bacon Bandit” Brown | **Bailey “Bacon Bandit” Brown** | Canonical replacement |
-| Pastry Palace | Croissant Crook | Clara “Croissant Crook” Cline | **Cameron “Croissant Crook” Cline** | Canonical replacement |
-| Sticky Syrup Swamp | Syrup Scoundrel | Simon “Syrup Scoundrel” Sugars | **Skyler “Syrup Scoundrel” Sugars** | Canonical replacement |
-| Kitchen Mayhem | Cutlery Thief / Cutlery Carl | Carl “Cutlery Carl” Canes | **Casey “Cutlery Thief” Canes** | Canonical replacement; title needs consistency |
-| Candy Chaos | Dessert Hoarder | Debbie “Dessert Hoarder” Sweet | **Drew “Dessert Hoarder” Sweet** | Canonical replacement |
-| Egg Factory Frenzy | Omelet Overlord | Oliver “Omelet Overlord” Eggman | **Morgan “Omelet Overlord” Eggman** | Canonical replacement |
-| Citrus Cascade | Juice Jacker | Julie “Juice Jacker” Squeeze | **Jordan “Juice Jacker” Squeeze** | Canonical replacement |
-| Bakery Bonanza | Muffin Mastermind | Marty “Muffin Mastermind” Munch | **Quinn “Muffin Mastermind” Munch** | Canonical replacement |
+| Level              | Culprit Title                | Legacy Name                     | Canonical Inclusive Name            | Status                                         |
+| ------------------ | ---------------------------- | ------------------------------- | ----------------------------------- | ---------------------------------------------- |
+| Grease Canyon      | Bacon Bandit                 | Barry “Bacon Bandit” Brown      | **Bailey “Bacon Bandit” Brown**     | Canonical replacement                          |
+| Pastry Palace      | Croissant Crook              | Clara “Croissant Crook” Cline   | **Cameron “Croissant Crook” Cline** | Canonical replacement                          |
+| Sticky Syrup Swamp | Syrup Scoundrel              | Simon “Syrup Scoundrel” Sugars  | **Skyler “Syrup Scoundrel” Sugars** | Canonical replacement                          |
+| Kitchen Mayhem     | Cutlery Thief / Cutlery Carl | Carl “Cutlery Carl” Canes       | **Casey “Cutlery Thief” Canes**     | Canonical replacement; title needs consistency |
+| Candy Chaos        | Dessert Hoarder              | Debbie “Dessert Hoarder” Sweet  | **Drew “Dessert Hoarder” Sweet**    | Canonical replacement                          |
+| Egg Factory Frenzy | Omelet Overlord              | Oliver “Omelet Overlord” Eggman | **Morgan “Omelet Overlord” Eggman** | Canonical replacement                          |
+| Citrus Cascade     | Juice Jacker                 | Julie “Juice Jacker” Squeeze    | **Jordan “Juice Jacker” Squeeze**   | Canonical replacement                          |
+| Bakery Bonanza     | Muffin Mastermind            | Marty “Muffin Mastermind” Munch | **Quinn “Muffin Mastermind” Munch** | Canonical replacement                          |
 
 ### 3.1 Inclusive Name Bank
 

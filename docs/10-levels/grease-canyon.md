@@ -4,15 +4,15 @@
 
 ### Identity
 
-| Field | Value |
-|---|---|
-| Level | Grease Canyon |
-| Culprit Title | Bacon Bandit |
-| Canonical Culprit | Bailey “Bacon Bandit” Brown |
-| Legacy Culprit | Barry “Bacon Bandit” Brown |
-| Crime | Takes an entire plate of bacon |
-| Palette | Warm reds, oranges, golds, browns, breakfast-food textures |
-| Core Feel | Hot, greasy, slippery, smoky, sizzling |
+| Field             | Value                                                      |
+| ----------------- | ---------------------------------------------------------- |
+| Level             | Grease Canyon                                              |
+| Culprit Title     | Bacon Bandit                                               |
+| Canonical Culprit | Bailey “Bacon Bandit” Brown                                |
+| Legacy Culprit    | Barry “Bacon Bandit” Brown                                 |
+| Crime             | Takes an entire plate of bacon                             |
+| Palette           | Warm reds, oranges, golds, browns, breakfast-food textures |
+| Core Feel         | Hot, greasy, slippery, smoky, sizzling                     |
 
 ### Level Elements
 
@@ -69,24 +69,24 @@
 
 ### Enemies
 
-| Enemy | Current Behavior | Status |
-|---|---|---|
-| Small Angry Pigs | Patrol / charge; knock player off platforms | Canonical |
-| Bacon Worms | Slither or move up/down sausage ropes | Canonical |
-| Flying Sausage Links | Hover/flap and swoop down at player | Canonical |
-| Pig/Bacon enemy variants | Seen in visual references | Variant / visual concept |
-| Chef-pig / armored pig figures | Seen in visual references | Variant / boss-minion candidate |
+| Enemy                          | Current Behavior                            | Status                          |
+| ------------------------------ | ------------------------------------------- | ------------------------------- |
+| Small Angry Pigs               | Patrol / charge; knock player off platforms | Canonical                       |
+| Bacon Worms                    | Slither or move up/down sausage ropes       | Canonical                       |
+| Flying Sausage Links           | Hover/flap and swoop down at player         | Canonical                       |
+| Pig/Bacon enemy variants       | Seen in visual references                   | Variant / visual concept        |
+| Chef-pig / armored pig figures | Seen in visual references                   | Variant / boss-minion candidate |
 
 ### Boss Fight
 
-| Field | Current Design |
-|---|---|
-| Boss | Bailey “Bacon Bandit” Brown |
-| Legacy boss visual | Pixel shades, apron, bacon-whip arm |
-| Main attack | Bacon Tornado: spins wildly with bacon flying everywhere |
-| Arena | Center platform, wider than normal, bacon spiral columns, tornado FX loop |
-| Counterplay | Jump between platforms, avoid flying bacon debris, attack with Bacon Gun when boss slows |
-| Possible states | Stunned after grease-trail or Bacon Gun counter; fleeing below health threshold |
+| Field              | Current Design                                                                           |
+| ------------------ | ---------------------------------------------------------------------------------------- |
+| Boss               | Bailey “Bacon Bandit” Brown                                                              |
+| Legacy boss visual | Pixel shades, apron, bacon-whip arm                                                      |
+| Main attack        | Bacon Tornado: spins wildly with bacon flying everywhere                                 |
+| Arena              | Center platform, wider than normal, bacon spiral columns, tornado FX loop                |
+| Counterplay        | Jump between platforms, avoid flying bacon debris, attack with Bacon Gun when boss slows |
+| Possible states    | Stunned after grease-trail or Bacon Gun counter; fleeing below health threshold          |
 
 ### Power-Ups
 
@@ -102,20 +102,20 @@
 
 ### Weapons Connected To Level
 
-| Weapon | Type | Source Category | Notes |
-|---|---|---|---|
-| Bacon Gun | Ranged | Global / special | Fires strips of bacon to immobilize or wrap enemies |
-| Bacon Gun projectile | Projectile | Special | Bacon strips can damage, wrap, or immobilize based on enemy class |
-| Grease/slide trail | Utility / movement | Power-up interaction | Slows enemies and may stun Bacon Bandit |
+| Weapon               | Type               | Source Category      | Notes                                                             |
+| -------------------- | ------------------ | -------------------- | ----------------------------------------------------------------- |
+| Bacon Gun            | Ranged             | Global / special     | Fires strips of bacon to immobilize or wrap enemies               |
+| Bacon Gun projectile | Projectile         | Special              | Bacon strips can damage, wrap, or immobilize based on enemy class |
+| Grease/slide trail   | Utility / movement | Power-up interaction | Slows enemies and may stun Bacon Bandit                           |
 
 ### Bacon Gun Effect Rules
 
-| Target Category | Effect |
-|---|---|
-| Small enemy | Killed |
-| Medium enemy | Damaged and wrapped; may be killed on critical damage |
-| Large mob | Damaged only or partial immobilization |
-| Boss | Immune or damaged only, with specific vulnerability windows |
+| Target Category | Effect                                                      |
+| --------------- | ----------------------------------------------------------- |
+| Small enemy     | Killed                                                      |
+| Medium enemy    | Damaged and wrapped; may be killed on critical damage       |
+| Large mob       | Damaged only or partial immobilization                      |
+| Boss            | Immune or damaged only, with specific vulnerability windows |
 
 ### Visual References Assigned
 

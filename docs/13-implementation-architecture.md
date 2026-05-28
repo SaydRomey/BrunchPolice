@@ -253,31 +253,31 @@ Reusable AI behavior classes / concepts:
 
 ## 9.3 Extended Enemy States
 
-| State | Current Meaning | Current Use Candidate |
-|---|---|---|
-| Idle | Stationary/simple animations | All enemies |
-| Patrolling | Moves along path/platform | Pigs, chefs, rolling enemies |
-| Chasing | Follows player in range | Chickens, donuts, golems, muffins |
-| Attacking | Performs melee/ranged attack | All combat enemies |
-| Retreating | Moves away / safe position | Low-health enemies |
-| Stunned | Temporarily disabled | Bacon Bandit hit by grease trail; weapon effects |
-| Summoning | Spawns minions/traps | Croissant Crook spawning rolling croissants |
-| Fleeing | Runs away when health drops | Culprits and special enemies |
-| Frozen | Immobilized but vulnerable | Future ice/frost weapon effects |
-| Invincible | Ignores damage during i-frames | Health component / visual feedback |
-| Wrapped | Immobilized by Bacon Gun | Bacon Gun effect |
-| Slowed | Movement speed reduced | Syrup / grease / sticky weapons |
-| Blinded | Vision/aim impaired | Dishwasher Sprayer or Flour Cloud effects |
+| State      | Current Meaning                | Current Use Candidate                            |
+| ---------- | ------------------------------ | ------------------------------------------------ |
+| Idle       | Stationary/simple animations   | All enemies                                      |
+| Patrolling | Moves along path/platform      | Pigs, chefs, rolling enemies                     |
+| Chasing    | Follows player in range        | Chickens, donuts, golems, muffins                |
+| Attacking  | Performs melee/ranged attack   | All combat enemies                               |
+| Retreating | Moves away / safe position     | Low-health enemies                               |
+| Stunned    | Temporarily disabled           | Bacon Bandit hit by grease trail; weapon effects |
+| Summoning  | Spawns minions/traps           | Croissant Crook spawning rolling croissants      |
+| Fleeing    | Runs away when health drops    | Culprits and special enemies                     |
+| Frozen     | Immobilized but vulnerable     | Future ice/frost weapon effects                  |
+| Invincible | Ignores damage during i-frames | Health component / visual feedback               |
+| Wrapped    | Immobilized by Bacon Gun       | Bacon Gun effect                                 |
+| Slowed     | Movement speed reduced         | Syrup / grease / sticky weapons                  |
+| Blinded    | Vision/aim impaired            | Dishwasher Sprayer or Flour Cloud effects        |
 
 ## 9.4 Environment-Aware Enemy Interaction Types
 
-| Interaction Type | Current Description | Brunch Police Example |
-|---|---|---|
-| Hazard-aware | Enemies avoid or take damage from hazards | Bacon worms can die in boiling grease pits |
-| Platform-aware | Enemies follow platforms or avoid edges | Platform-bound éclairs avoid falling |
-| Destructible-aware | Enemies break crates/barrels/objects | Bees destroy player barricades |
-| Trigger-aware | Enemies activate switches/traps | Kitchen enemies activate conveyors or moving hazards |
-| Dynamic pathfinding | Enemies navigate around obstacles | Complex factory/kitchen layouts |
+| Interaction Type    | Current Description                       | Brunch Police Example                                |
+| ------------------- | ----------------------------------------- | ---------------------------------------------------- |
+| Hazard-aware        | Enemies avoid or take damage from hazards | Bacon worms can die in boiling grease pits           |
+| Platform-aware      | Enemies follow platforms or avoid edges   | Platform-bound éclairs avoid falling                 |
+| Destructible-aware  | Enemies break crates/barrels/objects      | Bees destroy player barricades                       |
+| Trigger-aware       | Enemies activate switches/traps           | Kitchen enemies activate conveyors or moving hazards |
+| Dynamic pathfinding | Enemies navigate around obstacles         | Complex factory/kitchen layouts                      |
 
 ## 9.5 Enemy Spawning
 

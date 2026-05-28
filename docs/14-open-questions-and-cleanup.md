@@ -2,16 +2,16 @@
 
 # 19. Current Design Conflicts / Cleanup Queue
 
-| Area | Conflict | Current Treatment |
-|---|---|---|
-| Boss names | Legacy gendered names vs inclusive names | Inclusive names are canonical; legacy names kept for reference only |
-| Casey title | Cutlery Thief vs Cutlery Carl | Canonical title should be Cutlery Thief; Cutlery Carl kept legacy |
-| Evidence | Several levels have empty evidence sections | Preserve as `TBD Evidence`; do not delete |
-| Weapon taxonomy | Some weapons appear as power-ups, temporary weapons, and reward weapons | Keep all; mark duplicates as `Needs merge` |
-| Visual styles | Character sprites are pixel art; level refs are painterly/cartoon | Treat as concept references until final art style guide is defined |
-| Boss variants | Multiple possible boss sprites for Kitchen and Syrup | Keep all as variants until selected |
-| Grease Canyon reward | Bacon Gun is critical but reward/progression placement unclear | Mark `Needs progression decision` |
-| Enemy vs hazard | Frying pans, rolling pins, ladles can be enemies or hazards | Preserve both interpretations until implementation taxonomy is defined |
+| Area                 | Conflict                                                                | Current Treatment                                                      |
+| -------------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| Boss names           | Legacy gendered names vs inclusive names                                | Inclusive names are canonical; legacy names kept for reference only    |
+| Casey title          | Cutlery Thief vs Cutlery Carl                                           | Canonical title should be Cutlery Thief; Cutlery Carl kept legacy      |
+| Evidence             | Several levels have empty evidence sections                             | Preserve as `TBD Evidence`; do not delete                              |
+| Weapon taxonomy      | Some weapons appear as power-ups, temporary weapons, and reward weapons | Keep all; mark duplicates as `Needs merge`                             |
+| Visual styles        | Character sprites are pixel art; level refs are painterly/cartoon       | Treat as concept references until final art style guide is defined     |
+| Boss variants        | Multiple possible boss sprites for Kitchen and Syrup                    | Keep all as variants until selected                                    |
+| Grease Canyon reward | Bacon Gun is critical but reward/progression placement unclear          | Mark `Needs progression decision`                                      |
+| Enemy vs hazard      | Frying pans, rolling pins, ladles can be enemies or hazards             | Preserve both interpretations until implementation taxonomy is defined |
 
 ---
 

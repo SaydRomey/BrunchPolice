@@ -4,15 +4,15 @@
 
 ### Identity
 
-| Field | Value |
-|---|---|
-| Level | Egg Factory Frenzy |
-| Culprit Title | Omelet Overlord |
-| Canonical Culprit | Morgan “Omelet Overlord” Eggman |
-| Legacy Culprit | Oliver “Omelet Overlord” Eggman |
-| Crime | Takes all the eggs to make a giant omelet |
-| Palette | Eggshell white, yolk yellow, factory gray, hazard-stripe black/yellow, pan black |
-| Core Feel | Industrial egg conveyor chaos with yolk traps and chicken enemies |
+| Field             | Value                                                                            |
+| ----------------- | -------------------------------------------------------------------------------- |
+| Level             | Egg Factory Frenzy                                                               |
+| Culprit Title     | Omelet Overlord                                                                  |
+| Canonical Culprit | Morgan “Omelet Overlord” Eggman                                                  |
+| Legacy Culprit    | Oliver “Omelet Overlord” Eggman                                                  |
+| Crime             | Takes all the eggs to make a giant omelet                                        |
+| Palette           | Eggshell white, yolk yellow, factory gray, hazard-stripe black/yellow, pan black |
+| Core Feel         | Industrial egg conveyor chaos with yolk traps and chicken enemies                |
 
 ### Level Elements
 
@@ -58,21 +58,21 @@
 
 ### Enemies
 
-| Enemy | Current Behavior | Status |
-|---|---|---|
-| Angry Chickens | Chase player and peck | Canonical |
-| Eggshell Drones | Fly above player and drop yolk bombs | Canonical |
-| Frying Pans | Slam down on platforms | Canonical hazard/enemy |
-| Chicken/egg variants | Supplied in visual references | Variant |
-| Cracked egg creatures | Supplied in visual references | Variant |
+| Enemy                 | Current Behavior                     | Status                 |
+| --------------------- | ------------------------------------ | ---------------------- |
+| Angry Chickens        | Chase player and peck                | Canonical              |
+| Eggshell Drones       | Fly above player and drop yolk bombs | Canonical              |
+| Frying Pans           | Slam down on platforms               | Canonical hazard/enemy |
+| Chicken/egg variants  | Supplied in visual references        | Variant                |
+| Cracked egg creatures | Supplied in visual references        | Variant                |
 
 ### Boss Fight
 
-| Field | Current Design |
-|---|---|
-| Boss | Morgan “Omelet Overlord” Eggman |
-| Main weapon | Spatula |
-| Main attack | Flips player off platforms |
+| Field       | Current Design                                           |
+| ----------- | -------------------------------------------------------- |
+| Boss        | Morgan “Omelet Overlord” Eggman                          |
+| Main weapon | Spatula                                                  |
+| Main attack | Flips player off platforms                               |
 | Counterplay | Use Egg Launcher to crack defenses, avoid platform flips |
 
 ### Power-Ups
@@ -86,19 +86,19 @@
 
 ### Weapons Connected To Level
 
-| Weapon | Type | Source Category | Notes |
-|---|---|---|---|
-| Egg Beater | Main-hand | Weapon examples | Egg-themed melee / tool |
-| Yolk Bomb | Off-hand | Weapon examples | Throwable yolk item |
-| Frying Pan | Two-handed | Weapon examples | Heavy pan weapon |
-| Eggshell Knife | Main-hand | Additional weapon | Small blade |
-| Egg Scrambler Blade | Main-hand | Additional weapon | Scrambler sword |
-| Salt Shaker | Off-hand | Additional weapon | Debuff / status item candidate |
-| Egg Yolk Grenade | Off-hand | Additional weapon | AoE sticky explosive |
-| Omelet Spatula | Two-handed | Additional weapon | Boss/themed weapon |
-| Egg Beater Staff | Two-handed | Additional weapon | Staff weapon |
-| Egg Whisk | Temporary level weapon | Level-specific weapon | Temporary level weapon |
-| Egg Launcher | Level reward weapon | Reward weapon / boss counter | Cracks boss defenses |
+| Weapon              | Type                   | Source Category              | Notes                          |
+| ------------------- | ---------------------- | ---------------------------- | ------------------------------ |
+| Egg Beater          | Main-hand              | Weapon examples              | Egg-themed melee / tool        |
+| Yolk Bomb           | Off-hand               | Weapon examples              | Throwable yolk item            |
+| Frying Pan          | Two-handed             | Weapon examples              | Heavy pan weapon               |
+| Eggshell Knife      | Main-hand              | Additional weapon            | Small blade                    |
+| Egg Scrambler Blade | Main-hand              | Additional weapon            | Scrambler sword                |
+| Salt Shaker         | Off-hand               | Additional weapon            | Debuff / status item candidate |
+| Egg Yolk Grenade    | Off-hand               | Additional weapon            | AoE sticky explosive           |
+| Omelet Spatula      | Two-handed             | Additional weapon            | Boss/themed weapon             |
+| Egg Beater Staff    | Two-handed             | Additional weapon            | Staff weapon                   |
+| Egg Whisk           | Temporary level weapon | Level-specific weapon        | Temporary level weapon         |
+| Egg Launcher        | Level reward weapon    | Reward weapon / boss counter | Cracks boss defenses           |
 
 ### Visual References Assigned
 

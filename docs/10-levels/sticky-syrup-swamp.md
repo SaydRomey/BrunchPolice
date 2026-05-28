@@ -4,15 +4,15 @@
 
 ### Identity
 
-| Field | Value |
-|---|---|
-| Level | Sticky Syrup Swamp |
-| Culprit Title | Syrup Scoundrel |
-| Canonical Culprit | Skyler “Syrup Scoundrel” Sugars |
-| Legacy Culprit | Simon “Syrup Scoundrel” Sugars |
-| Crime | Dumps syrup all over the buffet, ruining food |
-| Palette | Amber, honey gold, pancake tan, swamp green, syrup brown |
-| Core Feel | Sticky, slow, vertical syrup traversal, pancake rafts, bees |
+| Field             | Value                                                       |
+| ----------------- | ----------------------------------------------------------- |
+| Level             | Sticky Syrup Swamp                                          |
+| Culprit Title     | Syrup Scoundrel                                             |
+| Canonical Culprit | Skyler “Syrup Scoundrel” Sugars                             |
+| Legacy Culprit    | Simon “Syrup Scoundrel” Sugars                              |
+| Crime             | Dumps syrup all over the buffet, ruining food               |
+| Palette           | Amber, honey gold, pancake tan, swamp green, syrup brown    |
+| Core Feel         | Sticky, slow, vertical syrup traversal, pancake rafts, bees |
 
 ### Level Elements
 
@@ -59,22 +59,22 @@
 
 ### Enemies
 
-| Enemy | Current Behavior | Status |
-|---|---|---|
-| Angry Bees | Buzz in circular pattern and attack when nearby | Canonical |
-| Syrup Golems | Rise from sticky floor and charge at player | Canonical |
-| Flying Butter Pats | Fly across screen and damage on contact | Canonical |
-| Bee variants | Seen in visual references | Variant |
-| Syrup barrel enemies | Seen in visual references | Variant / possible environmental enemy |
+| Enemy                | Current Behavior                                | Status                                 |
+| -------------------- | ----------------------------------------------- | -------------------------------------- |
+| Angry Bees           | Buzz in circular pattern and attack when nearby | Canonical                              |
+| Syrup Golems         | Rise from sticky floor and charge at player     | Canonical                              |
+| Flying Butter Pats   | Fly across screen and damage on contact         | Canonical                              |
+| Bee variants         | Seen in visual references                       | Variant                                |
+| Syrup barrel enemies | Seen in visual references                       | Variant / possible environmental enemy |
 
 ### Boss Fight
 
-| Field | Current Design |
-|---|---|
-| Boss | Skyler “Syrup Scoundrel” Sugars |
-| Main weapon | Syrup cannon |
-| Main attack | Covers parts of the arena with syrup |
-| Counterplay | Avoid syrup pools and attack during reload |
+| Field           | Current Design                                      |
+| --------------- | --------------------------------------------------- |
+| Boss            | Skyler “Syrup Scoundrel” Sugars                     |
+| Main weapon     | Syrup cannon                                        |
+| Main attack     | Covers parts of the arena with syrup                |
+| Counterplay     | Avoid syrup pools and attack during reload          |
 | Visual variants | Two syrup-gun boss sprites supplied in conversation |
 
 ### Power-Ups
@@ -89,19 +89,19 @@
 
 ### Weapons Connected To Level
 
-| Weapon | Type | Source Category | Notes |
-|---|---|---|---|
-| Butter Knife | Main-hand | Weapon examples / level-specific overlap | Also appears as temporary weapon |
-| Sticky Net | Off-hand | Weapon examples | Immobilization utility |
-| Syrup Cannon | Two-handed | Weapon examples | Heavy syrup projectile |
-| Honey Comb Blade | Main-hand | Additional weapon | Bee/honey blade |
-| Maple Saber | Main-hand | Additional weapon | Syrup sword |
-| Sugar Cube Bomb | Off-hand | Additional weapon | Throwable explosive |
-| Sticky Syrup Globe | Off-hand | Additional weapon | Sticky AoE |
-| Molasses Mallet | Two-handed | Additional weapon | Heavy slow weapon |
-| Caramel Whip | Two-handed | Additional weapon | Reach weapon |
-| Butter Knife | Temporary level weapon | Level-specific weapon | Temporary weapon for this level |
-| Syrup Launcher | Level reward weapon | Reward weapon | Reward weapon after level |
+| Weapon             | Type                   | Source Category                          | Notes                            |
+| ------------------ | ---------------------- | ---------------------------------------- | -------------------------------- |
+| Butter Knife       | Main-hand              | Weapon examples / level-specific overlap | Also appears as temporary weapon |
+| Sticky Net         | Off-hand               | Weapon examples                          | Immobilization utility           |
+| Syrup Cannon       | Two-handed             | Weapon examples                          | Heavy syrup projectile           |
+| Honey Comb Blade   | Main-hand              | Additional weapon                        | Bee/honey blade                  |
+| Maple Saber        | Main-hand              | Additional weapon                        | Syrup sword                      |
+| Sugar Cube Bomb    | Off-hand               | Additional weapon                        | Throwable explosive              |
+| Sticky Syrup Globe | Off-hand               | Additional weapon                        | Sticky AoE                       |
+| Molasses Mallet    | Two-handed             | Additional weapon                        | Heavy slow weapon                |
+| Caramel Whip       | Two-handed             | Additional weapon                        | Reach weapon                     |
+| Butter Knife       | Temporary level weapon | Level-specific weapon                    | Temporary weapon for this level  |
+| Syrup Launcher     | Level reward weapon    | Reward weapon                            | Reward weapon after level        |
 
 ### Visual References Assigned
 

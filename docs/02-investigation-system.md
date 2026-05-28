@@ -57,11 +57,11 @@
 
 ### 2.2 Existing Culprit Fleeing Exit Concepts
 
-| Exit Area | Current Concept |
-|---|---|
-| Main Exit | Street-themed platformer levels |
-| Bathroom | Toilet/pipes-themed platformer levels |
-| Kitchen | Staff-only / kitchen platformer levels |
+| Exit Area | Current Concept                        |
+| --------- | -------------------------------------- |
+| Main Exit | Street-themed platformer levels        |
+| Bathroom  | Toilet/pipes-themed platformer levels  |
+| Kitchen   | Staff-only / kitchen platformer levels |
 
 ### 2.3 Existing Hub Areas
 
