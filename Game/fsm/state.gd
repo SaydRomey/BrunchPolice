@@ -1,3 +1,4 @@
+# fsm/state.gd
 ## https://www.gdquest.com/tutorial/godot/design-patterns/finite-state-machine/
 
 ## Virtual base class for all states.

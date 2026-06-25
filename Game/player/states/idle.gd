@@ -1,21 +1,30 @@
+# player/states/idle.gd
 extends PlayerState
 
 
 func enter(_previous_state_path: String, _data := {}) -> void:
-	player.velocity.x = 0.0
+	#player.velocity.x = 0.0
+	player.stop_horizontal_movement()
+	player.set_facing_from_input(0.0)
 	player.play_directional_animation("idle")
 
 
-func physics_update(_delta: float) -> void:
-	player.velocity.y += player.gravity * _delta
-	player.move_and_slide()
+func physics_update(delta: float) -> void:
+	var input_x := get_input_x()
 
-	var input_direction_x := Input.get_axis("move_left", "move_right")
+	if Input.is_action_just_pressed("jump") and player.is_on_floor():
+		finished.emit(JUMPING)
+		return
+
+	if player.has_move_input(input_x):
+		player.set_facing_from_input(input_x)
+		finished.emit(RUNNING)
+		return
+
+	player.apply_gravity(delta)
+	player.move_and_slide()
+	player.play_directional_animation("idle")
 
 	if not player.is_on_floor():
 		finished.emit(FALLING)
-	elif Input.is_action_just_pressed("jump"):
-		finished.emit(JUMPING)
-	elif not is_equal_approx(input_direction_x, 0.0):
-	#elif Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right"):
-		finished.emit(RUNNING)
+		return
