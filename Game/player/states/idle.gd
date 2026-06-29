@@ -12,13 +12,24 @@ func enter(_previous_state_path: String, _data := {}) -> void:
 func physics_update(delta: float) -> void:
 	var input_x := get_input_x()
 
+	player.set_facing_from_input(input_x)
+
 	if Input.is_action_just_pressed("jump") and player.is_on_floor():
 		finished.emit(JUMPING)
 		return
 
+	if Input.is_action_pressed("crouch"):
+		if player.has_move_input(input_x):
+			finished.emit(CROUCH_WALKING)
+		else:
+			finished.emit(CROUCHING)
+		return
+
 	if player.has_move_input(input_x):
-		player.set_facing_from_input(input_x)
-		finished.emit(RUNNING)
+		if Input.is_action_pressed("run"):
+			finished.emit(RUNNING)
+		else:
+			finished.emit(WALKING)
 		return
 
 	player.apply_gravity(delta)

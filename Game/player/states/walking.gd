@@ -1,0 +1,38 @@
+# player/states/walking.gd
+extends PlayerState
+
+
+func enter(_previous_state_path: String, _data := {}) -> void:
+	player.play_directional_animation("walking")
+
+
+func physics_update(delta: float) -> void:
+	var input_x := get_input_x()
+
+	if Input.is_action_just_pressed("jump") and player.is_on_floor():
+		finished.emit(JUMPING)
+		return
+
+	if not player.has_move_input(input_x):
+		player.set_facing_from_input(0.0)
+
+		if Input.is_action_pressed("crouch"):
+			finished.emit(CROUCHING)
+		else:
+			finished.emit(IDLE)
+
+		return
+
+	if Input.is_action_pressed("crouch"):
+		finished.emit(CROUCH_WALKING)
+		return
+
+	if Input.is_action_pressed("run"):
+		finished.emit(RUNNING)
+		return
+
+	move_player(delta, "walking", player.walk_speed)
+
+	if not player.is_on_floor():
+		finished.emit(FALLING)
+		return

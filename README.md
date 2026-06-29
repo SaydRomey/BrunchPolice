@@ -42,3 +42,10 @@
 
 
 ---
+
+## Utility Scripts / Docs / Workflow / etc.
+
+- [Godot Docs (offline) stable `zip` link][godot-offline-doc-zip-link]
+
+[godot-offline-doc-zip-link]: https://nightly.link/godotengine/godot-docs/workflows/build_offline_docs/master/godot-docs-html-stable.zip
+

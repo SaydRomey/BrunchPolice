@@ -1,0 +1,22 @@
+
+for f in objects/*/*/rotations/*.png; do
+  name="${f#objects/}"
+  name="${name%/rotations/*}_${f:t}"
+  name="${name//\//_}"
+  mv -- "$f" "./$name"
+done
+
+
+
+
+for f in objects/*/*/animations/*/*/*.png; do
+  name="${f#objects/}"
+  name="${name%/rotations/*}_${f:t}"
+  name="${name//\//_}"
+  mv -- "$f" "./$name"
+done
+
+
+ls -laR
+
+

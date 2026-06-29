@@ -4,12 +4,13 @@
 class_name PlayerState extends State
 
 const IDLE = "Idle"
+const WALKING = "Walking"
 const RUNNING = "Running"
 const JUMPING = "Jumping"
 const FALLING = "Falling"
 #const GLIDING = "Gliding"
-#const CROUNCHING = "crouching" # ?
-#const CROUCH_WALKING = "crouch_walking" # ?
+const CROUCHING = "Crouching"
+const CROUCH_WALKING = "CrouchWalking"
 
 var player: Player
 
@@ -24,17 +25,35 @@ func get_input_x() -> float:
 	return player.get_move_input()
 
 
-func move_player(delta: float, animation_name: String) -> float:
+func move_player(delta: float, animation_name: String, movement_speed: float = -1.0) -> float:
 	var input_x := get_input_x()
 
-	player.move_with_input(delta, input_x)
+	if movement_speed < 0.0:
+		movement_speed = player.air_speed
+
+	player.move_with_input(delta, input_x, movement_speed)
 	player.play_directional_animation(animation_name)
 
 	return input_x
 
 
-func go_to_grounded_state(input_x: float) -> void:
+func get_grounded_state(input_x: float) -> String:
+	if Input.is_action_pressed("crouch"):
+		if player.has_move_input(input_x):
+			return CROUCH_WALKING
+		return CROUCHING
+
 	if player.has_move_input(input_x):
-		finished.emit(RUNNING)
-	else:
-		finished.emit(IDLE)
+		if Input.is_action_pressed("run"):
+			return RUNNING
+		return WALKING
+
+	return IDLE
+
+
+func go_to_grounded_state(input_x: float) -> void:
+	finished.emit(get_grounded_state(input_x))
+	#if player.has_move_input(input_x):
+		#finished.emit(RUNNING)
+	#else:
+		#finished.emit(IDLE)

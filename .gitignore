@@ -43,3 +43,6 @@ extern/godot-cpp/include/gen/
 
 # Temporary files
 tmp*
+
+# zip files
+*.zip

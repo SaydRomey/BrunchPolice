@@ -14,10 +14,24 @@ func physics_update(delta: float) -> void:
 		return
 
 	if not player.has_move_input(input_x):
-		finished.emit(IDLE)
+		player.set_facing_from_input(0.0)
+
+		if Input.is_action_pressed("crouch"):
+			finished.emit(CROUCHING)
+		else:
+			finished.emit(IDLE)
+
 		return
 
-	move_player(delta, "running")
+	if Input.is_action_pressed("crouch"):
+		finished.emit(CROUCH_WALKING)
+		return
+
+	if not Input.is_action_pressed("run"):
+		finished.emit(WALKING)
+		return
+
+	move_player(delta, "running", player.run_speed)
 
 	if not player.is_on_floor():
 		finished.emit(FALLING)

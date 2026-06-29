@@ -2,7 +2,11 @@
 class_name Player extends CharacterBody2D
 
 @export_category("Movement")
-@export var speed := 500.0         ## Horizontal speed in pixels per second.
+@export var walk_speed := 300.0
+@export var run_speed := 500.0
+@export var crouch_walk_speed := 150.0
+@export var air_speed := 500.0
+#@export var speed := 500.0         ## Horizontal speed in pixels per second.
 @export var gravity := 4000.0      ## Vertical acceleration in pixel per second squared.
 @export var jump_impulse := 1800.0 ## Vertical speed applied when jumping.
 
@@ -51,9 +55,9 @@ func stop_horizontal_movement() -> void:
 	velocity.x = 0.0
 
 
-func apply_horizontal_movement(input_x: float) -> void:
+func apply_horizontal_movement(input_x: float, movement_speed: float) -> void:
 	set_facing_from_input(input_x)
-	velocity.x = speed * input_x
+	velocity.x = movement_speed * input_x
 
 
 func apply_gravity(delta: float, gravity_value := gravity) -> void:
@@ -63,8 +67,8 @@ func apply_gravity(delta: float, gravity_value := gravity) -> void:
 		velocity.y += gravity_value * delta
 
 
-func move_with_input(delta: float, input_x: float) -> void:
-	apply_horizontal_movement(input_x)
+func move_with_input(delta: float, input_x: float, movement_speed: float) -> void:
+	apply_horizontal_movement(input_x, movement_speed)
 	apply_gravity(delta)
 	move_and_slide()
 
@@ -84,3 +88,10 @@ func play_directional_animation(base_name: String) -> void:
 		animated_sprite.play(animation_name)
 	elif not animated_sprite.is_playing():
 		animated_sprite.play()
+
+# DEBUG
+func get_debug_label_text() -> String:
+	if fsm == null or fsm.state == null:
+		return "Player: none"
+	#return "Player: %s" % fsm.state.name
+	return "%s" % fsm.state.name
