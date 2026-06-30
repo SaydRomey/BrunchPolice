@@ -1,6 +1,0 @@
-
-Convert and keep ratio:
-convert input.jpg -resize 256x256 output.jpg
-
-Convert without keeping ratio:
-convert input.jpg -resize 256x256! output.jpg

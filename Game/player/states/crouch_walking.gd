@@ -22,7 +22,7 @@ func physics_update(delta: float) -> void:
 		finished.emit(CROUCHING)
 		return
 
-	move_player(delta, "crouch_walk", player.crouch_walk_speed)
+	move_player(delta, "crouch_walking", player.crouch_walk_speed)
 
 	if not player.is_on_floor():
 		finished.emit(FALLING)

@@ -38,11 +38,9 @@ func set_facing_from_input(input_direction_x: float) -> void:
 		facing = Facing.WEST
 	else:
 		facing = Facing.SOUTH
-	#facing = int(sign(input_direction_x))
 
 
 func get_facing_suffix() -> String:
-	#return "south" if facing == 0 else ("east" if facing > 0 else "west")
 	match facing:
 		Facing.SOUTH: return "south"
 		Facing.EAST: return "east"
@@ -89,9 +87,9 @@ func play_directional_animation(base_name: String) -> void:
 	elif not animated_sprite.is_playing():
 		animated_sprite.play()
 
-# DEBUG
-func get_debug_label_text() -> String:
-	if fsm == null or fsm.state == null:
-		return "Player: none"
-	#return "Player: %s" % fsm.state.name
-	return "%s" % fsm.state.name
+## DEBUG
+#func get_debug_label_text() -> String:
+	#if fsm == null or fsm.state == null:
+		#return "Player: none"
+	##return "Player: %s" % fsm.state.name
+	#return "%s" % fsm.state.name

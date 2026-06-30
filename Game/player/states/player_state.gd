@@ -42,18 +42,12 @@ func get_grounded_state(input_x: float) -> String:
 		if player.has_move_input(input_x):
 			return CROUCH_WALKING
 		return CROUCHING
-
 	if player.has_move_input(input_x):
 		if Input.is_action_pressed("run"):
 			return RUNNING
 		return WALKING
-
 	return IDLE
 
 
 func go_to_grounded_state(input_x: float) -> void:
 	finished.emit(get_grounded_state(input_x))
-	#if player.has_move_input(input_x):
-		#finished.emit(RUNNING)
-	#else:
-		#finished.emit(IDLE)
