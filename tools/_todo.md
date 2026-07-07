@@ -1,4 +1,3 @@
-
 <div align="right">
 
 [Return to previous README][readme-path]
@@ -7,23 +6,47 @@
 
 </div>
 
+> **I currently do not need this since i use unique names, but for the sake of general usage...**
 
-# `resize_sprite.sh` Improvements
+# `resize_sprites.sh` Improvements
 
 [Resize Pixel-art Sprite Files][resize-sprites]
 
 [resize-sprites]: ./resize_sprites.sh "Pixel-art Safe Conversion Script"
 
-> [!WARNING] TODO  
-> Add a duplicate-basename resolution step after file discovery 
-> and before the resize target menu.  
-> This matches the collision risk in the uploaded version, 
-> where `enemy.jpeg` and `enemy.png` would both output as `enemy.png`
+---
 
+## TODO: Duplicate Basename Resolution
 
-1. We could add these helper functions anywhere before `find_source_files()` or before `main()`:  
+> [!WARNING]
+> Add a duplicate-basename resolution step 
+> after file discovery and before the resize target menu.
 
-```bash  
+This prevents output collisions when 
+more than one source file has the same basename.
+
+Example collision:
+
+```text
+enemy_slime.jpeg
+enemy_slime.png
+```
+
+Both files would currently output to:
+
+```text
+resized/128x128/enemy_slime.png
+```
+
+The script should detect this and ask the user which source file to process.
+
+---
+
+## 1. Add Helper Functions
+
+Add these helper functions before `find_source_files()` or before `main()`:
+
+```bash
 get_base_name() {
   local file="$1"
   local filename
@@ -70,6 +93,7 @@ resolve_duplicate_basenames() {
     # Build a group of all files with this same basename.
     local group=()
     local candidate
+
     for candidate in "${files[@]}"; do
       local candidate_base_name
       candidate_base_name="$(get_base_name "$candidate")"
@@ -110,7 +134,7 @@ resolve_duplicate_basenames() {
         break
       fi
 
-      if [[ "$choice" =~ ^[0-9]+$ ]] && (( choice  1 && choice <= ${#group[@]} )); then
+      if [[ "$choice" =~ ^[0-9]+$ ]] && (( choice >= 1 && choice <= ${#group[@]} )); then
         resolved_files+=("${group[$((choice - 1))]}")
         echo "Selected: ${group[$((choice - 1))]}"
         break
@@ -122,7 +146,7 @@ resolve_duplicate_basenames() {
 
   files=("${resolved_files[@]}")
 
-  if (( duplicate_groups 0 )); then
+  if (( duplicate_groups > 0 )); then
     echo
     echo "Duplicate basename groups resolved: $duplicate_groups"
     echo "Files selected for processing:       ${#files[@]}"
@@ -136,7 +160,11 @@ resolve_duplicate_basenames() {
 }
 ```
 
-2. Then replace our current `find_source_files()` with this version:
+---
+
+## 2. Replace `find_source_files()`
+
+Replace the current `find_source_files()` function with this version:
 
 ```bash
 find_source_files() {
@@ -169,8 +197,11 @@ find_source_files() {
 }
 ```
 
-3. The new flow becomes: 
-```bash
+---
+
+## 3. Expected Flow
+
+```text
 Source directory [current directory]: ./enemies
 
 Candidate sprite files found: 108
@@ -194,8 +225,11 @@ Available resize targets:
   a) all
 ```
 
-Keep our existing `get_output_path()` unchanged.  
-This approach prevents overwrites by ensuring 
-only one source file per basename reaches the resize loop
-
 ---
+
+## 4. Keep Existing Output Path Logic
+
+Keep the existing `get_output_path()` function unchanged.
+
+This approach prevents overwrites by ensuring 
+only one source file per basename reaches the resize loop.
