@@ -1,3 +1,4 @@
+# scripts/CluePickupIso.gd
 extends Area2D
 
 @export var clue_name := "Clue"

@@ -1,3 +1,4 @@
+# scripts/MainIso.gd
 extends Node2D
 
 @onready var level: Node2D = $World/IsoLevel
@@ -46,4 +47,4 @@ func _on_player_respawned() -> void:
 
 func _update_hud(amount: int) -> void:
 	clue_label.text = "Clues: %d / %d" % [amount, total_clues]
-	status_label.text = "Controls: WASD/arrows move on iso grid | Shift sprint"
+	status_label.text = "Controls: WASD/arrows move on iso grid | Shift run"

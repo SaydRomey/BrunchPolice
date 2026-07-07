@@ -1,11 +1,12 @@
+# scripts/IsoLevel.gd
 extends Node2D
 
 const TILE_W := 96.0
 const TILE_H := 48.0
-const ORIGIN := Vector2(640, 130)
+const ORIGIN: Vector2 = Vector2(640, 130)
 
-var floor_tiles := []
-var blocked_cells := {}
+var floor_tiles: Array[Vector2i] = []
+var blocked_cells: Dictionary = {}
 
 func _ready() -> void:
 	z_as_relative = false
@@ -63,19 +64,34 @@ func _add_prop(cell: Vector2i, label_text: String, color: Color, size: Vector2) 
 	body.add_child(label)
 
 func _draw() -> void:
-	for cell in floor_tiles:
-		var p := iso_to_screen(cell)
+	for cell: Vector2i in floor_tiles:
+		var p: Vector2 = iso_to_screen(cell)
 		var poly := PackedVector2Array([
 			p + Vector2(0, -TILE_H * 0.5),
 			p + Vector2(TILE_W * 0.5, 0),
 			p + Vector2(0, TILE_H * 0.5),
 			p + Vector2(-TILE_W * 0.5, 0)
 		])
-		var checker := (cell.x + cell.y) % 2 == 0
-		var fill := Color(0.98, 0.82, 0.48) if checker else Color(0.95, 0.75, 0.38)
+
+		var checker: bool = ((cell.x + cell.y) % 2) == 0
+		var fill: Color = Color(0.98, 0.82, 0.48) if checker else Color(0.95, 0.75, 0.38)
+
 		draw_colored_polygon(poly, fill)
-		draw_polyline(poly + PackedVector2Array([poly[0]]), Color(0.55, 0.33, 0.14, 0.32), 1.0)
-	# Main brunch area sign/path accents
-	for cell in [Vector2i(0,4), Vector2i(1,4), Vector2i(2,4), Vector2i(4,4), Vector2i(5,4), Vector2i(6,4), Vector2i(8,4), Vector2i(9,4)]:
-		var p := iso_to_screen(cell)
+		draw_polyline(
+			poly + PackedVector2Array([poly[0]]),
+			Color(0.55, 0.33, 0.14, 0.32),
+			1.0
+		)
+
+	for cell: Vector2i in [
+		Vector2i(0, 4),
+		Vector2i(1, 4),
+		Vector2i(2, 4),
+		Vector2i(4, 4),
+		Vector2i(5, 4),
+		Vector2i(6, 4),
+		Vector2i(8, 4),
+		Vector2i(9, 4)
+	]:
+		var p: Vector2 = iso_to_screen(cell)
 		draw_circle(p, 5.0, Color(1.0, 0.95, 0.72, 0.7))
