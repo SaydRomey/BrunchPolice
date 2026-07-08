@@ -8,7 +8,7 @@ func enter(_previous_state_path: String, _data := {}) -> void:
 
 
 func physics_update(delta: float) -> void:
-	move_player(delta, "jumping")
+	move_platformer_player(delta, "jumping", player.air_speed)
 
 	if player.velocity.y >= 0.0:
 		finished.emit(FALLING)

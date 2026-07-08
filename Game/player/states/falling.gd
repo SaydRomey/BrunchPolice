@@ -7,8 +7,8 @@ func enter(_previous_state_path: String, _data := {}) -> void:
 
 
 func physics_update(delta: float) -> void:
-	var input_x := move_player(delta, "falling")
+	var input_x := move_platformer_player(delta, "falling", player.air_speed)
 
 	if player.is_on_floor():
-		go_to_grounded_state(input_x)
+		go_to_platformer_grounded_state(input_x)
 		return

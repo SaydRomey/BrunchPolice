@@ -1,0 +1,72 @@
+[gd_scene load_steps=4 format=3 uid="uid://conwvqglohx2p"]
+
+[ext_resource type="PackedScene" uid="uid://bkia7dfud8ufb" path="res://player/player.tscn" id="1_player"]
+[ext_resource type="Script" uid="uid://cjdismqqdktgu" path="res://scripts/scene_transition_area.gd" id="2_transition"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_chase_trigger"]
+size = Vector2(110, 110)
+
+[node name="BrunchHubBasic" type="Node2D"]
+
+[node name="Floor" type="ColorRect" parent="."]
+offset_right = 960.0
+offset_bottom = 540.0
+color = Color(0.35, 0.23, 0.13, 1)
+
+[node name="BuffetTable" type="ColorRect" parent="."]
+offset_left = 280.0
+offset_top = 150.0
+offset_right = 680.0
+offset_bottom = 230.0
+color = Color(0.72, 0.47, 0.22, 1)
+
+[node name="SeatingArea" type="ColorRect" parent="."]
+offset_left = 90.0
+offset_top = 355.0
+offset_right = 430.0
+offset_bottom = 485.0
+color = Color(0.2, 0.13, 0.09, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(140, 260)
+starting_mode = 1
+
+[node name="ChaseLevelTrigger" type="Area2D" parent="."]
+position = Vector2(835, 260)
+script = ExtResource("2_transition")
+target_scene_path = "res://world/platformer_chase_basic.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChaseLevelTrigger"]
+shape = SubResource("RectangleShape2D_chase_trigger")
+
+[node name="PortalVisual" type="ColorRect" parent="ChaseLevelTrigger"]
+offset_left = -55.0
+offset_top = -55.0
+offset_right = 55.0
+offset_bottom = 55.0
+color = Color(0.85, 0.18, 0.1, 0.75)
+
+[node name="PortalLabel" type="Label" parent="ChaseLevelTrigger"]
+offset_left = -95.0
+offset_top = -88.0
+offset_right = 95.0
+offset_bottom = -60.0
+text = "Correct accusation: chase!"
+horizontal_alignment = 1
+
+[node name="Instructions" type="Label" parent="."]
+offset_left = 18.0
+offset_top = 16.0
+offset_right = 650.0
+offset_bottom = 94.0
+text = "BRUNCH HUB - TOP DOWN
+Move: WASD / Arrows    Run: Shift    Inspect placeholder: E
+Walk into the red trigger to enter a platformer chase level."
+
+[node name="BuffetLabel" type="Label" parent="."]
+offset_left = 375.0
+offset_top = 176.0
+offset_right = 585.0
+offset_bottom = 205.0
+text = "Buffet inspection area"
+horizontal_alignment = 1

@@ -10,17 +10,17 @@ func enter(_previous_state_path: String, _data := {}) -> void:
 func physics_update(delta: float) -> void:
 	var input_x := get_input_x()
 
-	player.set_facing_from_input(input_x)
+	player.set_platformer_facing_from_input(input_x)
 
 	if Input.is_action_just_pressed("jump") and player.is_on_floor():
 		finished.emit(JUMPING)
 		return
 
 	if not Input.is_action_pressed("crouch"):
-		go_to_grounded_state(input_x)
+		go_to_platformer_grounded_state(input_x)
 		return
 
-	if player.has_move_input(input_x):
+	if player.has_platformer_move_input(input_x):
 		finished.emit(CROUCH_WALKING)
 		return
 

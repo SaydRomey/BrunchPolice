@@ -1,26 +1,26 @@
-[gd_scene load_steps=95 format=3 uid="uid://bkia7dfud8ufb"]
+[gd_scene load_steps=99 format=3 uid="uid://bkia7dfud8ufb"]
 
-[ext_resource type="Script" uid="uid://dejgcxr0v8m7x" path="res://player/player.gd" id="1_rgyib"]
+[ext_resource type="Script" uid="uid://ckqk0othr3erl" path="res://player/player.gd" id="1_rgyib"]
 [ext_resource type="Texture2D" uid="uid://dot54bfabyjjf" path="res://player/sprites/crouch_walking_east.png" id="2_rptt4"]
-[ext_resource type="Script" uid="uid://bf7gqwqies32p" path="res://fsm/state_machine.gd" id="3_8t03j"]
+[ext_resource type="Script" uid="uid://b4w5w3l7ugoxf" path="res://fsm/state_machine.gd" id="3_8t03j"]
 [ext_resource type="Texture2D" uid="uid://b03i6hhg1t7qr" path="res://player/sprites/crouch_walking_west.png" id="3_r7pn3"]
-[ext_resource type="Script" uid="uid://cdr1pivimmspq" path="res://player/states/idle.gd" id="4_2ieo8"]
+[ext_resource type="Script" uid="uid://b7u1g5dcjdwld" path="res://player/states/idle.gd" id="4_2ieo8"]
 [ext_resource type="Texture2D" uid="uid://cjdfr0jw5814t" path="res://player/sprites/crouching_east.png" id="4_b8hi5"]
 [ext_resource type="Texture2D" uid="uid://c4qlgjary87wp" path="res://player/sprites/crouching_south.png" id="5_2uvqg"]
-[ext_resource type="Script" uid="uid://bsphdssugydkf" path="res://player/states/running.gd" id="5_ebec5"]
+[ext_resource type="Script" uid="uid://kjbuch2xq5jq" path="res://player/states/running.gd" id="5_ebec5"]
 [ext_resource type="Texture2D" uid="uid://cxt383ci2eorn" path="res://player/sprites/crouching_west.png" id="6_1s1yo"]
-[ext_resource type="Script" uid="uid://b2q27ko20fb00" path="res://player/states/jumping.gd" id="6_yllr7"]
+[ext_resource type="Script" uid="uid://bi8ew863w7adj" path="res://player/states/jumping.gd" id="6_yllr7"]
 [ext_resource type="Texture2D" uid="uid://cpjkt84vq18qw" path="res://player/sprites/falling_east.png" id="7_5ejfk"]
-[ext_resource type="Script" uid="uid://bay07qjwh7lwr" path="res://player/states/falling.gd" id="7_kb6p2"]
+[ext_resource type="Script" uid="uid://deemcifp5tlhs" path="res://player/states/falling.gd" id="7_kb6p2"]
 [ext_resource type="Texture2D" uid="uid://c1h2xcbutwayv" path="res://player/sprites/falling_south.png" id="8_jd2rm"]
-[ext_resource type="Script" uid="uid://ddw3kobru4kic" path="res://player/states/walking.gd" id="8_kb6p2"]
+[ext_resource type="Script" uid="uid://ddjao1465knme" path="res://player/states/walking.gd" id="8_kb6p2"]
 [ext_resource type="Texture2D" uid="uid://dg345vmjxumk" path="res://player/sprites/falling_west.png" id="9_q28gw"]
 [ext_resource type="Texture2D" uid="uid://c4iknjakn4w4w" path="res://player/sprites/idle_east.png" id="10_ge24q"]
 [ext_resource type="Texture2D" uid="uid://xd6xrybbmkn5" path="res://player/sprites/idle_north.png" id="11_pnw6m"]
-[ext_resource type="Script" uid="uid://c14lwqyl40mft" path="res://player/states/crouching.gd" id="11_wodsf"]
+[ext_resource type="Script" uid="uid://toyyhvp6iggu" path="res://player/states/crouching.gd" id="11_wodsf"]
 [ext_resource type="Texture2D" uid="uid://wjao74qj23xe" path="res://player/sprites/idle_south.png" id="12_1so5t"]
 [ext_resource type="Texture2D" uid="uid://d18f6tmrlyfac" path="res://player/sprites/idle_west.png" id="13_55jnj"]
-[ext_resource type="Script" uid="uid://bts0gv1o2m87r" path="res://player/states/crouch_walking.gd" id="13_wodsf"]
+[ext_resource type="Script" uid="uid://wyaeyq3b80lj" path="res://player/states/crouch_walking.gd" id="13_wodsf"]
 [ext_resource type="Texture2D" uid="uid://sn26bif6088f" path="res://player/sprites/jumping_east.png" id="14_dx5ib"]
 [ext_resource type="Texture2D" uid="uid://bmyrp5c8bo1ni" path="res://player/sprites/jumping_south.png" id="15_a2xo5"]
 [ext_resource type="Texture2D" uid="uid://ikwmlys5q223" path="res://player/sprites/jumping_west.png" id="16_art4l"]
@@ -28,6 +28,10 @@
 [ext_resource type="Texture2D" uid="uid://daj7f74jot1s5" path="res://player/sprites/running_west.png" id="18_gswnw"]
 [ext_resource type="Texture2D" uid="uid://46i0wg75xflm" path="res://player/sprites/walking_east.png" id="19_xcnuv"]
 [ext_resource type="Texture2D" uid="uid://bmb2n6dsqksje" path="res://player/sprites/walking_west.png" id="20_j55il"]
+[ext_resource type="Script" uid="uid://5n7lf0m4b8np" path="res://player/states/hub_idle.gd" id="21_hub_idle"]
+[ext_resource type="Script" uid="uid://brbuwx1rfspbb" path="res://player/states/hub_walking.gd" id="22_hub_walking"]
+[ext_resource type="Script" uid="uid://b87m3cc1hduy3" path="res://player/states/hub_running.gd" id="23_hub_running"]
+[ext_resource type="Script" uid="uid://psefj1qk6qaw" path="res://player/states/hub_inspecting.gd" id="24_hub_inspecting"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hjies"]
 atlas = ExtResource("2_rptt4")
@@ -593,32 +597,36 @@ shape = SubResource("CapsuleShape2D_ur7pv")
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("3_8t03j")
-metadata/_custom_type_script = "uid://bf7gqwqies32p"
 
 [node name="Idle" type="Node" parent="StateMachine"]
 script = ExtResource("4_2ieo8")
-metadata/_custom_type_script = "uid://mhvvqf2dsin"
 
 [node name="Walking" type="Node" parent="StateMachine"]
 script = ExtResource("8_kb6p2")
-metadata/_custom_type_script = "uid://mhvvqf2dsin"
 
 [node name="Running" type="Node" parent="StateMachine"]
 script = ExtResource("5_ebec5")
-metadata/_custom_type_script = "uid://mhvvqf2dsin"
 
 [node name="Jumping" type="Node" parent="StateMachine"]
 script = ExtResource("6_yllr7")
-metadata/_custom_type_script = "uid://mhvvqf2dsin"
 
 [node name="Falling" type="Node" parent="StateMachine"]
 script = ExtResource("7_kb6p2")
-metadata/_custom_type_script = "uid://mhvvqf2dsin"
 
 [node name="Crouching" type="Node" parent="StateMachine"]
 script = ExtResource("11_wodsf")
-metadata/_custom_type_script = "uid://mhvvqf2dsin"
 
 [node name="CrouchWalking" type="Node" parent="StateMachine"]
 script = ExtResource("13_wodsf")
-metadata/_custom_type_script = "uid://mhvvqf2dsin"
+
+[node name="HubIdle" type="Node" parent="StateMachine"]
+script = ExtResource("21_hub_idle")
+
+[node name="HubWalking" type="Node" parent="StateMachine"]
+script = ExtResource("22_hub_walking")
+
+[node name="HubRunning" type="Node" parent="StateMachine"]
+script = ExtResource("23_hub_running")
+
+[node name="HubInspecting" type="Node" parent="StateMachine"]
+script = ExtResource("24_hub_inspecting")
