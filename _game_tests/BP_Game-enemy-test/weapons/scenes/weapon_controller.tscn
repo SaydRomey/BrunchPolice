@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://brunchweaponcontroller"]
+
+[ext_resource type="Script" path="res://weapons/weapon_controller.gd" id="1_controller"]
+[ext_resource type="Resource" path="res://weapons/data/brunch_fork.tres" id="2_weapon"]
+
+[node name="WeaponController" type="Node2D"]
+script = ExtResource("1_controller")
+starting_weapon = ExtResource("2_weapon")
+
+[node name="AttackOrigin" type="Marker2D" parent="."]
+position = Vector2(28, 0)
+
+[node name="HeldWeaponSprite" type="Sprite2D" parent="."]
+position = Vector2(18, 0)

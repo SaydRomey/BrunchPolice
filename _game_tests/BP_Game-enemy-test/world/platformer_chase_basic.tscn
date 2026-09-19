@@ -1,0 +1,94 @@
+[gd_scene load_steps=6 format=3 uid="uid://b3p17cx6a8eel"]
+
+[ext_resource type="PackedScene" uid="uid://bkia7dfud8ufb" path="res://player/player.tscn" id="1_player"]
+[ext_resource type="Script" uid="uid://cjdismqqdktgu" path="res://scripts/scene_transition_area.gd" id="2_transition"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(960, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform"]
+size = Vector2(190, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit_trigger"]
+size = Vector2(100, 140)
+
+[node name="PlatformerChaseBasic" type="Node2D"]
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 960.0
+offset_bottom = 540.0
+color = Color(0.15, 0.18, 0.27, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(110, 330)
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(480, 430)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="FloorVisual" type="ColorRect" parent="Floor"]
+offset_left = -480.0
+offset_top = -24.0
+offset_right = 480.0
+offset_bottom = 24.0
+color = Color(0.48, 0.27, 0.09, 1)
+
+[node name="PlatformA" type="StaticBody2D" parent="."]
+position = Vector2(360, 335)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformA"]
+shape = SubResource("RectangleShape2D_platform")
+
+[node name="Visual" type="ColorRect" parent="PlatformA"]
+offset_left = -95.0
+offset_top = -16.0
+offset_right = 95.0
+offset_bottom = 16.0
+color = Color(0.66, 0.38, 0.12, 1)
+
+[node name="PlatformB" type="StaticBody2D" parent="."]
+position = Vector2(620, 265)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformB"]
+shape = SubResource("RectangleShape2D_platform")
+
+[node name="Visual" type="ColorRect" parent="PlatformB"]
+offset_left = -95.0
+offset_top = -16.0
+offset_right = 95.0
+offset_bottom = 16.0
+color = Color(0.66, 0.38, 0.12, 1)
+
+[node name="ReturnToHubTrigger" type="Area2D" parent="."]
+position = Vector2(875, 350)
+script = ExtResource("2_transition")
+target_scene_path = "res://world/brunch_hub_basic.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ReturnToHubTrigger"]
+shape = SubResource("RectangleShape2D_exit_trigger")
+
+[node name="PortalVisual" type="ColorRect" parent="ReturnToHubTrigger"]
+offset_left = -50.0
+offset_top = -70.0
+offset_right = 50.0
+offset_bottom = 70.0
+color = Color(0.1, 0.55, 0.95, 0.75)
+
+[node name="PortalLabel" type="Label" parent="ReturnToHubTrigger"]
+offset_left = -80.0
+offset_top = -105.0
+offset_right = 80.0
+offset_bottom = -76.0
+text = "Exit back to hub"
+horizontal_alignment = 1
+
+[node name="Instructions" type="Label" parent="."]
+offset_left = 18.0
+offset_top = 16.0
+offset_right = 650.0
+offset_bottom = 94.0
+text = "PLATFORMER CHASE LEVEL
+Move: A/D or Left/Right    Jump: Space    Run: Shift    Crouch: S/Down
+Reach the blue trigger to return to the brunch hub."

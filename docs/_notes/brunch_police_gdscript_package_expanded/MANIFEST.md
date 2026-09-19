@@ -1,0 +1,142 @@
+# Package Manifest
+
+- `README.md`
+- `docs/00-source-index.md`
+- `docs/levels/01-pastry-palace.md`
+- `docs/levels/02-sticky-syrup-swamp.md`
+- `docs/levels/03-kitchen-mayhem.md`
+- `docs/levels/04-egg-factory-frenzy.md`
+- `docs/levels/05-citrus-cascade.md`
+- `docs/levels/06-candy-chaos.md`
+- `docs/levels/07-bakery-bonanza.md`
+- `docs/levels/08-grease-canyon.md`
+- `docs/systems/00-implementation-setup.md`
+- `docs/systems/01-weapon-and-projectile-system.md`
+- `docs/systems/02-inventory-powerups-resources.md`
+- `docs/systems/03-save-load-system.md`
+- `docs/systems/04-audio-visual-animation.md`
+- `docs/systems/05-timer-score-tilemap-resource-cache.md`
+- `docs/weapons/00-weapon-design-overview.md`
+- `docs/weapons/01-weapon-catalog-by-level.md`
+- `docs/weapons/02-level-reward-weapons.md`
+- `docs/weapons/03-bacon-gun.md`
+- `godot/autoloads/GameResourceManager.gd`
+- `godot/autoloads/Inventory.gd`
+- `godot/autoloads/PowerUpManager.gd`
+- `godot/autoloads/ResourceManager.gd`
+- `godot/autoloads/SaveManager.gd`
+- `godot/autoloads/ScoreManager.gd`
+- `godot/autoloads/SoundManager.gd`
+- `godot/autoloads/TimerManager.gd`
+- `godot/autoloads/VisualEffectsManager.gd`
+- `godot/components/BaseEnemyStatusEffects.gd`
+- `godot/components/PlayerWeaponController.gd`
+- `godot/components/SpriteAnimationController.gd`
+- `godot/components/Stamina.gd`
+- `godot/components/TilemapLoader.gd`
+- `godot/components/VisualFeedback.gd`
+- `godot/pickups/Coin.gd`
+- `godot/pickups/WeaponPickup.gd`
+- `godot/projectiles/BaconProjectile.gd`
+- `godot/projectiles/Projectile.gd`
+- `godot/weapons/BaconGun.gd`
+- `godot/weapons/BreadSlicer.gd`
+- `godot/weapons/ButterKnife.gd`
+- `godot/weapons/CitrusBlaster.gd`
+- `godot/weapons/DishwasherSprayer.gd`
+- `godot/weapons/EggLauncher.gd`
+- `godot/weapons/FlourBlaster.gd`
+- `godot/weapons/GummyBearGrenade.gd`
+- `godot/weapons/RollingPin.gd`
+- `godot/weapons/SyrupLauncher.gd`
+- `godot/weapons/Weapon.gd`
+- `godot/weapons/WhippedCreamCannon.gd`
+- `source_files/README.md`
+- `source_files/bakery-bonanza.md`
+- `source_files/candy-chaos.md`
+- `source_files/character-and-level-design.md`
+- `source_files/citrus-cascade.md`
+- `source_files/dialogue-system.md`
+- `source_files/egg-factory-frenzy.md`
+- `source_files/game-design-doc.md`
+- `source_files/grease-canyon.md`
+- `source_files/imventory-system.txt`
+- `source_files/interaction-system.md`
+- `source_files/kitchen-mayhem.md`
+- `source_files/lgbtq+.md`
+- `source_files/pastry-palace.md`
+- `source_files/power-up-manager.txt`
+- `source_files/projectilemanagermd.txt`
+- `source_files/resource-management-assets.txt`
+- `source_files/ressource-management-in-game.txt`
+- `source_files/save-load-system.txt`
+- `source_files/score-manager.txt`
+- `source_files/sound-manager.txt`
+- `source_files/sprite-animation-controller.txt`
+- `source_files/sticky-syrup-swamp.md`
+- `source_files/tilemap-loader.txt`
+- `source_files/timer-manager.txt`
+- `source_files/visual-effects-manager.txt`
+- `source_files/visualfeedbackmd.txt`
+- `source_files/weapon-bacongunmd.txt`
+- `source_files/weapon-categories-and-ideas.txt`
+- `source_files/weapons-bacon-gun.md`
+- `source_files/weapons-level-reward.md`
+- `source_files/weapons-level-specific.md`
+- `source_files/weapons-level-specific.txt`
+- `source_files/weapons.md`
+- `source_files/weaponslevelrewardmd.txt`
+- `source_files/weaponslevelspecificmd.txt`
+- `source_files/weaponsmd.txt`
+- `source_files/weaponsystemmd.txt`
+
+## Added in Expanded Pass
+
+### New documentation
+
+- `docs/systems/06-health-damage-iframes.md`
+- `docs/systems/07-checkpoints-camera-events.md`
+- `docs/systems/08-ambiance-audio-minimap.md`
+- `docs/systems/09-customization-debug-editor-objectives.md`
+- `docs/development/development-roadmap.md`
+- `docs/minigames/modular-minigame-systems.md`
+
+### New Godot 4 GDScript
+
+- `godot/autoloads/AmbianceManager.gd`
+- `godot/autoloads/CheckpointSystem.gd`
+- `godot/autoloads/EventQueue.gd`
+- `godot/autoloads/EventSystem.gd`
+- `godot/autoloads/MiniGameManager.gd`
+- `godot/autoloads/QuestObjectiveManager.gd`
+- `godot/audio/DynamicSoundEffect.gd`
+- `godot/audio/FootstepSurfaceAudio.gd`
+- `godot/camera/DynamicCamera.gd`
+- `godot/components/CharacterCustomizer.gd`
+- `godot/components/DamageCalculator.gd`
+- `godot/components/HealthComponent.gd`
+- `godot/components/InvincibilityBlinker.gd`
+- `godot/debug/DebugOverlay.gd`
+- `godot/editor/LevelEditor.gd`
+- `godot/minimap/MinimapSystem.gd`
+- `godot/pickups/Checkpoint.gd`
+
+### New source files preserved
+
+- `source_files/ambiance-management.txt`
+- `source_files/character-customization.txt`
+- `source_files/checkpoint-and-respawn.txt`
+- `source_files/combat-brainstorm.txt`
+- `source_files/damagecalculations.txt`
+- `source_files/debug-tools.txt`
+- `source_files/development.txt`
+- `source_files/dynamic-camera-system.txt`
+- `source_files/dynamic-sound-effect.txt`
+- `source_files/event-queue-system.txt`
+- `source_files/event-system.txt`
+- `source_files/healthcomponent.txt`
+- `source_files/invincibilityframes.txt`
+- `source_files/level-editor-system.txt`
+- `source_files/minimap-system.txt`
+- `source_files/modular-minigame-systems.txt`
+- `source_files/quest-objective-system.txt`

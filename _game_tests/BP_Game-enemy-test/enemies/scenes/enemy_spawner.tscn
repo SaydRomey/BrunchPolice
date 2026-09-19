@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://enemyspawnerdemo"]
+
+[ext_resource type="Script" path="res://enemies/enemy_spawner.gd" id="1"]
+[ext_resource type="Script" path="res://enemies/enemy_spawn_point.gd" id="2"]
+
+[node name="EnemySpawner" type="Node2D"]
+script = ExtResource("1")
+spawn_on_ready = true
+max_alive = 3
+spawn_count = 2
+respawn_delay = 4.0
+
+[node name="SpawnPointA" type="Marker2D" parent="."]
+position = Vector2(-96, 0)
+script = ExtResource("2")
+
+[node name="SpawnPointB" type="Marker2D" parent="."]
+position = Vector2(96, 0)
+script = ExtResource("2")

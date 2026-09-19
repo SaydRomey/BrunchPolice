@@ -1,0 +1,166 @@
+[gd_scene format=3 uid="uid://c2cmd8fn0s5of"]
+
+[ext_resource type="Script" uid="uid://yqdm65jc5e0i" path="res://UI/InspectionMode.gd" id="1_2721y"]
+[ext_resource type="Script" uid="uid://bkkafcr0p4isu" path="res://UI/InspectableItem.gd" id="2_x56td"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_72et5"]
+
+[node name="InspectionMode" type="Node2D" unique_id=80826342]
+script = ExtResource("1_2721y")
+
+[node name="Background" type="ColorRect" parent="." unique_id=717171760]
+visible = false
+custom_minimum_size = Vector2(640, 360)
+offset_right = 640.0
+offset_bottom = 320.0
+mouse_filter = 2
+color = Color(0.613739, 0.7772149, 0.9296875, 1)
+
+[node name="BackgroundTexture" type="TextureRect" parent="." unique_id=578257821]
+visible = false
+custom_minimum_size = Vector2(640, 360)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="NPCCloseup" type="Sprite2D" parent="." unique_id=677995145]
+
+[node name="Items" type="Node2D" parent="." unique_id=1565208586]
+
+[node name="SuspiciousItem1" type="Area2D" parent="Items" unique_id=1331279640]
+position = Vector2(150, 200)
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+monitorable = false
+script = ExtResource("2_x56td")
+is_suspicious = true
+feedback_text = "Suspicious..."
+
+[node name="Sprite2D" type="Sprite2D" parent="Items/SuspiciousItem1" unique_id=140435274]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/SuspiciousItem1" unique_id=74700615]
+shape = SubResource("CircleShape2D_72et5")
+debug_color = Color(1, 0, 0, 0.41960785)
+
+[node name="SuspiciousItem2" type="Area2D" parent="Items" unique_id=168696559]
+position = Vector2(320, 100)
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+monitorable = false
+script = ExtResource("2_x56td")
+is_suspicious = true
+feedback_text = "Suspicious..."
+
+[node name="Sprite2D" type="Sprite2D" parent="Items/SuspiciousItem2" unique_id=1737927427]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/SuspiciousItem2" unique_id=1029125071]
+shape = SubResource("CircleShape2D_72et5")
+debug_color = Color(1, 0, 0, 0.41960785)
+
+[node name="SuspiciousItem3" type="Area2D" parent="Items" unique_id=956915111]
+position = Vector2(490, 100)
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+monitorable = false
+script = ExtResource("2_x56td")
+is_suspicious = true
+feedback_text = "Suspicious..."
+
+[node name="Sprite2D" type="Sprite2D" parent="Items/SuspiciousItem3" unique_id=880690444]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/SuspiciousItem3" unique_id=275697731]
+shape = SubResource("CircleShape2D_72et5")
+debug_color = Color(1, 0, 0, 0.41960785)
+
+[node name="DecoyItem1" type="Area2D" parent="Items" unique_id=1122214162]
+position = Vector2(220, 250)
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+monitorable = false
+script = ExtResource("2_x56td")
+
+[node name="Sprite2D" type="Sprite2D" parent="Items/DecoyItem1" unique_id=1737163226]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/DecoyItem1" unique_id=931234047]
+shape = SubResource("CircleShape2D_72et5")
+debug_color = Color(0.021936273, 0.70196074, 0, 0.41960785)
+
+[node name="DecoyItem2" type="Area2D" parent="Items" unique_id=1249755508]
+position = Vector2(420, 250)
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+monitorable = false
+script = ExtResource("2_x56td")
+
+[node name="Sprite2D" type="Sprite2D" parent="Items/DecoyItem2" unique_id=1821981617]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/DecoyItem2" unique_id=61160295]
+shape = SubResource("CircleShape2D_72et5")
+debug_color = Color(0.021936273, 0.70196074, 0, 0.41960785)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=503322664]
+layer = 10
+
+[node name="UI" type="Control" parent="CanvasLayer" unique_id=1594722811]
+custom_minimum_size = Vector2(640, 320)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="FeedbackLabel" type="Label" parent="CanvasLayer/UI" unique_id=542332147]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = 80.0
+grow_vertical = 0
+text = "FEEDBACK"
+metadata/_edit_use_anchors_ = true
+
+[node name="ProgressLabel" type="Label" parent="CanvasLayer/UI" unique_id=725726338]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -16.5
+offset_top = -23.0
+offset_right = 16.5
+grow_horizontal = 2
+grow_vertical = 0
+text = "0 / 3"
+metadata/_edit_use_anchors_ = true
+
+[node name="FeedbackTimer" type="Timer" parent="CanvasLayer/UI" unique_id=2018775264]
+unique_name_in_owner = true
+one_shot = true
+
+[connection signal="input_event" from="Items/SuspiciousItem1" to="Items/SuspiciousItem1" method="_on_input_event"]
+[connection signal="input_event" from="Items/SuspiciousItem2" to="Items/SuspiciousItem2" method="_on_input_event"]
+[connection signal="input_event" from="Items/SuspiciousItem3" to="Items/SuspiciousItem3" method="_on_input_event"]
+[connection signal="input_event" from="Items/DecoyItem1" to="Items/DecoyItem1" method="_on_input_event"]
+[connection signal="input_event" from="Items/DecoyItem2" to="Items/DecoyItem2" method="_on_input_event"]
+[connection signal="timeout" from="CanvasLayer/UI/FeedbackTimer" to="." method="_on_feedback_timer_timeout"]

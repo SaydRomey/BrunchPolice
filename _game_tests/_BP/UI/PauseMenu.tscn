@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://do71x4e2dg62y"]
+
+[ext_resource type="Script" uid="uid://c7let880175g2" path="res://UI/PauseMenu.gd" id="1_05bun"]
+[ext_resource type="FontFile" uid="uid://d2csu21pfigke" path="res://UI/PixelOperator8-Bold.ttf" id="2_tsvmi"]
+
+[sub_resource type="Theme" id="Theme_72et5"]
+default_font = ExtResource("2_tsvmi")
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=1570317229]
+process_mode = 3
+layer = 20
+script = ExtResource("1_05bun")
+
+[node name="UI" type="Control" parent="." unique_id=1172001626]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DimBackground" type="ColorRect" parent="UI" unique_id=1241708610]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.47058824, 0.38039216, 0.29411766, 0.59607846)
+
+[node name="CenterContainer" type="CenterContainer" parent="UI" unique_id=1182760227]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme = SubResource("Theme_72et5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/CenterContainer" unique_id=907184575]
+layout_mode = 2
+alignment = 1
+
+[node name="Resume" type="Button" parent="UI/CenterContainer/VBoxContainer" unique_id=1489874272]
+unique_name_in_owner = true
+layout_mode = 2
+text = "RESUME"
+
+[node name="QuitToTitle" type="Button" parent="UI/CenterContainer/VBoxContainer" unique_id=1103069801]
+unique_name_in_owner = true
+layout_mode = 2
+text = "QUIT TO TITLE"
+
+[connection signal="pressed" from="UI/CenterContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="UI/CenterContainer/VBoxContainer/QuitToTitle" to="." method="_on_quit_to_title_pressed"]

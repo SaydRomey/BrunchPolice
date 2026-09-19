@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://bt52iqklecqqg"]
+
+[ext_resource type="Script" uid="uid://dbixa1oyn5vr0" path="res://Entities/RoamingNPC.gd" id="1_m0r3o"]
+[ext_resource type="Texture2D" uid="uid://b6801sbrmduws" path="res://Entities/Character0_Idle.png" id="2_y6ina"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kth3w"]
+radius = 9.0
+height = 28.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_72et5"]
+radius = 13.0
+height = 36.0
+
+[node name="RoamingNpc" type="CharacterBody2D" unique_id=1708992552]
+collision_mask = 3
+script = ExtResource("1_m0r3o")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1939396137]
+position = Vector2(0.06250006, -2.9375002)
+scale = Vector2(0.09103262, 0.09103262)
+texture = ExtResource("2_y6ina")
+hframes = 8
+vframes = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1178853347]
+shape = SubResource("CapsuleShape2D_kth3w")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=60100432]
+
+[node name="WaitTimer" type="Timer" parent="." unique_id=570349865]
+one_shot = true
+
+[node name="TalkTimer" type="Timer" parent="." unique_id=241806381]
+one_shot = true
+
+[node name="InteractArea" type="Area2D" parent="." unique_id=1086843379]
+collision_layer = 4
+collision_mask = 0
+input_pickable = false
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea" unique_id=366221933]
+shape = SubResource("CapsuleShape2D_72et5")
+debug_color = Color(0.86369824, 0.32646132, 0.3961832, 0.41960785)
+
+[node name="NameLabel" type="Label" parent="." unique_id=229354197]
+unique_name_in_owner = true
+offset_left = -15.0
+offset_top = -22.0
+offset_right = 16.0
+offset_bottom = 1.0
+horizontal_alignment = 1
+
+[connection signal="timeout" from="WaitTimer" to="." method="_on_wait_timer_timeout"]
+[connection signal="timeout" from="TalkTimer" to="." method="_on_talk_timer_timeout"]

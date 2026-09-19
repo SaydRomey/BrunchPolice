@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://c822j2lwunoir"]
+
+[ext_resource type="Script" uid="uid://hsyqw8cncfwd" path="res://Entities/PortalNPC.gd" id="1_gu1hk"]
+[ext_resource type="Texture2D" uid="uid://b6801sbrmduws" path="res://Entities/Character0_Idle.png" id="1_sommv"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gu1hk"]
+
+[node name="PortalNpc" type="Area2D" unique_id=1548466496]
+collision_layer = 4
+collision_mask = 0
+input_pickable = false
+monitoring = false
+script = ExtResource("1_gu1hk")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1207132868]
+position = Vector2(0.06250006, -2.9375002)
+scale = Vector2(0.09103262, 0.09103262)
+texture = ExtResource("1_sommv")
+hframes = 8
+vframes = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=206166498]
+shape = SubResource("CapsuleShape2D_gu1hk")

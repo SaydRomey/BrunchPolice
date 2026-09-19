@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://530cxy5ngm2h"]
+
+[ext_resource type="Script" uid="uid://byf0h7fv0jhk1" path="res://UI/MainMenu.gd" id="1_uahxu"]
+[ext_resource type="FontFile" uid="uid://d2csu21pfigke" path="res://UI/PixelOperator8-Bold.ttf" id="2_b37jj"]
+[ext_resource type="Texture2D" uid="uid://870rjfqok1at" path="res://UI/bp_badge_logo_2.png" id="3_8aown"]
+
+[sub_resource type="Theme" id="Theme_kre3y"]
+default_font = ExtResource("2_b37jj")
+
+[node name="MainMenu" type="Control" unique_id=880124563]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uahxu")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1275731627]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.13825987, 0.45521134, 0.6940104, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1946208545]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_kre3y")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=552289508]
+layout_mode = 2
+
+[node name="Logo" type="TextureRect" parent="CenterContainer/VBoxContainer" unique_id=475185675]
+layout_mode = 2
+texture = ExtResource("3_8aown")
+stretch_mode = 4
+
+[node name="Play" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1808399499]
+unique_name_in_owner = true
+layout_mode = 2
+text = "PLAY"
+
+[node name="Settings" type="Button" parent="CenterContainer/VBoxContainer" unique_id=121419418]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "SETTINGS"
+
+[node name="Quit" type="Button" parent="CenterContainer/VBoxContainer" unique_id=259298929]
+unique_name_in_owner = true
+layout_mode = 2
+text = "QUIT"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

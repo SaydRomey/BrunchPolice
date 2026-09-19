@@ -44,6 +44,7 @@ var facing: Facing = Facing.SOUTH
 
 @onready var fsm: StateMachine = $StateMachine
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var interaction_area: Area2D = $InteractionArea
 
 
 func _ready() -> void:
@@ -271,3 +272,32 @@ func play_directional_animation(base_name: String) -> void:
 				return
 
 	push_warning("Missing animation for base '%s' and facing '%s'." % [base_name, str(facing)])
+
+
+# -----------------------------------------------------------------------------
+# Interaction helper
+# -----------------------------------------------------------------------------
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not event.is_action_pressed(&"interact"):
+		return
+	
+	var viewport := get_viewport()
+	if viewport != null:
+		viewport.set_input_as_handled()
+	
+	_try_interact()
+
+
+func _try_interact() -> void:
+	# Gather all the zones (NPCs) in the InteractionArea of the player
+	for area: Area2D in interaction_area.get_overlapping_areas():
+		var target: Node = area
+
+		if not target.has_method(&"interact"):
+			target = area.get_parent()
+		
+		# If the zone has an 'interact' method (It's an NPC)
+		if target != null and target.has_method(&"interact"):
+			target.call(&"interact")
+			return # We interact with only one NPC at a time

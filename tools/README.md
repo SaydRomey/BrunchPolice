@@ -9,6 +9,7 @@
     - [Moving and Renaming Files](#moving-and-renaming-files)
 - [Misc](#misc)
     - [Pixel PNG Generator](#pixel-png-generator)
+    - [Print Every Characters](#print-every-characters)
 - [Dependencies](#dependencies)
 
 ---
@@ -173,6 +174,29 @@ c9e2b3ff
 
 ---
 
+### Print Every Characters
+
+Script: [Output All Available Characters on the CLI][print-all-chars]
+
+> [!WARNING] Messy  
+> The output is not rendered well in my terminal...  
+> [This version of the `print-all-chars` script][print-all-chars-2] might be better (w.i.p.)
+
+Features:
+- Analyzes every character and identifies its exact type 
+  (e.g., lowercase, currency, math symbol) based on international standards.
+- Scans all 1,114,112 possible Unicode code points, 
+  ensuring it catches everything available on your system,
+  including math notations, global scripts, and emojis.
+- Packs all characters of the exact same type into a single, 
+  continuous line for ~~clean~~ terminal printing.
+
+> [!NOTE] Upgrades  
+> [The version 2 of the script][print-all-chars-2] is a little cleaner.  
+> [The version 3 of the script][print-all-chars-3] prompts for language.
+
+---
+
 ## Dependencies
 
 - [ImageMagick][url-imagemagick]
@@ -207,5 +231,7 @@ brew install imagemagick node
 [fix-white-background]: ./fix-white-background.sh "Non-gray White Background Cleanup"
 [webp-to-png]: ./webp_to_png.sh "WebP to PNG Converter"
 [sprite-file-utils]: ./sprite-file-utils.sh "Sprite File Batch Move and Rename Utilities"
-[download-1x1]: ./download-1x1.js "Minimal Color Pixel Asset Generator"
-
+[download-1x1]: ./download-1x1.js "Minimal Color Pixel Asset Generator"  
+[print-all-chars]: ./print-all-chars.sh "Extensive Characters From Every Dimension"
+[print-all-chars-2]: ./print-all-chars-2.sh "w.i.p. Cleaner Output"
+[print-all-chars-3]: ./print-all-chars-3.sh "w.i.p. Prompt and Language Selection"

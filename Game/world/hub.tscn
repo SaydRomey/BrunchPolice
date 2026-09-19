@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://dppgxdu75y0fh"]
+
+[ext_resource type="PackedScene" uid="uid://bkia7dfud8ufb" path="res://player/player.tscn" id="1_ndfb8"]
+[ext_resource type="Script" uid="uid://bheshebtrw7r2" path="res://world/camera_2d.gd" id="2_qv2hu"]
+[ext_resource type="PackedScene" uid="uid://00tr3sigbx7a" path="res://entities/roaming_npc.tscn" id="3_xey58"]
+[ext_resource type="PackedScene" uid="uid://bjq235o48pns6" path="res://ui/pause_menu.tscn" id="4_qt21f"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_kth3w"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_72et5"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_a8q6k"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_a1w5w"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_qrvfw"]
+vertices = PackedVector2Array(767.0469, 229.00781, -14.4609375, 229.99219, -224.71094, -250.00781, 769.9297, -250.99219)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-240, -260, 780, -261, 777, 239, -21, 240)])
+
+[node name="Hub" type="Node2D" unique_id=1710891097]
+
+[node name="WorldBounds" type="StaticBody2D" parent="." unique_id=1513817239]
+
+[node name="TopBoundary" type="CollisionShape2D" parent="WorldBounds" unique_id=1398536088]
+position = Vector2(640, 0)
+shape = SubResource("WorldBoundaryShape2D_kth3w")
+
+[node name="BottomBoundary" type="CollisionShape2D" parent="WorldBounds" unique_id=1420941358]
+position = Vector2(640, 720)
+shape = SubResource("WorldBoundaryShape2D_72et5")
+
+[node name="LeftBoundary" type="CollisionShape2D" parent="WorldBounds" unique_id=1509633621]
+position = Vector2(0, 360)
+shape = SubResource("WorldBoundaryShape2D_a8q6k")
+
+[node name="RightBoundary" type="CollisionShape2D" parent="WorldBounds" unique_id=1296691618]
+position = Vector2(1280, 360)
+shape = SubResource("WorldBoundaryShape2D_a1w5w")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1673992984]
+position = Vector2(360, 360)
+navigation_polygon = SubResource("NavigationPolygon_qrvfw")
+
+[node name="POIs" type="Node2D" parent="." unique_id=1361390542 groups=["poi_zone"]]
+
+[node name="POI1" type="Marker2D" parent="POIs" unique_id=1814237574]
+position = Vector2(263, 172)
+
+[node name="POI2" type="Marker2D" parent="POIs" unique_id=408590386]
+position = Vector2(1025, 196)
+
+[node name="POI3" type="Marker2D" parent="POIs" unique_id=2011548038]
+position = Vector2(1054, 543)
+
+[node name="POI4" type="Marker2D" parent="POIs" unique_id=3488525]
+position = Vector2(387, 558)
+
+[node name="Player" parent="." unique_id=40968361 instance=ExtResource("1_ndfb8")]
+position = Vector2(640, 640)
+starting_mode = 1
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1610923592]
+limit_left = 0
+limit_top = 0
+limit_right = 1280
+limit_bottom = 720
+position_smoothing_enabled = true
+script = ExtResource("2_qv2hu")
+
+[node name="RoamingNpc" parent="." unique_id=1482491024 instance=ExtResource("3_xey58")]
+position = Vector2(720, 360)
+scale = Vector2(0.5, 0.5)
+
+[node name="PauseMenu" parent="." unique_id=1192877445 instance=ExtResource("4_qt21f")]

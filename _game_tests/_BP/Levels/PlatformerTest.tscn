@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://bcmhvos5481lu"]
+
+[ext_resource type="PackedScene" uid="uid://crdf52ecjsqsd" path="res://Entities/PlayerPlatformer.tscn" id="1_qpq88"]
+[ext_resource type="PackedScene" uid="uid://do71x4e2dg62y" path="res://UI/PauseMenu.tscn" id="2_jqeyn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jqeyn"]
+size = Vector2(640, 40)
+
+[node name="PlatformerTest" type="Node2D" unique_id=1208982514]
+
+[node name="Background" type="ColorRect" parent="." unique_id=152311333]
+custom_minimum_size = Vector2(640, 360)
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="Platforms" type="Node2D" parent="." unique_id=1595219570]
+
+[node name="Floor" type="StaticBody2D" parent="Platforms" unique_id=1234134513]
+position = Vector2(320, 340)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Floor" unique_id=385268545]
+shape = SubResource("RectangleShape2D_jqeyn")
+
+[node name="PlayerPlatformer" parent="." unique_id=271209034 instance=ExtResource("1_qpq88")]
+position = Vector2(100, 280)
+
+[node name="PauseMenu" parent="PlayerPlatformer" unique_id=780769886 instance=ExtResource("2_jqeyn")]
+
+[node name="FinishArea" type="Area2D" parent="." unique_id=968618034]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FinishArea" unique_id=793145700]
+
+[node name="PauseMenu" parent="." unique_id=1570317229 instance=ExtResource("2_jqeyn")]

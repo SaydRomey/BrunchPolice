@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://dlvcq883sq46u"]
+
+[ext_resource type="PackedScene" uid="uid://dws78g1hxv8ri" path="res://Entities/PlayerHub.tscn" id="1_c2pbl"]
+[ext_resource type="PackedScene" uid="uid://bt52iqklecqqg" path="res://Entities/RoamingNPC.tscn" id="1_gvx88"]
+[ext_resource type="Script" uid="uid://coaudt3r2attp" path="res://UI/PlayerHubCamera.gd" id="2_dwbsd"]
+[ext_resource type="PackedScene" uid="uid://c822j2lwunoir" path="res://Entities/PortalNPC.tscn" id="3_0pegt"]
+[ext_resource type="PackedScene" uid="uid://do71x4e2dg62y" path="res://UI/PauseMenu.tscn" id="5_wpa5h"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1thrt"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3wcn2"]
+distance = -360.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_5tohe"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_7ty56"]
+normal = Vector2(-1, 0)
+distance = -640.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_72et5"]
+vertices = PackedVector2Array(565.59375, 287.03125, 16.84375, 288.96094, 12.1484375, -9.1328125, 584.35156, -16.851563)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(2, -19, 595, -27, 575, 297, -17, 311)])
+
+[node name="Hub" type="Node2D" unique_id=961270541]
+
+[node name="WorldBounds" type="StaticBody2D" parent="." unique_id=1042128387]
+
+[node name="TopBoundary" type="CollisionShape2D" parent="WorldBounds" unique_id=525945744]
+shape = SubResource("WorldBoundaryShape2D_1thrt")
+
+[node name="BottomBoundary" type="CollisionShape2D" parent="WorldBounds" unique_id=776358990]
+shape = SubResource("WorldBoundaryShape2D_3wcn2")
+
+[node name="LeftBoundary" type="CollisionShape2D" parent="WorldBounds" unique_id=243127261]
+shape = SubResource("WorldBoundaryShape2D_5tohe")
+
+[node name="RightBoundary" type="CollisionShape2D" parent="WorldBounds" unique_id=326808947]
+shape = SubResource("WorldBoundaryShape2D_7ty56")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=278044326]
+position = Vector2(34, 39)
+navigation_polygon = SubResource("NavigationPolygon_72et5")
+
+[node name="PlayerHub" parent="." unique_id=1309136994 instance=ExtResource("1_c2pbl")]
+position = Vector2(322, 314)
+
+[node name="Camera2D" type="Camera2D" parent="PlayerHub" unique_id=1671205953]
+zoom = Vector2(1.5, 1.5)
+limit_left = 0
+limit_top = 0
+limit_right = 640
+limit_bottom = 360
+position_smoothing_enabled = true
+script = ExtResource("2_dwbsd")
+
+[node name="PortalNpc" parent="." unique_id=1548466496 instance=ExtResource("3_0pegt")]
+position = Vector2(467, 175)
+level_to_load = "uid://bcmhvos5481lu"
+
+[node name="POIs" type="Node2D" parent="." unique_id=1893930649 groups=["poi_zone"]]
+
+[node name="POI1" type="Marker2D" parent="POIs" unique_id=834469080]
+position = Vector2(100, 103)
+
+[node name="POI2" type="Marker2D" parent="POIs" unique_id=1741052893]
+position = Vector2(87, 277)
+
+[node name="POI3" type="Marker2D" parent="POIs" unique_id=1266594806]
+position = Vector2(486, 101)
+
+[node name="POI4" type="Marker2D" parent="POIs" unique_id=1653473035]
+position = Vector2(502, 236)
+
+[node name="RoamingNpc" parent="." unique_id=1708992552 instance=ExtResource("1_gvx88")]
+self_modulate = Color(0.99088544, 0.068381436, 0.53505987, 1)
+position = Vector2(279, 62)
+npc_name = "Happy"
+dialogues = Array[String](["Hello !", "This place is great.", "Miam ."])
+
+[node name="RoamingNpc2" parent="." unique_id=1903914345 instance=ExtResource("1_gvx88")]
+self_modulate = Color(0.91764706, 0.5882353, 0.27450982, 1)
+position = Vector2(140, 291)
+scale = Vector2(0.75, 0.75)
+speed = 150.0
+npc_name = "Kid"
+dialogues = Array[String](["The maple syrup is way too thick ...", "I need more waffles ! .", "Do you want my bacon ?"])
+
+[node name="RoamingNpc3" parent="." unique_id=14171466 instance=ExtResource("1_gvx88")]
+self_modulate = Color(0.91796875, 0.21344006, 0.025100708, 1)
+position = Vector2(78, 172)
+speed = 75.0
+npc_name = "Annoyed"
+dialogues = Array[String](["I suppose i will be late to work ... !", "The coffee is cold .", "Where are the waiters ?."])
+
+[node name="RoamingNpc4" parent="." unique_id=187946698 instance=ExtResource("1_gvx88")]
+self_modulate = Color(0.52734375, 0.42366028, 0.42366028, 1)
+position = Vector2(544, 91)
+speed = 50.0
+npc_name = "Elderly"
+dialogues = Array[String](["Nothing beats burnt toasts and butter !", "I can't seem to find the bathrroms ...", "People use to have better manners ."])
+
+[node name="PauseMenu" parent="." unique_id=1570317229 instance=ExtResource("5_wpa5h")]

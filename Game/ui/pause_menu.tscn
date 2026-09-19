@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://bjq235o48pns6"]
+
+[ext_resource type="Script" uid="uid://cpbn5yn03o12l" path="res://ui/pause_menu.gd" id="1_50142"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=1192877445]
+process_mode = 3
+layer = 20
+script = ExtResource("1_50142")
+
+[node name="UI" type="Control" parent="." unique_id=1938118237]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DimBackground" type="ColorRect" parent="UI" unique_id=2086000292]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.7666667, 0, 0.43137255)
+
+[node name="CenterContainer" type="CenterContainer" parent="UI" unique_id=1980120806]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/CenterContainer" unique_id=1237491980]
+layout_mode = 2
+
+[node name="Resume" type="Button" parent="UI/CenterContainer/VBoxContainer" unique_id=1207872233]
+unique_name_in_owner = true
+layout_mode = 2
+text = "RESUME"
+
+[node name="QuitToTitle" type="Button" parent="UI/CenterContainer/VBoxContainer" unique_id=2007596771]
+unique_name_in_owner = true
+layout_mode = 2
+text = "QUIT TO TITLE"
+
+[connection signal="pressed" from="UI/CenterContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="UI/CenterContainer/VBoxContainer/QuitToTitle" to="." method="_on_quit_to_title_pressed"]

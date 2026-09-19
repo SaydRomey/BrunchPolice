@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://djbh1j5xpkwys"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_72et5"]
+
+[node name="WorldObject" type="StaticBody2D" unique_id=1461277823]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=805907987]
+shape = SubResource("RectangleShape2D_72et5")
+debug_color = Color(0.7019608, 0, 0.3137255, 0.5254902)

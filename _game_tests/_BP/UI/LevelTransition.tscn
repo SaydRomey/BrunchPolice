@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://dg8qm7ruckvqe"]
+
+[ext_resource type="Script" uid="uid://c40uxo035iwu5" path="res://UI/LevelTransition.gd" id="1_1thrt"]
+
+[node name="LevelTransition" type="Control" unique_id=906227360]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1thrt")
+
+[node name="Background" type="ColorRect" parent="." unique_id=55763849]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=374321978]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LevelTitle" type="Label" parent="CenterContainer" unique_id=1023137071]
+unique_name_in_owner = true
+layout_mode = 2
+text = "LEVEL TITLE"
+
+[node name="Timer" type="Timer" parent="." unique_id=1689139621]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

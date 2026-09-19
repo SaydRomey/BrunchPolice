@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://4bi3dcnq45vu"]
+
+[ext_resource type="PackedScene" uid="uid://bkia7dfud8ufb" path="res://player/player.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://1wqbw83sdj7s" path="res://enemies/scenes/small_angry_pig.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://cx3rvvpufg03" path="res://enemies/scenes/flying_sausage_link.tscn" id="3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(900, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform"]
+size = Vector2(220, 28)
+
+[node name="EnemyTestPlatformer" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1")]
+position = Vector2(80, 260)
+jump_impulse = 800.0
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(450, 360)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="Platform" type="StaticBody2D" parent="."]
+position = Vector2(500, 250)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform"]
+shape = SubResource("RectangleShape2D_platform")
+
+[node name="SmallAngryPig" parent="." instance=ExtResource("2")]
+position = Vector2(520, 330)
+
+[node name="FlyingSausageLink" parent="." instance=ExtResource("3")]
+position = Vector2(610, 170)

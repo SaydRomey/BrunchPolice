@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://brunchweaponbacongunpickup"]
+
+[ext_resource type="Script" path="res://weapons/weapon_pickup.gd" id="1_pickup"]
+[ext_resource type="Resource" path="res://weapons/data/bacon_gun.tres" id="2_weapon"]
+[ext_resource type="Texture2D" path="res://weapons/sprites/pickups/bacon_gun_pickup.png" id="3_texture"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pickup"]
+size = Vector2(28, 28)
+
+[node name="BaconGunPickup" type="Area2D"]
+script = ExtResource("1_pickup")
+weapon_data = ExtResource("2_weapon")
+collision_layer = 0
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_texture")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_pickup")

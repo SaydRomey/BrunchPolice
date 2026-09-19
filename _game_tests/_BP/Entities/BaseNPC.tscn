@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bsvc8t5wqionx"]
+
+[ext_resource type="Script" uid="uid://cuyhep4r0f5dk" path="res://Entities/BaseNPC.gd" id="1_auxts"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_72et5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kth3w"]
+radius = 19.026299
+
+[node name="BaseNpc" type="CharacterBody2D" unique_id=1442094796]
+script = ExtResource("1_auxts")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1633247111]
+unique_name_in_owner = true
+
+[node name="BodyCollision" type="CollisionShape2D" parent="." unique_id=1880840152]
+unique_name_in_owner = true
+shape = SubResource("CapsuleShape2D_72et5")
+
+[node name="InteractArea" type="Area2D" parent="." unique_id=372306128]
+unique_name_in_owner = true
+collision_layer = 4
+collision_mask = 0
+input_pickable = false
+monitoring = false
+
+[node name="InteractionCollision" type="CollisionShape2D" parent="InteractArea" unique_id=2144650280]
+unique_name_in_owner = true
+shape = SubResource("CircleShape2D_kth3w")
+
+[node name="NameLabel" type="Label" parent="." unique_id=1872733969]
+unique_name_in_owner = true
+offset_right = 40.0
+offset_bottom = 23.0

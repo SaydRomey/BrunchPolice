@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=5 format=3 uid="uid://brunchweapondatafork"]
+
+[ext_resource type="Script" path="res://weapons/weapon_data.gd" id="1_weapon_data"]
+[ext_resource type="PackedScene" path="res://weapons/scenes/melee_hitbox.tscn" id="2_hitbox"]
+[ext_resource type="Texture2D" path="res://weapons/sprites/icons/brunch_fork_icon.png" id="3_icon"]
+[ext_resource type="Texture2D" path="res://weapons/sprites/held/brunch_fork_held.png" id="4_held"]
+
+[resource]
+script = ExtResource("1_weapon_data")
+weapon_id = "brunch_fork"
+display_name = "Brunch Fork"
+level_source = "Global"
+slot_type = 0
+range_type = 0
+damage = 1
+cooldown = 0.22
+knockback = 160.0
+ammo_capacity = -1
+melee_hitbox_scene = ExtResource("2_hitbox")
+status_effects = Array[String]([])
+status_duration = 0.0
+icon = ExtResource("3_icon")
+held_texture = ExtResource("4_held")
+attack_animation_base = "attack"
+notes = "Default melee weapon for quick low-damage attacks."

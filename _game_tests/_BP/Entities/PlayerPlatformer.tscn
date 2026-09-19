@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://crdf52ecjsqsd"]
+
+[ext_resource type="Script" uid="uid://cr0yuf5hcrydl" path="res://Entities/PlayerPlatformer.gd" id="1_0s8fj"]
+[ext_resource type="Texture2D" uid="uid://bw6il6s3nyrku" path="res://Entities/Brunch_Police.png" id="2_0iw2y"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sd3cf"]
+radius = 14.0
+height = 56.0
+
+[node name="PlayerPlatformer" type="CharacterBody2D" unique_id=271209034]
+collision_layer = 2
+script = ExtResource("1_0s8fj")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=981424366]
+position = Vector2(1, 0)
+texture = ExtResource("2_0iw2y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1773911955]
+position = Vector2(0, 3)
+shape = SubResource("CapsuleShape2D_sd3cf")

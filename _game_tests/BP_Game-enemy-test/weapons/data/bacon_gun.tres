@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=6 format=3 uid="uid://brunchweapondatabacongun"]
+
+[ext_resource type="Script" path="res://weapons/weapon_data.gd" id="1_weapon_data"]
+[ext_resource type="PackedScene" path="res://weapons/scenes/bacon_projectile.tscn" id="2_projectile"]
+[ext_resource type="Texture2D" path="res://weapons/sprites/icons/bacon_gun_icon.png" id="3_icon"]
+[ext_resource type="Texture2D" path="res://weapons/sprites/held/bacon_gun_held.png" id="4_held"]
+[ext_resource type="Texture2D" path="res://weapons/sprites/pickups/bacon_gun_pickup.png" id="5_pickup"]
+
+[resource]
+script = ExtResource("1_weapon_data")
+weapon_id = "bacon_gun"
+display_name = "Bacon Gun"
+level_source = "Grease Canyon / Global Candidate"
+slot_type = 0
+range_type = 1
+damage = 1
+cooldown = 0.45
+knockback = 120.0
+ammo_capacity = -1
+projectile_scene = ExtResource("2_projectile")
+status_effects = Array[String](["wrapped"])
+status_duration = 1.5
+icon = ExtResource("3_icon")
+held_texture = ExtResource("4_held")
+pickup_texture = ExtResource("5_pickup")
+attack_animation_base = "shoot"
+projectile_speed = 900.0
+projectile_lifetime = 1.2
+notes = "Ranged control weapon. Fires bacon projectiles that can wrap enemies."

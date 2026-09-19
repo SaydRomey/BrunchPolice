@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dws78g1hxv8ri"]
+
+[ext_resource type="Script" uid="uid://b0y10sxkolmqw" path="res://Entities/PlayerHub.gd" id="1_g657c"]
+[ext_resource type="Texture2D" uid="uid://bw6il6s3nyrku" path="res://Entities/Brunch_Police.png" id="2_ar1v2"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_72et5"]
+radius = 12.0
+height = 58.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kth3w"]
+radius = 22.0
+height = 66.0
+
+[node name="PlayerHub" type="CharacterBody2D" unique_id=1309136994]
+collision_layer = 2
+script = ExtResource("1_g657c")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=794464025]
+position = Vector2(1, 0)
+texture = ExtResource("2_ar1v2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1607567860]
+shape = SubResource("CapsuleShape2D_72et5")
+
+[node name="InteractionArea" type="Area2D" parent="." unique_id=1780205045]
+collision_layer = 0
+collision_mask = 4
+input_pickable = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1467343402]
+shape = SubResource("CapsuleShape2D_kth3w")
+debug_color = Color(0.7681791, 0.39509135, 0.5549552, 0.41960785)

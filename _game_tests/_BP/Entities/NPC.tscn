@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://d4ajr51nvuxii"]
+
+[ext_resource type="Texture2D" uid="uid://b6801sbrmduws" path="res://Entities/Character0_Idle.png" id="2_ar0s7"]
+
+[sub_resource type="GDScript" id="GDScript_fkfp1"]
+script/source = "# Entities/NPC.gd
+extends Area2D
+
+# Expose the dialogs in the inspectour to modify easily
+@export var dialogs: Array[String] = [
+	\"This croissant is delicious !\",
+	\"Did you taste the coffee ?\",
+	\"It's a nice day.\",
+]
+
+#@export var dialogues: Array[String] = [
+	#\"Ce croissant est délicieux !\",
+	#\"As-tu goûté au café ?\",
+	#\"Il fait beau aujourd'hui.\"
+#]
+
+func interact():
+	# Pick a random sentence
+	var sentence = dialogs.pick_random()
+
+	# TODO: replace print() -> call UI dialog interface
+	print(\"NPC says : \", sentence)
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_72et5"]
+
+[node name="Npc" type="Area2D" unique_id=412088142]
+script = SubResource("GDScript_fkfp1")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=950507604]
+position = Vector2(0.06250006, -2.9375002)
+scale = Vector2(0.09103262, 0.09103262)
+texture = ExtResource("2_ar0s7")
+hframes = 8
+vframes = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1063103899]
+shape = SubResource("CapsuleShape2D_72et5")

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://enemies/enemy_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+enemy_id = "small_angry_pig"
+display_name = "Small Angry Pig"
+level_source = "Grease Canyon"
+enemy_class = "Ground charger"
+max_health = 2
+speed = 85.0
+damage = 1
+detection_range = 220.0
+attack_range = 190.0
+attack_cooldown = 0.8
+knockback_force = 320.0
+gravity = 4000.0
+movement_behavior = "patrol_charge"
+attack_behavior = "contact_charge"
+notes = "Patrols platforms, winds up, charges, and recovers. Good first enemy for Grease Canyon."

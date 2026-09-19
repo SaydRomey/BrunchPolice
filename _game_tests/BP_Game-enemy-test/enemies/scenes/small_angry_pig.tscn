@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=3 uid="uid://smallangrypigdemo"]
+
+[ext_resource type="Script" path="res://enemies/small_angry_pig.gd" id="1"]
+[ext_resource type="Script" path="res://combat/contact_damage_area.gd" id="2"]
+[ext_resource type="Texture2D" path="res://enemies/sprites/placeholders/small_angry_pig_placeholder.png" id="3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(26, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_contact"]
+size = Vector2(30, 22)
+
+[node name="SmallAngryPig" type="CharacterBody2D" groups=["enemies"]]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1")
+max_health = 2
+speed = 85.0
+damage = 1
+detection_range = 220.0
+attack_range = 190.0
+avoid_edges = true
+idle_animation = "idle"
+patrol_animation = "patrol"
+chase_animation = "patrol"
+attack_animation = "charge"
+stunned_animation = "stunned"
+wrapped_animation = "wrapped"
+death_animation = "defeat"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3")
+centered = true
+position = Vector2(0, -10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="ContactDamageArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactDamageArea"]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_contact")
+
+[node name="FloorRayLeft" type="RayCast2D" parent="."]
+position = Vector2(-12, 2)
+target_position = Vector2(0, 28)
+enabled = true
+collision_mask = 1
+
+[node name="FloorRayRight" type="RayCast2D" parent="."]
+position = Vector2(12, 2)
+target_position = Vector2(0, 28)
+enabled = true
+collision_mask = 1
+
+[node name="WallRayLeft" type="RayCast2D" parent="."]
+position = Vector2(-14, -10)
+target_position = Vector2(-10, 0)
+enabled = true
+collision_mask = 1
+
+[node name="WallRayRight" type="RayCast2D" parent="."]
+position = Vector2(14, -10)
+target_position = Vector2(10, 0)
+enabled = true
+collision_mask = 1
