@@ -44,5 +44,22 @@ extern/godot-cpp/include/gen/
 # Temporary files
 tmp*
 
-# zip files
+# Drive synchronization temporary files
+.tmp.driveupload
+.tmp.drivedownload
+
+# Local Dir
+_local*
+
+# Compressed archives
 *.zip
+*.tar
+*.gz
+*.rar
+*.7z
+*.dmg
+*.iso
+*.jar
+
+# Ignore all .ini files
+*.ini
