@@ -1,36 +1,27 @@
 
-# Brunch Police
+<div align="center">
+  <h1>Brunch Police — Game Design & Technical Documentation</h1>
+    <img src="assets/bp_placeholder_title.png" alt="Brunch Police Logo" width="500">
+</div>
 
-> [!NOTE] W.I.P.  
-> Overhaul of documentation in progress...
+<!-- # Brunch Police — Game Design & Technical Documentation -->
 
-## Original Docs
-- [Game Design Document][gdd]
-- [Character and Level Design Document][levels]
-- [Weapons Ideas and Implementation Document][weapons]
-- [Enemies Document][enemies]
-- [Interaction System][interactions]
-- [Dialogue System][dialogue]
+<!-- **Edition:** 1.0
+**Engine:** Godot 4
+**Language:** GDScript
+**Scope:** Eight-world action-adventure platformer with a detective hub. -->
 
-[gdd]: ./docs/game-design/game-design-doc.md
-[levels]: ./docs/game-design/character-and-level-design.md
-[weapons]: ./docs/game-design/weapons/weapons.md
-[enemies]: ./docs/game-design/enemies/enemies.md
-[interactions]: ./docs/game-design/interaction-system.md
-[dialogue]: ./docs/game-design/dialogue-system.md
+Begin with the [official documentation index](docs/00-master-index.md). 
+
+<!-- Each section establishes a game rule, content contract, production guideline, or acceptance criterion. 
+
+Where values are marked **tuning**, they are Inspector-configurable defaults 
+to be calibrated through playtesting; 
+where an implementation is marked **prototype**, runtime acceptance is still required. -->
 
 ---
 
-## New Docs
-
-- [Design inventory][designinventory]
-- [Master Index][masterindex]
-
-[designinventory]: docs/__to_sort/_brunch-police-design-inventory.md
-[masterindex]: docs/00-master-index.md
-
-
-## Catalogues
+<!-- ## Catalogues
 
 - [Enemies Catalogue][enemycatalogue]
 - [Enemies Catalogue][levelelementscatalogue]
@@ -40,12 +31,11 @@
 [levelelementscatalogue]: docs/catalogs/_level-elements-catalog.md
 [weaponscatalogue]: docs/catalogs/_weapons-catalog.md
 
-
----
-
+--- -->
+<!-- 
 ## Utility Scripts / Docs / Workflow / etc.
 
 - [Godot Docs (offline) stable `zip` link][godot-offline-doc-zip-link]
 
 [godot-offline-doc-zip-link]: https://nightly.link/godotengine/godot-docs/workflows/build_offline_docs/master/godot-docs-html-stable.zip
-
+ -->

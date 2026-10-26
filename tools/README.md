@@ -1,16 +1,16 @@
 
 # Tools & Converters
 
-- [File Conversion Tools](#file-conversion-tools)
+- [Tools \& Converters](#tools--converters)
+  - [File Conversion Tools](#file-conversion-tools)
     - [Pixel-art Image Resizing](#pixel-art-image-resizing)
     - [Fixing White Backgrounds](#fixing-white-backgrounds)
     - [WebP to PNG Conversion](#webp-to-png-conversion)
-- [Sprite File Utilities](#sprite-file-utilities)
-    - [Moving and Renaming Files](#moving-and-renaming-files)
-- [Misc](#misc)
+  - [Sprite File Utilities](#sprite-file-utilities)
+    - [Moving and Renaming files](#moving-and-renaming-files)
+  - [Misc](#misc)
     - [Pixel PNG Generator](#pixel-png-generator)
-    - [Print Every Characters](#print-every-characters)
-- [Dependencies](#dependencies)
+  - [Dependencies](#dependencies)
 
 ---
 
@@ -171,29 +171,6 @@ c9e2b3ff
 
 > [!TIP] Simple Asset for *Godot*  
 > This file can be used as a simple scalable asset in **Godot**.
-
----
-
-### Print Every Characters
-
-Script: [Output All Available Characters on the CLI][print-all-chars]
-
-> [!WARNING] Messy  
-> The output is not rendered well in my terminal...  
-> [This version of the `print-all-chars` script][print-all-chars-2] might be better (w.i.p.)
-
-Features:
-- Analyzes every character and identifies its exact type 
-  (e.g., lowercase, currency, math symbol) based on international standards.
-- Scans all 1,114,112 possible Unicode code points, 
-  ensuring it catches everything available on your system,
-  including math notations, global scripts, and emojis.
-- Packs all characters of the exact same type into a single, 
-  continuous line for ~~clean~~ terminal printing.
-
-> [!NOTE] Upgrades  
-> [The version 2 of the script][print-all-chars-2] is a little cleaner.  
-> [The version 3 of the script][print-all-chars-3] prompts for language.
 
 ---
 
