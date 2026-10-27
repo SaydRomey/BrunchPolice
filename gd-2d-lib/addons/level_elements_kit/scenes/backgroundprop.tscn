@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://c78mana61ndfi"]
+
+[ext_resource type="Script" uid="uid://cv4npdew7af7p" path="res://addons/level_elements_kit/scripts/le_element_2d.gd" id="1_script"]
+
+[node name="BackgroundProp" type="Node2D" unique_id=1322621985]
+script = ExtResource("1_script")
+display_name = "BackgroundProp"
+category = "background_prop"
+element_size = Vector2(140, 100)
+fill_color = Color(0.46, 0.62, 0.88, 0.4)
+
+[node name="DebugLabel" type="Label" parent="." unique_id=34251524]
+offset_left = -53.0
+offset_top = -77.0
+offset_right = 53.0
+offset_bottom = -59.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "BackgroundProp"

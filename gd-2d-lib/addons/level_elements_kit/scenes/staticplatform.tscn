@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://addons/level_elements_kit/scripts/le_platform_base.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+resource_local_to_scene = true
+size = Vector2(128, 24)
+
+[node name="StaticPlatform" type="Node2D"]
+script = ExtResource("1_script")
+display_name = "StaticPlatform"
+category = "platform"
+element_size = Vector2(128, 24)
+fill_color = Color(0.31, 0.64, 0.91, 1)
+
+[node name="Body" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+shape = SubResource("RectangleShape2D_body")
+
+[node name="DebugLabel" type="Label" parent="."]
+mouse_filter = 2
+text = "StaticPlatform"

@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://addons/level_elements_kit/scripts/le_checkpoint.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_area"]
+resource_local_to_scene = true
+size = Vector2(38, 72)
+
+[node name="Checkpoint" type="Node2D"]
+script = ExtResource("1_script")
+display_name = "Checkpoint"
+category = "other"
+element_size = Vector2(38, 72)
+fill_color = Color(0.20, 0.76, 0.99, 0.8)
+
+[node name="Area" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area"]
+shape = SubResource("RectangleShape2D_area")
+
+[node name="DebugLabel" type="Label" parent="."]
+mouse_filter = 2
+text = "Checkpoint"

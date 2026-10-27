@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="LE_VisualPreset" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/level_elements_kit/scripts/le_visual_preset.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+theme_name = "Egg Factory Frenzy"
+fill_color = Color(0.92, 0.81, 0.3, 1)

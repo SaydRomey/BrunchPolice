@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://ct5ugirefdb5w"]
+
+[ext_resource type="Script" uid="uid://b53yj5cigl2v6" path="res://addons/level_elements_kit/scripts/le_switch.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_area"]
+resource_local_to_scene = true
+size = Vector2(36, 48)
+
+[node name="Switch" type="Node2D" unique_id=1027864805]
+script = ExtResource("1_script")
+display_name = "Switch"
+category = "switch"
+element_size = Vector2(36, 48)
+fill_color = Color(0.95, 0.75, 0.23, 1)
+
+[node name="Area" type="Area2D" parent="." unique_id=1331662493]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area" unique_id=54783547]
+shape = SubResource("RectangleShape2D_area")
+
+[node name="DebugLabel" type="Label" parent="." unique_id=991890354]
+offset_left = -21.0
+offset_top = -51.0
+offset_right = 21.0
+offset_bottom = -33.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "Switch"
+
+[node name="EnabledLabel" type="Label" parent="." unique_id=1119035184]
+offset_left = -21.0
+offset_top = -51.0
+offset_right = 21.0
+offset_bottom = -33.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 13

@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://addons/level_elements_kit/scripts/le_bounce_pad.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+resource_local_to_scene = true
+size = Vector2(88, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
+resource_local_to_scene = true
+size = Vector2(88, 8)
+
+[node name="BouncePad" type="Node2D"]
+script = ExtResource("1_script")
+display_name = "BouncePad"
+category = "launcher"
+element_size = Vector2(88, 20)
+fill_color = Color(0.38, 0.82, 0.77, 1)
+
+[node name="Body" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+shape = SubResource("RectangleShape2D_body")
+
+[node name="Trigger" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger"]
+position = Vector2(0, -14)
+shape = SubResource("RectangleShape2D_trigger")
+
+[node name="DebugLabel" type="Label" parent="."]
+mouse_filter = 2
+text = "BouncePad"

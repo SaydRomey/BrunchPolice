@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://dl66wkgni2vll"]
+
+[ext_resource type="Script" uid="uid://bvoj0vflclbu4" path="res://addons/level_elements_kit/scripts/le_moving_platform.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+resource_local_to_scene = true
+size = Vector2(128, 24)
+
+[node name="MovingPlatform" type="Node2D" unique_id=1422646511]
+script = ExtResource("1_script")
+
+[node name="Body" type="AnimatableBody2D" parent="." unique_id=1344676882]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=799195250]
+shape = SubResource("RectangleShape2D_body")
+
+[node name="DebugLabel" type="Label" parent="Body" unique_id=1151833306]
+offset_left = -44.0
+offset_top = -39.0
+offset_right = 44.0
+offset_bottom = -21.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "Level Element"
