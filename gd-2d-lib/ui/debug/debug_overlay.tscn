@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://c5ms8kab5ve10"]
+
+[ext_resource type="Script" uid="uid://iim3dsugjeeu" path="res://ui/debug/debug_overlay.gd" id="1_tkeri"]
+[ext_resource type="Script" uid="uid://i7p4q0vfki14" path="res://ui/debug/position_label.gd" id="2_wfpet"]
+[ext_resource type="Script" uid="uid://dyf28i7chb583" path="res://ui/debug/fps_label.gd" id="3_7rk31"]
+
+[node name="DebugOverlay" type="CanvasLayer" unique_id=616853231]
+script = ExtResource("1_tkeri")
+
+[node name="VBoxContainerTopLeft" type="VBoxContainer" parent="." unique_id=1676361209]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PositionLabel" type="Label" parent="VBoxContainerTopLeft" unique_id=1571368793]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource("2_wfpet")
+
+[node name="VBoxContainerTopRight" type="VBoxContainer" parent="." unique_id=377921464]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="FPSLabel" type="Label" parent="VBoxContainerTopRight" unique_id=1386112357]
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("3_7rk31")

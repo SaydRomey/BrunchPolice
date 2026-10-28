@@ -1,0 +1,140 @@
+[gd_scene format=3 uid="uid://dwyc3q0lib161"]
+
+[ext_resource type="Script" uid="uid://bspi6g2up75tg" path="res://demo/demo.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://bkia7dfud8ufb" path="res://player/player.tscn" id="2_fy1p0"]
+[ext_resource type="PackedScene" uid="uid://c5ms8kab5ve10" path="res://ui/debug/debug_overlay.tscn" id="2_x31ta"]
+[ext_resource type="PackedScene" path="res://addons/level_elements_kit/scenes/staticplatform.tscn" id="3_scene"]
+[ext_resource type="PackedScene" uid="uid://boej14rev37nr" path="res://components/camera/camera_2d.tscn" id="3_svvho"]
+[ext_resource type="PackedScene" path="res://addons/level_elements_kit/scenes/onewayplatform.tscn" id="4_scene"]
+[ext_resource type="PackedScene" uid="uid://dl66wkgni2vll" path="res://addons/level_elements_kit/scenes/movingplatform.tscn" id="5_scene"]
+[ext_resource type="PackedScene" path="res://addons/level_elements_kit/scenes/collapsingplatform.tscn" id="6_scene"]
+[ext_resource type="PackedScene" path="res://addons/level_elements_kit/scenes/conveyorplatform.tscn" id="7_scene"]
+[ext_resource type="PackedScene" path="res://addons/level_elements_kit/scenes/bouncepad.tscn" id="8_scene"]
+[ext_resource type="PackedScene" path="res://addons/level_elements_kit/scenes/damagezone.tscn" id="9_scene"]
+[ext_resource type="PackedScene" path="res://addons/level_elements_kit/scenes/surfacezone.tscn" id="10_scene"]
+[ext_resource type="PackedScene" uid="uid://ct5ugirefdb5w" path="res://addons/level_elements_kit/scenes/switch.tscn" id="11_scene"]
+[ext_resource type="PackedScene" path="res://addons/level_elements_kit/scenes/checkpoint.tscn" id="12_scene"]
+[ext_resource type="PackedScene" path="res://addons/level_elements_kit/scenes/collectible.tscn" id="13_scene"]
+[ext_resource type="PackedScene" uid="uid://c78mana61ndfi" path="res://addons/level_elements_kit/scenes/backgroundprop.tscn" id="14_scene"]
+
+[node name="Demo" type="Node2D" unique_id=851540597]
+script = ExtResource("1_script")
+
+[node name="DebugOverlay" parent="." unique_id=616853231 instance=ExtResource("2_x31ta")]
+
+[node name="Player" parent="." unique_id=157131950 instance=ExtResource("2_fy1p0")]
+position = Vector2(-400, 278)
+starting_mode = null
+walk_speed = null
+run_speed = null
+crouch_walk_speed = null
+air_speed = null
+jump_impulse = null
+gravity = null
+ground_acceleration = null
+air_acceleration = null
+max_jump_height_px = null
+hub_walk_speed = null
+hub_run_speed = null
+glide_max_speed = null
+glide_acceleration = null
+glide_gravity = null
+glide_jump_impulse = null
+
+[node name="Camera2d" parent="Player" unique_id=1613929176 instance=ExtResource("3_svvho")]
+
+[node name="Ground" parent="." unique_id=145687550 instance=ExtResource("3_scene")]
+position = Vector2(-85, 330)
+element_id = "platform_ground_01"
+display_name = "Starting Ground"
+element_size = Vector2(740, 24)
+show_label_in_game = true
+label_position_mode = 2
+
+[node name="OneWay" parent="." unique_id=1463298456 instance=ExtResource("4_scene")]
+position = Vector2(100, 245)
+display_name = "One-way / jump from below"
+element_size = Vector2(160, 18)
+show_label_in_game = true
+
+[node name="Moving" parent="." unique_id=25371219 instance=ExtResource("5_scene")]
+position = Vector2(410, 225)
+travel = Vector2(180, -100)
+display_name = "Moving Lift"
+category = "moving_platform"
+show_label_in_game = true
+label_position_mode = 1
+
+[node name="Collapsing" parent="." unique_id=752904446 instance=ExtResource("6_scene")]
+position = Vector2(673, 340)
+one_way = true
+display_name = "Brittle Floor"
+show_label_in_game = true
+label_position_mode = 1
+
+[node name="Conveyor" parent="." unique_id=1438718647 instance=ExtResource("7_scene")]
+position = Vector2(920, 330)
+belt_velocity = Vector2(180, 0)
+display_name = "Switch-controlled Belt"
+element_size = Vector2(250, 24)
+show_label_in_game = true
+
+[node name="Bounce" parent="." unique_id=808372073 instance=ExtResource("8_scene")]
+position = Vector2(240, 305)
+launch_velocity = Vector2(120, -490)
+display_name = "Jump Pad"
+show_label_in_game = true
+label_position_mode = 2
+
+[node name="Hazard" parent="." unique_id=1404091856 instance=ExtResource("9_scene")]
+position = Vector2(1200, 330)
+display_name = "Fire Hazard"
+category = "Damaging Syrup"
+show_label_in_game = true
+
+[node name="Sticky" parent="." unique_id=529633066 instance=ExtResource("10_scene")]
+position = Vector2(-280, 309)
+speed_multiplier = 0.4
+traction_multiplier = 0.45
+display_name = "Sticky Puddle"
+category = "sticky_surface"
+show_label_in_game = true
+label_position_mode = 2
+
+[node name="Slippery" parent="." unique_id=1559640222 instance=ExtResource("10_scene")]
+position = Vector2(-80, 309)
+speed_multiplier = 1.0
+traction_multiplier = 0.15000000000000002
+display_name = "Slippery Grease"
+category = "slippery_surface"
+show_label_in_game = true
+label_position_mode = 2
+
+[node name="Switch" parent="." unique_id=972757964 instance=ExtResource("11_scene")]
+position = Vector2(810, 286)
+display_name = "Belt Switch"
+show_label_in_game = true
+
+[node name="Checkpoint" parent="." unique_id=791313302 instance=ExtResource("12_scene")]
+position = Vector2(664, 247)
+respawn_offset = Vector2(0, -55)
+show_label_in_game = true
+label_position_mode = 2
+
+[node name="Collectible" parent="." unique_id=270735876 instance=ExtResource("13_scene")]
+position = Vector2(460, 124)
+item_id = "evidence_01"
+display_name = "Evidence Pickup"
+category = "evidence_prop"
+show_label_in_game = true
+
+[node name="Background" parent="." unique_id=1649509735 instance=ExtResource("14_scene")]
+position = Vector2(1030, 30)
+display_name = "Background Prop"
+show_label_in_game = true
+
+[node name="FarGround" parent="." unique_id=197481105 instance=ExtResource("3_scene")]
+position = Vector2(1450, 330)
+display_name = "Finish Area"
+element_size = Vector2(320, 24)
+show_label_in_game = true

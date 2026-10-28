@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bh6ircjoyb36x"]
+
+[ext_resource type="Script" uid="uid://dyf28i7chb583" path="res://ui/debug/fps_label.gd" id="1_v32o4"]
+
+[node name="AverageFPSLabel" type="Label" unique_id=666759940]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("1_v32o4")

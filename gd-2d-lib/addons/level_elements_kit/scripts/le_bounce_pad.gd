@@ -30,8 +30,14 @@ func _sync_trigger() -> void:
 func _on_enter(body: Node2D) -> void:
 	if not body is CharacterBody2D:
 		return
+	
+	if body.velocity.y < -1.0:
+		return
+	
 	if body.has_method("apply_launch"):
 		body.call("apply_launch", launch_velocity)
 	else:
 		(body as CharacterBody2D).velocity = launch_velocity
+		#body.velocity = launch_velocity
+	
 	actor_launched.emit(body, launch_velocity)
