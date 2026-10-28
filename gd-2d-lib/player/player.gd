@@ -29,6 +29,8 @@ enum Facing {
 
 @export var jump_impulse: float = 420.0
 @export var gravity: float = 1050.0
+var _bounce_boost_deadline_ms: int = 0
+var _bounce_boost_extra_impulse: float = 0.0
 
 @export var ground_acceleration: float = 1500.0
 @export var air_acceleration: float = 1200.0
@@ -92,11 +94,30 @@ func _ready() -> void:
 		#_respawn()
 
 
-func get_jump_impulse() -> float:
+func get_base_jump_impulse() -> float:
 	var max_allowed_impulse := sqrt(
-	2.0 * maxf(gravity, 1.0) * max_jump_height_px
+		2.0 * maxf(gravity, 1.0) * max_jump_height_px
 	)
-	return minf(absf(jump_impulse), max_allowed_impulse)
+
+	return minf(
+		absf(jump_impulse),
+		max_allowed_impulse
+	)
+
+
+func get_jump_impulse() -> float:
+	var multiplier: float = 1.0
+
+	if is_on_floor():
+		for entry in _surfaces.values():
+			if entry.size() >= 3:
+				multiplier *= float(entry[2])
+
+	multiplier = clampf(multiplier, 0.1, 2.0)
+	
+	print("Jump multiplier: ", multiplier) # Debug
+
+	return get_base_jump_impulse() * multiplier
 
 
 func enter_platformer_mode() -> void:
@@ -369,10 +390,17 @@ func play_directional_animation(base_name: String) -> void:
 # -----------------------------------------------------------------------------
 
 func _unhandled_input(event: InputEvent) -> void:
+	var viewport := get_viewport()
+
+	# Timed bounce input has priority.
+	if try_bounce_boost(event):
+		if viewport != null:
+			viewport.set_input_as_handled()
+		return
+
 	if not event.is_action_pressed(&"interact"):
 		return
 	
-	var viewport := get_viewport()
 	if viewport != null:
 		viewport.set_input_as_handled()
 	
@@ -410,6 +438,62 @@ func apply_launch(new_velocity: Vector2) -> void:
 			fsm.transition_to("Falling")
 
 
+func start_bounce_boost_window(
+	window_seconds: float,
+	extra_impulse: float
+) -> void:
+	# Replace any previous bounce opportunity.
+	clear_bounce_boost()
+
+	if window_seconds <= 0.0 or extra_impulse <= 0.0:
+		return
+
+	_bounce_boost_extra_impulse = extra_impulse
+	_bounce_boost_deadline_ms = (
+		Time.get_ticks_msec()
+		+ int(round(window_seconds * 1000.0))
+	)
+
+	print("BOUNCE WINDOW OPEN") # Debug
+
+
+func clear_bounce_boost() -> void:
+	_bounce_boost_deadline_ms = 0
+	_bounce_boost_extra_impulse = 0.0
+
+
+func try_bounce_boost(event: InputEvent) -> bool:
+	# Only a new Jump press counts, not a held key.
+	if not event.is_action_pressed(&"jump"):
+		return false
+
+	if _bounce_boost_deadline_ms == 0:
+		return false
+
+	# Reject late input.
+	if Time.get_ticks_msec() > _bounce_boost_deadline_ms:
+		clear_bounce_boost()
+		return false
+
+	# Only boost while rising in platformer mode.
+	if movement_mode != MovementMode.PLATFORMER:
+		clear_bounce_boost()
+		return false
+
+	if velocity.y >= 0.0:
+		clear_bounce_boost()
+		return false
+
+	# Add upward speed without resetting the whole bounce.
+	velocity.y -= _bounce_boost_extra_impulse
+
+	# Consume this opportunity: only one boost per contact.
+	clear_bounce_boost()
+
+	print("PERFECT BOUNCE BOOST!") # Debug
+	return true
+
+
 func receive_damage(_damage: int, _source: Vector2) -> void:
 	_respawn()
 
@@ -419,16 +503,24 @@ func set_checkpoint(new_position: Vector2) -> void:
 func enter_surface(
 	token: int, 
 	speed_factor: float, 
-	traction_factor: float
+	traction_factor: float,
+	jump_factor: float = 1.0
 ) -> void:
-	_surfaces[token] = [speed_factor, traction_factor]
-	print("SURFACE ENTER: ", speed_factor, ", ", traction_factor) # Debug
+	
+	_surfaces[token] = [
+		speed_factor, 
+		traction_factor, 
+		jump_factor
+	]
+	print("SURFACE ENTER: ", speed_factor, ", ", traction_factor, ", ", jump_factor) # Debug
 
 func exit_surface(token: int) -> void:
 	_surfaces.erase(token)
 	print("SURFACE EXIT") # Debug
 
 func _respawn() -> void:
+	clear_bounce_boost()
+	
 	global_position = checkpoint_position
 	velocity = Vector2.ZERO
 	_surfaces.clear()

@@ -11,6 +11,7 @@ signal actor_exited_surface(actor: Node2D)
 @export_group("Movement Modifiers")
 @export_range(0.1, 2.0, 0.05) var speed_multiplier: float = 0.5
 @export_range(0.05, 2.0, 0.05) var traction_multiplier: float = 1.0
+@export_range(0.1, 2.0, 0.05) var jump_multiplier: float = 1.0
 
 func _ready() -> void:
 	super._ready()
@@ -33,8 +34,15 @@ func _sync_shape() -> void:
 
 func _on_enter(actor: Node2D) -> void:
 	actor_entered_surface.emit(actor)
+	
 	if actor.has_method("enter_surface"):
-		actor.call("enter_surface", get_instance_id(), speed_multiplier, traction_multiplier)
+		actor.call(
+			"enter_surface", 
+			get_instance_id(), 
+			speed_multiplier, 
+			traction_multiplier,
+			jump_multiplier
+		)
 
 func _on_exit(actor: Node2D) -> void:
 	actor_exited_surface.emit(actor)
