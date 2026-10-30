@@ -2,9 +2,13 @@
 
 **A practical, step-by-step implementation guide based on the BP2 Level Elements Catalog**  
 **Target:** Godot **4.7.2**, GDScript, 2D side-scrolling platformer  
-**Deliverable:** A reusable `addons/level_elements_kit/` directory with Inspector-configurable elements, optional debug labels, themed visual presets, and standardized player/level integration.
+**Deliverable:** A reusable `addons/level_elements_kit/` directory 
+with Inspector-configurable elements, optional debug labels, 
+themed visual presets, and standardized player/level integration.
 
-> **Companion files:** `godot_level_elements_kit.zip` contains a starting implementation, 15 reusable scene templates, 8 thematic color presets, and a separate demonstration project. The guide explains how to construct and evolve it. The code is provided as a starter implementation, not as a formally tested production framework; run the validation checklist in your Godot build before shipping.
+> **Companion files:** `godot_level_elements_kit.zip` contains a starting implementation, 
+> 15 reusable scene templates, 8 thematic color presets, and a separate demonstration project.  
+> The guide explains how to construct and evolve it. 
 
 ---
 
@@ -41,7 +45,9 @@
 
 ### 1.1 Review of the supplied BP2 catalog
 
-The uploaded **BP2 Level Elements Catalog** organizes environmental content into **17 tagging categories**, shared reusable platforms, shared hazards, and **eight themed environments**:
+The uploaded **BP2 Level Elements Catalog** organizes 
+environmental content into **17 tagging categories**, 
+shared reusable platforms, shared hazards, and **eight themed environments**:
 
 1. Grease Canyon
 2. Pastry Palace
@@ -563,8 +569,8 @@ Your catalog repeatedly needs moving platforms: pancake rafts, frying-pan lifts,
 ```text
 MovingPlatform (Node2D, le_moving_platform.gd)
 └── Body (AnimatableBody2D)
-    ├── CollisionShape2D (RectangleShape2D, Local to Scene ON)
-    └── DebugLabel (Label)
+	├── CollisionShape2D (RectangleShape2D, Local to Scene ON)
+	└── DebugLabel (Label)
 ```
 
 Use an **`AnimatableBody2D`**, because Godot estimates its motion velocity for interaction with other bodies. The starter uses its `sync_to_physics = true` default.
@@ -746,7 +752,7 @@ Implement this in your player for the most predictable integration:
 
 ```gdscript
 func apply_launch(new_velocity: Vector2) -> void:
-    velocity = new_velocity
+	velocity = new_velocity
 ```
 
 If your controller recalculates vertical velocity or blocks external impulses each tick, adapt that controller to preserve the launch velocity. Later, add a cooldown or active-contact check for bounce pads that should repeatedly launch a player while overlapping.
@@ -773,7 +779,7 @@ Export `damage` and `active`. On body entry, emit:
 ```gdscript
 actor_hit.emit(body, damage)
 if body.has_method("receive_damage"):
-    body.call("receive_damage", damage, global_position)
+	body.call("receive_damage", damage, global_position)
 ```
 
 This separates the **effect** from your game's specific health UI, invincibility logic, knockback, sound, or respawn implementation.
@@ -823,8 +829,8 @@ func enter_surface(token: int, speed_factor: float, traction_factor: float) -> v
     pass
 
 func exit_surface(token: int) -> void:
-    # Remove exactly this area's modifier.
-    pass
+	# Remove exactly this area's modifier.
+	pass
 ```
 
 The supplied demo player implements these functions and combines multiple overlapping modifiers. The kit passes each source zone's runtime instance ID as the `token`, so two overlapping zones can be removed independently.
@@ -977,22 +983,22 @@ If your player extends `CharacterBody2D`:
 ```gdscript
 # Put equivalent methods in your own player script.
 func apply_launch(launch: Vector2) -> void:
-    velocity = launch
+	velocity = launch
 
 func receive_damage(amount: int, source: Vector2) -> void:
-    # Apply health, invulnerability, knockback or respawn rules.
-    pass
+	# Apply health, invulnerability, knockback or respawn rules.
+	pass
 
 func set_checkpoint(world_position: Vector2) -> void:
-    # Save the active checkpoint for respawn.
-    pass
+	# Save the active checkpoint for respawn.
+	pass
 
 func enter_surface(token: int, speed_factor: float, traction_factor: float) -> void:
-    # Store per-zone movement modifiers.
-    pass
+	# Store per-zone movement modifiers.
+	pass
 
 func exit_surface(token: int) -> void:
-    # Remove that zone's modifier.
+	# Remove that zone's modifier.
     pass
 ```
 

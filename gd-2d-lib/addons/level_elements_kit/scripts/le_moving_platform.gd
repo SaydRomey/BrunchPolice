@@ -1,3 +1,9 @@
+## Moves an AnimatableBody2D back and forth along a configurable travel vector.
+##
+## The placed root stays fixed.[br]
+## Its Body and root-drawn placeholder move during physics ticks; 
+## custom artwork should follow Body.
+
 @tool
 extends LE_PlatformBase
 class_name LE_MovingPlatform
@@ -5,16 +11,24 @@ class_name LE_MovingPlatform
 ## The Node2D root stays at its authored position as a stable path anchor.
 
 @export_group("Motion")
+## Body displacement in local pixels from the initial placed position to the other endpoint.
 @export var travel: Vector2 = Vector2(200, 0)
+## Travel speed in pixels per second.
 @export_range(1, 1000, 1) var speed_px_per_second: float = 90.0
+## Whether the platform Body progresses along its route at runtime.
 @export var motion_enabled: bool = true
 
+## Moving AnimatableBody2D child controlled by the platform.
 @onready var _body: AnimatableBody2D = $Body
 
+## Starting local Body position.
 var _body_origin: Vector2 = Vector2.ZERO
+## Accumulated progress along the travel segment in pixels.
 var _distance: float = 0.0
+## Current travel direction: 1 toward the end, -1 toward the start.
 var _direction: float = 1.0
 
+## Caches the child Body initial local position, sets the placeholder offset, and enables physics processing only during gameplay.
 func _ready() -> void:
 	super._ready()
 	_body_origin = _body.position
@@ -22,6 +36,7 @@ func _ready() -> void:
 	queue_redraw()
 	set_physics_process(not Engine.is_editor_hint())
 
+## Updates the AnimatableBody2D local position between its origin and travel end and redraws the placeholder. Pauses movement when motion_enabled is false.
 func _physics_process(delta: float) -> void:
 	if not motion_enabled:
 		return
@@ -45,6 +60,7 @@ func _physics_process(delta: float) -> void:
 	_visual_offset = _body.position
 	queue_redraw()
 
+## Enables or pauses movement without removing collision or resetting the current travel position. [param value] is the desired enabled state.
 func set_enabled(value: bool) -> void:
 	motion_enabled = value
 

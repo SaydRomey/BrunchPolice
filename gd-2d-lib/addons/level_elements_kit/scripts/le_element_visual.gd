@@ -1,3 +1,9 @@
+## Optional child visual that draws the owner element's placeholder 
+## in its own local coordinate system.
+##
+## Attach beneath a moving Body or another transformed child so art follows that child.[br]
+## The ancestor [LE_Element2D] supplies its appearance settings.
+
 @tool
 extends Node2D
 class_name LE_ElementVisual
@@ -5,6 +11,7 @@ class_name LE_ElementVisual
 ## Parent this to Body or Area so physics and artwork share one transform.
 ## The owning LE_Element2D retains all existing Inspector appearance settings.
 
+## Finds the nearest [LE_Element2D] ancestor and draws that element's placeholder in this node's local space. Does nothing when no owner is found or placeholders are hidden.
 func _draw() -> void:
 	var element := _find_element()
 	if element == null or not element.show_placeholder:
@@ -30,6 +37,7 @@ func _draw() -> void:
 		draw_rect(rect, color_to_draw, true)
 	draw_rect(rect, Color(0.08, 0.1, 0.15, 0.8), false, 1.0)
 
+## Walks up parent nodes and returns the closest [LE_Element2D], or null when no matching ancestor exists.
 func _find_element() -> LE_Element2D:
 	var ancestor: Node = get_parent()
 	while ancestor != null:
