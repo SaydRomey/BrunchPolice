@@ -1,21 +1,118 @@
-# Godot 4+ specific ignores
+# **************************************************************************** #
+# .gitignore
+# **************************************************************************** #
+
+# ==============================
+# Private and local-only folders
+# ==============================
+
+# Private work and local scratch directories
+_PRIVATE
+_local*
+_misc/
+
+# ==============================
+# Compressed archives
+# ==============================
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+*.dmg
+*.iso
+*.jar
+
+# ==============================
+# C++
+# ==============================
+
+# Executables
+*.out
+*.exe
+
+# Prerequisite dependency files
+*.d
+
+# Object files
+*.o
+*.obj
+
+# Static libraries
+*.a
+*.lib
+
+# Dynamic/shared libraries
+*.so
+*.dll
+*.dylib
+
+# Build artifacts and intermediate folders
+build/
+bin/
+lib/
+
+# Script Index
+script-index.txt
+
+# CMake-related (if ever used)
+# CMakeFiles/
+# CMakeCache.txt
+# cmake_install.cmake
+
+# Apple libraries
+*.framework/
+*.xcframework/
+
+# MSVC/LLDB/Clang artifacts
+*.pdb
+*.ipdb
+*.iobj
+*.ilk
+
+# ==============================
+# SCons / GDExtension
+# ==============================
+
+# Build metadata
+.sconsign.dblite
+.cache/
+
+# SCons object files (godot-cpp sets OBJSUFFIX/SHOBJSUFFIX to .os)
+*.os
+# src/**/*.os
+
+# GDExtension C++ bindings (keep sources if vendored)
+# extern/godot-cpp/
+
+# godot-cpp generated build outputs
+extern/godot-cpp/bin/
+extern/godot-cpp/include/gen/
+
+# Godot GDExtension build outputs
+# Re-include the directory ignored by bin/, then ignore its contents,
+# except for .gdextension descriptors that must remain trackable.
+!game/bin/
+game/bin/**
+!game/bin/*.gdextension
+
+# ==============================
+# Godot
+# ==============================
+
+# Godot 4+ generated editor cache
 .godot/
 .nomedia
-/android/
 
-# Godot-specific ignores
+# Legacy generated import cache
 .import/
+
+# Godot-specific exports
 export.cfg
 export_credentials.cfg
-
-# Godot editor folders
-.import/
 export/
-*.godot
-*.import
-
-# 
-# *.uid
+/android/
+.android/
 
 # Imported translations (automatically generated from CSV files)
 *.translation
@@ -25,41 +122,59 @@ export/
 data_*/
 mono_crash.*.json
 
-# GDExtensions CPP Bindings
-# extern/godot-cpp/
-
-# C++ build artifacts
-build/
-bin/
-lib/
-
-# godot-cpp build outputs
-extern/godot-cpp/bin/
-extern/godot-cpp/include/gen/
+# ==============================
+# VS Code
+# ==============================
 
 # Editor settings
 .vscode/
+
+# ==============================
+# Vim
+# ==============================
+
+# Swap files (open buffers)
+*.swp
+*.swo
+*.swx
+
+# Backup files (before saving)
+*~
+
+# Undo history (if persistent undo is enabled)
+.undodir/
+*.un~
+
+# Session files (if saved)
+Session.vim
+
+# Tag files (if generated with :!ctags)
+tags
+
+# ==============================
+# Misc
+# ==============================
+
+# Logs
 *.log
 
-# Temporary files
+# Temporary files and directories
+# These patterns apply at any directory depth.
 tmp*
+_tmp*
 
 # Drive synchronization temporary files
 .tmp.driveupload
 .tmp.drivedownload
 
-# Local Dir
-_local*
+# Environment variables files
+.env
+.env.*
 
-# Compressed archives
-*.zip
-*.tar
-*.gz
-*.rar
-*.7z
-*.dmg
-*.iso
-*.jar
+# macOS and Windows clutter
+.DS_Store
+Thumbs.db
+desktop.ini
 
 # Ignore all .ini files
 *.ini
